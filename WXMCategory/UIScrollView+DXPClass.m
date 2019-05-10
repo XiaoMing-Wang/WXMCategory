@@ -61,8 +61,4 @@
 - (CGFloat)contentInsetRight {
     return self.contentInset.right;
 }
-- (void)dxpResignFirstResponder {
-    
-}
-
 @end

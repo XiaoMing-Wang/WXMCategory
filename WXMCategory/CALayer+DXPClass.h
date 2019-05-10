@@ -28,6 +28,5 @@
 
 /** 去掉隐式动画 */
 + (void)removeImplicitanimationWithBlock:(void (^)(void))block;
-
 - (void)setBorderColorWithUIColor:(UIColor *)color;
 @end

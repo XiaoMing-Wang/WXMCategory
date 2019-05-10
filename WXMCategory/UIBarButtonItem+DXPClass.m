@@ -22,17 +22,17 @@ static char barButtonItemImageWithTitleKey;
                                      action:(void (^)(void))action {
     
     UIFont *font = [UIFont systemFontOfSize:LargePhone ? 17 : 16];
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithTitle:title
-                                                                    style:UIBarButtonItemStylePlain target:nil
-                                                                     action:nil];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:title
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:nil
+                                                            action:nil];
     
-    [barButtonItem setTitleTextAttributes:@{NSFontAttributeName : font }
-                                 forState:UIControlStateNormal];
-    
-    [barButtonItem setAction:@selector(barButtonClick)];
-    objc_setAssociatedObject(barButtonItem, &barT, action, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    barButtonItem.tintColor = tintColor ?: [UIColor blueColor];
-    return barButtonItem;
+    NSDictionary *attributes = @{NSFontAttributeName : font };
+    [item setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    [item setAction:@selector(barButtonClick)];
+    objc_setAssociatedObject(item, &barT, action, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    item.tintColor = tintColor ?: [UIColor blueColor];
+    return item;
 }
 - (void)barButtonClick {
     void (^block)(void) = (void (^)(void))objc_getAssociatedObject(self, &barT);
@@ -43,22 +43,22 @@ static char barButtonItemImageWithTitleKey;
 + (UIBarButtonItem *)barButtonCustomWithTitle:(NSString *)title
                                     tintColor:(UIColor *)tintColor
                                        action:(void (^)(void))action {
-    
+    UIFont *font = [UIFont systemFontOfSize:LargePhone ? 16.5 : 16];
     CGRect rect = [title boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
                                       options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
-                                   attributes:@{ NSFontAttributeName: [UIFont systemFontOfSize:LargePhone ? 16.5 : 16] }
+                                   attributes:@{ NSFontAttributeName: font }
                                       context:nil];
     
     UIButton *rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, rect.size.width, 20)];
     objc_setAssociatedObject(rightButton, &rightT, action, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
-    [rightButton addTarget:barButtonItem action:@selector(rightBarClick:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:rightButton];
+    [rightButton addTarget:item action:@selector(rightBarClick:) forControlEvents:UIControlEventTouchUpInside];
     [rightButton setTitle:title forState:UIControlStateNormal];
     [rightButton setTitleColor:tintColor ?: [UIColor blueColor] forState:UIControlStateNormal];
     rightButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    rightButton.titleLabel.font = [UIFont systemFontOfSize:LargePhone ? 16.5 : 16];
+    rightButton.titleLabel.font = font;
     rightButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -5);
-    return barButtonItem;
+    return item;
 }
 - (void)rightBarClick:(UIButton *)btn {
     void (^block)(void) = (void (^)(void))objc_getAssociatedObject(btn, &rightT);
@@ -66,22 +66,27 @@ static char barButtonItemImageWithTitleKey;
 }
 
 /** button 图片 */
-+ (UIBarButtonItem *)barItemWithImageName:(NSString *)imageName
-                     highlightedImageName:(NSString *)highlightedImageName
-                                   action:(void (^)(void))action {
-    
++ (UIBarButtonItem *)barItemWithImageName:(NSString *)imageName action:(void (^)(void))action {
     UIButton *button = [[UIButton alloc] init];
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-
     [button setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
-    if (highlightedImageName) {
-        [button setBackgroundImage:[UIImage imageNamed:highlightedImageName] forState:UIControlStateHighlighted];
-    }
-    
+    [button setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateHighlighted];
     CGSize size = button.currentBackgroundImage.size;
     button.frame = CGRectMake(0, 0, size.width, size.height);
     [button addTarget:barButtonItem action:@selector(click:) forControlEvents:UIControlEventTouchUpInside];
     objc_setAssociatedObject(button, &barImage, action, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return barButtonItem;
+}
++ (UIBarButtonItem *)barItemWithImageName:(NSString *)imageName
+                                   target:(id)target
+                                   action:(SEL)action {
+    UIButton *button = [[UIButton alloc] init];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    [button setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+    [button setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateHighlighted];
+    CGSize size = button.currentBackgroundImage.size;
+    button.frame = CGRectMake(0, 0, size.width, size.height);
+    [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return barButtonItem;
 }
 - (void)click:(UIButton *)btn {
@@ -99,7 +104,8 @@ static char barButtonItemImageWithTitleKey;
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
     
     UIImage *image = [UIImage imageNamed:imageName];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(leftImage, 0, image.size.width, image.size.height)];
+    CGRect rect = CGRectMake(leftImage, 0, image.size.width, image.size.height);
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:rect];
     imageView.image = image;
     imageView.center = CGPointMake(imageView.center.x, backButton.frame.size.height / 2);
     
@@ -116,12 +122,10 @@ static char barButtonItemImageWithTitleKey;
     [backButton addSubview:titleLabel];
     objc_setAssociatedObject(backButton, &barButtonItemImageWithTitleKey, action, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    [backButton addTarget:barButtonItem action:@selector(BarButtonClickImageWithTitle:) forControlEvents:UIControlEventTouchUpInside];
+    
+    SEL sel = @selector(barButtonClickImageWithTitle:);
+    [backButton addTarget:barButtonItem action:sel forControlEvents:UIControlEventTouchUpInside];
     return barButtonItem;
-}
-- (void)BarButtonClickImageWithTitle:(UIButton *)btn {
-    void (^block)(void) = (void (^)(void))objc_getAssociatedObject(btn, &barButtonItemImageWithTitleKey);
-    if (block) block();
 }
 + (UIBarButtonItem *)barItemWithImageName:(NSString *)imageName
                                     title:(NSString *)title
@@ -149,5 +153,9 @@ static char barButtonItemImageWithTitleKey;
     UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
     [backButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return barButtonItem;
+}
+- (void)barButtonClickImageWithTitle:(UIButton *)btn {
+    void (^block)(void) = (void (^)(void))objc_getAssociatedObject(btn, &barButtonItemImageWithTitleKey);
+    if (block) block();
 }
 @end

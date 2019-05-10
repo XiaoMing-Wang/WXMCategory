@@ -19,7 +19,4 @@
 @property (nonatomic, assign) CGFloat contentInsetBottom;
 @property (nonatomic, assign) CGFloat contentInsetRight;
 
-/** 收键盘 */
-- (void)dxpResignFirstResponder;
-
 @end

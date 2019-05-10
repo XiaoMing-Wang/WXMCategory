@@ -22,5 +22,7 @@
 #import "UIScrollView+DXPClass.h"
 #import "UIViewController+DXPClass.h"
 #import "UIBarButtonItem+DXPClass.h"
+#import "UIButton+DXPClass.h"
+#import "UILabel+DXPClass.h"
 
 #endif /* CategoryHeader_h */

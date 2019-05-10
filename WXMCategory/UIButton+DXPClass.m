@@ -22,8 +22,8 @@ static char responseKey;
 
 + (void)load {
     Method method1 = class_getInstanceMethod(self, @selector(sendAction:to:forEvent:));
-    Method method2 = class_getInstanceMethod(self, @selector(dp__sendAction:to:forEvent:));
-    method_exchangeImplementations(method1, method2);
+    Method method2 = class_getInstanceMethod(self, @selector(wxm__sendAction:to:forEvent:));
+    [self swizzleInstanceMethod:method1 with:method2];
 }
 
 /** -方法 */
@@ -83,8 +83,7 @@ static char responseKey;
     if (topEdge && rightEdge && bottomEdge && leftEdge) {
         return CGRectMake(self.bounds.origin.x - leftEdge.floatValue, self.bounds.origin.y - topEdge.floatValue, self.bounds.size.width + leftEdge.floatValue + rightEdge.floatValue,
             self.bounds.size.height + topEdge.floatValue + bottomEdge.floatValue);
-    } else
-        return self.bounds;
+    } else return self.bounds;
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -107,7 +106,7 @@ static char responseKey;
 - (CGFloat)respondTime {
     return [objc_getAssociatedObject(self, _cmd) floatValue];
 }
-- (void)dp__sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
+- (void)wxm__sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
     BOOL response = [objc_getAssociatedObject(self, &responseKey) boolValue];
     if (response && self.respondTime > 0) {
         NSLog(@"button暂时不能响应...");
@@ -115,11 +114,11 @@ static char responseKey;
     }
     
     if (self.respondTime > 0 && self.respondTime) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.respondTime * 1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            objc_setAssociatedObject(self, &responseKey, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(self.respondTime * 1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            objc_setAssociatedObject(self, &responseKey, @(NO), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         });
     }
-    [self dp__sendAction:action to:target forEvent:event];
+    [self wxm__sendAction:action to:target forEvent:event];
 }
 @end
 
