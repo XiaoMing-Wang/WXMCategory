@@ -6,9 +6,9 @@
 //  Copyright © 2019年 wq. All rights reserved.
 //
 
-#import "UIScrollView+DXPClass.h"
+#import "UIScrollView+WXMKit.h"
 
-@implementation UIScrollView (DXPClass)
+@implementation UIScrollView (WXMKit)
 
 - (void)setContentOffsetX:(CGFloat)contentOffsetX {
     self.contentOffset = CGPointMake(contentOffsetX, self.contentOffset.y);

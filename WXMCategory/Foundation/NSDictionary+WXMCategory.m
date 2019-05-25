@@ -6,7 +6,7 @@
 //  Copyright © 2018年 wq. All rights reserved.
 //
 
-#import "NSDictionary+DXPCategory.h"
+#import "NSDictionary+WXMCategory.h"
 #import <objc/runtime.h>
 
 @implementation NSDictionary (DXPCategory)
@@ -38,7 +38,7 @@
 }
 
 /** 转字符串 */
-- (NSString *)jsonRepresentation {
+- (NSString *)wxm_jsonRepresentation {
     NSData *data = [NSJSONSerialization dataWithJSONObject:self options:0 error:nil];
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }

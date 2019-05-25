@@ -9,6 +9,7 @@
 #import "NSArray+Log.h"
 
 @implementation NSArray (Log)
+
 - (NSString *)descriptionWithLocale:(id)locale {
     NSMutableString *string = [NSMutableString string];
     [string appendString:@"[\n"];

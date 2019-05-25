@@ -1,15 +1,16 @@
 //
-//  UIView+DXPClass.h
-//  runTime
+//  UIView+WXMKit.h
+//  Multi-project-coordination
 //
-//  Created by wq on 16/8/10.
-//  Copyright © 2016年 WQ. All rights reserved.
+//  Created by wq on 2019/5/26.
+//  Copyright © 2019年 wxm. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-NS_ASSUME_NONNULL_BEGIN
 
-@interface UIView (DXPClass)
+@interface UIView (WXMKit)
+
+/** 绝对定位 */
 @property (nonatomic, assign) CGFloat x;
 @property (nonatomic, assign) CGFloat y;
 @property (nonatomic, assign) CGFloat width;
@@ -19,15 +20,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat centerY;
 
 @property (nonatomic, assign) CGPoint origin;
-@property (nonatomic, assign) CGSize  size;
+@property (nonatomic, assign) CGSize size;
+
 @property (nonatomic, assign) CGFloat left;
 @property (nonatomic, assign) CGFloat right;
 @property (nonatomic, assign) CGFloat top;
 @property (nonatomic, assign) CGFloat bottom;
 
-+ (instancetype)Nib;
-+ (instancetype)NibWithName:(NSString *)nibName idex:(NSInteger)idex;
+/** 相对定位 */
+@property (nonatomic, assign) BOOL layoutCenterSupLayer;
+@property (nonatomic, assign) CGFloat layoutRight;
+@property (nonatomic, assign) CGFloat layoutBottom;
 
 @end
-
-NS_ASSUME_NONNULL_END

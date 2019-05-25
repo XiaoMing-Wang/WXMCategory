@@ -6,11 +6,12 @@
 //  Copyright © 2016年 WQ. All rights reserved.
 //
 //Library 路径
-#define KLibraryboxPath NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject
+#define KLibraryboxPath \
+NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject
 #define UserData [KLibraryboxPath stringByAppendingPathComponent:@"UserData"]
-
-#import "NSObject+DXPCategory.h"
+#import "NSObject+WXMCategory.h"
 #import <objc/runtime.h>
+
 static const int block_key;
 static char timers;
 
@@ -37,7 +38,6 @@ static char timers;
     
     id newVal = [change objectForKey:NSKeyValueChangeNewKey];
     if (newVal == [NSNull null]) newVal = nil;
-    
     self.block(object, oldVal, newVal);
 }
 @end
@@ -45,35 +45,41 @@ static char timers;
 @implementation NSObject (DXPCategory)
 
 /** GCD定时器 */
-- (dispatch_source_t)startTimingWithInterval:(float)interval backBlock:(BOOL (^)(void))block {
+- (dispatch_source_t)wxm_startTiming:(float)interval countdown:(BOOL(^)(void))countdown {
     dispatch_queue_t queue = dispatch_get_main_queue();
+    
     self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
     dispatch_source_set_timer(self.timer, dispatch_walltime(NULL, 0), interval * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(self.timer, ^{
         
-        BOOL isStop = block();
-        if (block == nil | isStop == NO) {
-            dispatch_cancel(self.timer); // 取消定时器
+        BOOL isStop = countdown();
+        if (countdown == nil || isStop == NO) {
+            
+            /**  取消定时器 */
+            dispatch_cancel(self.timer);
             self.timer = nil;
         }
     });
     dispatch_resume(self.timer);
     return self.timer;
 }
+
 /** -方法 */
-+ (BOOL)swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel {
-    Method originalMethod = class_getInstanceMethod(self, originalSel);
++ (BOOL)wxm_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel {
+    Method original = class_getInstanceMethod(self, originalSel);
     Method newMethod = class_getInstanceMethod(self, newSel);
-    if (!originalMethod || !newMethod) return NO;
+    if (!original || !newMethod) return NO;
     
-    class_addMethod(self, originalSel, class_getMethodImplementation(self, originalSel), method_getTypeEncoding(originalMethod));
-    class_addMethod(self, newSel, class_getMethodImplementation(self, newSel), method_getTypeEncoding(newMethod));
+    IMP originalImp = class_getMethodImplementation(self, originalSel);
+    IMP newMethodImp = class_getMethodImplementation(self, newSel);
+    class_addMethod(self, originalSel, originalImp, method_getTypeEncoding(original));
+    class_addMethod(self, newSel, newMethodImp, method_getTypeEncoding(newMethod));
     method_exchangeImplementations(class_getInstanceMethod(self, originalSel), class_getInstanceMethod(self, newSel));
     return YES;
 }
 
 /** +方法 */
-+ (BOOL)swizzleClassMethod:(SEL)originalSel with:(SEL)newSel {
++ (BOOL)wxm_swizzleClassMethod:(SEL)originalSel with:(SEL)newSel {
     Class class = object_getClass(self);
     Method originalMethod = class_getInstanceMethod(class, originalSel);
     Method newMethod = class_getInstanceMethod(class, newSel);
@@ -83,36 +89,38 @@ static char timers;
 }
 
 /** 绑定 */
-- (void)setAssociateValue:(id)value withKey:(void *)key {
+- (void)wxm_setAssociateValue:(id)value withKey:(void *)key {
     objc_setAssociatedObject(self, key, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)setAssociateWeakValue:(id)value withKey:(void *)key {
+- (void)wxm_setAssociateWeakValue:(id)value withKey:(void *)key {
     objc_setAssociatedObject(self, key, value, OBJC_ASSOCIATION_ASSIGN);
 }
 
-- (id)getAssociatedValueForKey:(void *)key {
+/** 获取 */
+- (id)wxm_getAssociatedValueForKey:(void *)key {
     return objc_getAssociatedObject(self, key);
 }
 
 /**获取所有属性 */
-+ (NSArray *)getFropertys {
++ (NSArray *)wxm_getFropertys {
     unsigned int count = 0;
     NSMutableArray *_arrayM = @[].mutableCopy;
     objc_property_t *propertys = class_copyPropertyList([self class], &count);
     for (int i = 0; i < count; i++) {
-        objc_property_t property = propertys[i]; //获得每一个属性
-        NSString *propertyName = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
-        [_arrayM addObject:propertyName];
+        objc_property_t property = propertys[i]; /** 获得每一个属性 */
+        NSString *pro = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
+        [_arrayM addObject:pro];
     }
     return _arrayM;
 }
+
 - (void)setNilValueForKey:(NSString *)key {}
 
 #pragma mark _____________________________________________________________________KVO
 
-//监听 有block的
-- (void)addObserverBlockForKeyPath:(NSString *)keyPath block:(void (^)(__weak id obj, id oldVal, id newVal))block {
+/** 监听 有block的 */
+- (void)wxm_addObserverBlockForKeyPath:(NSString *)keyPath block:(void(^)(id obj,id oldVal,id newVal))block {
     if (!keyPath || !block) return;
     NSObjectKVOBlockTarget *target = [[NSObjectKVOBlockTarget alloc] initWithBlock:block];
     NSMutableDictionary *dic = [self allNSObjectObserverBlocks];
@@ -124,7 +132,8 @@ static char timers;
     [arr addObject:target];
     [self addObserver:target forKeyPath:keyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
 }
-//监听的key字典
+
+/** 监听的key字典 */
 - (NSMutableDictionary *)allNSObjectObserverBlocks {
     NSMutableDictionary *targets = objc_getAssociatedObject(self, &block_key);
     if (!targets) {
@@ -133,8 +142,9 @@ static char timers;
     }
     return targets;
 }
-//删掉监听的key
-- (void)removeObserverBlocksForKeyPath:(NSString *)keyPath {
+
+/** 删掉监听的key */
+- (void)wxm_removeObserverBlocksForKeyPath:(NSString *)keyPath {
     if (!keyPath) return;
     NSMutableDictionary *dic = [self allNSObjectObserverBlocks];
     NSMutableArray *arr = dic[keyPath];
@@ -143,8 +153,9 @@ static char timers;
     }];
     [dic removeObjectForKey:keyPath];
 }
-//删掉监听的block
-- (void)removeObserverBlocks {
+
+/** 删掉监听的block */
+- (void)wxm_removeObserverBlocks {
     NSMutableDictionary *dic = [self allNSObjectObserverBlocks];
     [dic enumerateKeysAndObjectsUsingBlock: ^(NSString *key, NSArray *arr, BOOL *stop) {
         [arr enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
@@ -161,13 +172,9 @@ static char timers;
     return objc_getAssociatedObject(self, &timers);
 }
 
+#pragma mark____________________________________ 解归档 需实现归档协议
 
-#pragma mark____________________________________________________________解归档 需实现归档协议
-#pragma mark____________________________________________________________解归档 需实现归档协议
-#pragma mark____________________________________________________________解归档 需实现归档协议
-
-
-//归档
+/** 归档 */
 - (BOOL)archiverWithPath:(NSString *)path {
     BOOL success = NO;
     @try {

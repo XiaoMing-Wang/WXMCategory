@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSArray (DXPCategory)
+@interface NSArray (WXMCategory)
 
 /** 判断数组是否可用 */
-- (BOOL)isAvailable;
+- (BOOL)wxm_isAvailable;
 
 /** 加载plist文件 */
-+ (NSArray *)arrayWithPlist:(NSString *)plistName;
++ (NSArray *)wxm_arrayWithPlist:(NSString *)plistName;
 
 @end
 

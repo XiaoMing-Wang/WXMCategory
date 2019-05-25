@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDictionary (DXPCategory)
+@interface NSDictionary (WXMCategory)
 
 /** 转字符串 */
-- (NSString *)jsonRepresentation;
+- (NSString *)wxm_jsonRepresentation;
 
 @end

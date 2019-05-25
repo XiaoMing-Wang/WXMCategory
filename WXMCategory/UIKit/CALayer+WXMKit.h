@@ -1,16 +1,18 @@
 //
-//  CALayer+DXPClass.h
-//  Bili
+//  CALayer+WXMKit.h
+//  Multi-project-coordination
 //
-//  Created by wq on 16/10/8.
-//  Copyright © 2016年 WQ. All rights reserved.
+//  Created by wq on 2019/5/26.
+//  Copyright © 2019年 wxm. All rights reserved.
 //
 
 #import <QuartzCore/QuartzCore.h>
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
-@interface CALayer (DXPClass)
+@interface CALayer (WXMKit)
 
+/** 绝对定位 */
 @property (nonatomic, assign) CGFloat x;
 @property (nonatomic, assign) CGFloat y;
 @property (nonatomic, assign) CGFloat width;
@@ -19,14 +21,17 @@
 @property (nonatomic, assign) CGFloat centerX;
 @property (nonatomic, assign) CGFloat centerY;
 
+@property (nonatomic, assign) CGPoint origin;
 @property (nonatomic, assign) CGSize size;
+
 @property (nonatomic, assign) CGFloat left;
 @property (nonatomic, assign) CGFloat right;
 @property (nonatomic, assign) CGFloat top;
 @property (nonatomic, assign) CGFloat bottom;
-@property (nonatomic, strong) UIImage *image;
 
-/** 去掉隐式动画 */
-+ (void)removeImplicitanimationWithBlock:(void (^)(void))block;
-- (void)setBorderColorWithUIColor:(UIColor *)color;
+/** 相对定位 */
+@property (nonatomic, assign) BOOL layoutCenterSupLayer;
+@property (nonatomic, assign) CGFloat layoutRight;
+@property (nonatomic, assign) CGFloat layoutBottom;
+
 @end

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIScrollView (DXPClass)
+@interface UIScrollView (WXMKit)
 
 @property (nonatomic, assign) CGFloat contentOffsetX;
 @property (nonatomic, assign) CGFloat contentOffsetY;

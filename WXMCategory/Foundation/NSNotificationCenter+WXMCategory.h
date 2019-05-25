@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface NSNotificationCenter (DXPCategory)
+@interface NSNotificationCenter (WXMCategory)
 
 /** 自动释放 在view和控制器的dealloc里面 */
 
-- (void)addObserver:(UIViewController *)observer
-               name:(NSString *)name
-             object:(id)obj
-         usingBlock:(void (^)(NSNotification *note))block;
+- (void)wxm_addObserver:(UIViewController *)observer
+                   name:(NSString *)name
+                 object:(id)obj
+             usingBlock:(void (^)(NSNotification *note))block;
 
 @end
