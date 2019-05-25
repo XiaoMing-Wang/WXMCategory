@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "WXMCategory"
-  s.version      = "1.0.0"
+  s.version      = "1.1.0"
   s.summary      = "类别"
   s.description  = <<-DESC
 			一些常用工具类的工具类别
