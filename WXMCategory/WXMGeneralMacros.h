@@ -1,6 +1,5 @@
 //
 //  WXMGeneralMacros.h
-//  Demo2
 //
 //  Created by edz on 2019/4/30.
 //  Copyright © 2019年 wq. All rights reserved.
@@ -112,7 +111,6 @@ __LINE__, \
 
 #define KNSLog(...) WXMLog(@"%@", KMASBoxValue(__VA_ARGS__));;
 #else
-
 #define WXMLog(FORMAT, ...) nil;
 #define KNSLog(...) nil;
 #endif
@@ -122,6 +120,18 @@ __LINE__, \
 #define Kiphone5 (CGRectGetHeight([UIScreen mainScreen].bounds) == 568.0)
 #define KiPhone6 (CGRectGetHeight([UIScreen mainScreen].bounds) == 667.0)
 #define KiPhone6P ([UIScreen mainScreen].bounds.size.width > 400.0)
+
+/** 线程 */
+static inline void wxm_dispatch_async_on_main_queue(void (^block)(void)) {
+    dispatch_async(dispatch_get_main_queue(), block);
+}
+static inline void wxm_dispatch_async_on_global_queue(void (^block)(void)) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
+}
+static inline void wxm_dispatch_after_main_queue(CGFloat delay, void (^block)(void)) {
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(t * NSEC_PER_SEC)), queue, block);
+}
 
 /** 将括号内的类型转化成id类型 */
 static inline id aMASBoxValue(const char *type, ...) {
@@ -239,3 +249,4 @@ cls = class_getSuperclass(cls); \
 }   \
 }
 #endif /* WXMGeneralMacros_h */
+
