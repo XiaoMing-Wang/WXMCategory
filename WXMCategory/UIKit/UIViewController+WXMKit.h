@@ -1,14 +1,14 @@
 //
-//  UIViewController+DXPClass.h
-//  类库
+//  UIViewController+WXMKit.h
+//  哈哈哈
 //
-//  Created by wq on 16/8/28.
-//  Copyright © 2016年 WQ. All rights reserved.
+//  Created by edz on 2019/5/31.
+//  Copyright © 2019 wq. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-NSString *const WXM_showAlertViewNotifi = @"WXM_showAlertViewNotifi";
+NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (WXMKit)
 
@@ -29,8 +29,8 @@ NSString *const WXM_showAlertViewNotifi = @"WXM_showAlertViewNotifi";
                                                 otherAction:(NSArray *)otherAction
                                               completeBlock:(void (^)(NSInteger index))block;
 
-
 @end
+
 
 /** 导航控制器  */
 @interface UINavigationController (WXMKit)
@@ -56,7 +56,7 @@ NSString *const WXM_showAlertViewNotifi = @"WXM_showAlertViewNotifi";
 @end
 
 /** TabBar控制器  */
-@interface UITabBarController (DXPClass)
+@interface UITabBarController (WXMKit)
 
 - (void)wxm_addChildViewController:(NSString *)viewController
                                nav:(NSString *)nav
@@ -68,8 +68,9 @@ NSString *const WXM_showAlertViewNotifi = @"WXM_showAlertViewNotifi";
 @end
 
 /** Alert控制器  */
-@interface UIAlertController (DXPClass)
+@interface UIAlertController (WXMKit)
 @property (nonatomic, assign) NSTextAlignment wxm_titleTextAlignment;
 @property (nonatomic, assign) NSTextAlignment wxm_messageTextAlignment;
 @property (nonatomic, assign) UIFont *wxm_messageFont;
 @end
+NS_ASSUME_NONNULL_END
