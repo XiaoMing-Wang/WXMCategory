@@ -130,7 +130,7 @@ static inline void wxm_dispatch_async_on_global_queue(void (^block)(void)) {
 }
 static inline void wxm_dispatch_after_main_queue(CGFloat delay, void (^block)(void)) {
     dispatch_queue_t queue = dispatch_get_main_queue();
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(t * NSEC_PER_SEC)), queue, block);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), queue, block);
 }
 
 /** 将括号内的类型转化成id类型 */

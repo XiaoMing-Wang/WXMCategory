@@ -1,15 +1,14 @@
 //
-//  UIViewController+DXPClass.m
-//  类库
+//  UIViewController+WXMKit.m
+//  哈哈哈
 //
-//  Created by wq on 16/8/28.
-//  Copyright © 2016年 WQ. All rights reserved.
+//  Created by edz on 2019/5/31.
+//  Copyright © 2019 wq. All rights reserved.
 //
 #define WXM_KEYS @"NSNotificationCenterKey"
 #import <objc/runtime.h>
 #import "UIViewController+WXMKit.h"
 
-/** UIView控制器  */
 @implementation UIViewController (WXMKit)
 
 + (void)load {
@@ -40,7 +39,7 @@
                                                  cancel:(NSString *)cancleString {
     NSString * tl = title;
     NSString * ms = message;
-    [[NSNotificationCenter defaultCenter] postNotificationName:WXM_showAlertViewNotifi object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WXM_KEYS object:nil];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:tl message:ms preferredStyle:1];
     UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancleString style:1 handler:nil];
     [alert addAction:cancle];
@@ -57,7 +56,7 @@
     
     NSString * tl = title;
     NSString * ms = message;
-    [[NSNotificationCenter defaultCenter] postNotificationName:WXM_showAlertViewNotifi object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WXM_KEYS object:nil];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:tl message:ms preferredStyle:1];
     
     UIAlertAction *cl = [UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *action) {
@@ -73,10 +72,11 @@
         }];
         [alert addAction:action];
     }];
- 
+    
     [(self.navigationController ?: self) presentViewController:alert animated:YES completion:nil];
     return alert;
 }
+
 /** 警告框  Sheet*/
 - (UIAlertController *)showSheetViewControllerWithTitle:(NSString *)title
                                                 message:(NSString *)message
@@ -86,7 +86,7 @@
     
     NSString * tl = title;
     NSString * ms = message;
-    [[NSNotificationCenter defaultCenter] postNotificationName:WXM_showAlertViewNotifi object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WXM_KEYS object:nil];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:tl message:ms preferredStyle:0];
     
     UIAlertAction *cl = [UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *action) {
@@ -108,7 +108,6 @@
 }
 
 @end
-
 
 /** 导航控制器  */
 @implementation UINavigationController (WXMKit)
@@ -180,7 +179,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 }
 
 /** 回退到第几个界面 */
-- (void)popViewControllerIndex:(NSString *)index {
+- (void)wxm_popViewControllerIndex:(NSString *)index {
     NSArray *arrayVC = self.viewControllers;
     NSInteger indexInt = index.integerValue;
     if (indexInt < 0 || indexInt >= 7 || indexInt >= arrayVC.count) return;
@@ -205,7 +204,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
                      selectedImage:(NSString *)selectedImage
                        imageInsets:(UIEdgeInsets)imageInsets
                      titlePosition:(UIOffset)titlePosition  {
-
+    
     UIViewController *vc = [NSClassFromString(viewController) new];
     UINavigationController *navigationController = [[NSClassFromString(nav) alloc] initWithRootViewController:vc];
     
@@ -219,7 +218,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 @end
 
 /** Alert控制器  */
-@implementation UIAlertController (DXPClass)
+@implementation UIAlertController (WXMKit)
 @dynamic wxm_messageFont;
 @dynamic wxm_messageTextAlignment;
 @dynamic wxm_titleTextAlignment;
@@ -257,4 +256,3 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
     return nil;
 }
 @end
-
