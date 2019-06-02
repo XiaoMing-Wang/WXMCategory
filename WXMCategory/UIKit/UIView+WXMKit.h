@@ -28,7 +28,7 @@
 @property (nonatomic, assign) CGFloat bottom;
 
 /** 相对定位 */
-@property (nonatomic, assign) BOOL layoutCenterSupLayer;
+@property (nonatomic, assign) BOOL layoutCenterSupView;
 @property (nonatomic, assign) CGFloat layoutRight;
 @property (nonatomic, assign) CGFloat layoutBottom;
 

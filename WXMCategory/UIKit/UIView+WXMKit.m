@@ -12,7 +12,7 @@
 
 @dynamic layoutRight;
 @dynamic layoutBottom;
-@dynamic layoutCenterSupLayer;
+@dynamic layoutCenterSupView;
 
 - (void)setX:(CGFloat)x {
     CGRect frame = self.frame;
@@ -88,9 +88,9 @@
     if (self.top == 0) self.top = height - self.height - layoutBottom;
 }
 
-- (void)setLayoutCenterSupLayer:(BOOL)layoutCenterSupLayer {
-    if (self.superview) return;
-    if (layoutCenterSupLayer) {
+- (void)setLayoutCenterSupView:(BOOL)layoutCenterSupView {
+    if (!self.superview) return;
+    if (layoutCenterSupView) {
         self.centerX = self.superview.width / 2;
         self.centerY = self.superview.height / 2;
     } else self.centerY = self.superview.height / 2;

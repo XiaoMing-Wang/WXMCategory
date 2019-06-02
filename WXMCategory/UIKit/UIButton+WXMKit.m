@@ -46,6 +46,17 @@ static char responseKey;
     objc_setAssociatedObject(self, &touchUpInsideKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self addTarget:self action:@selector(callActionBlock:) forControlEvents:UIControlEventTouchUpInside];
 }
+
+/** */
+- (void)wxm_addTarget:(nullable id)target action:(SEL)action {
+    [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+}
+
+/** */
+- (void)wxm_setBackgroundImage:(NSString *)imageName {
+    [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+}
+
 - (void)callActionBlock:(id)sender {
     void (^buttonBlock)(void) = (void (^)(void))objc_getAssociatedObject(self, &touchUpInsideKey);
     if (buttonBlock) buttonBlock();

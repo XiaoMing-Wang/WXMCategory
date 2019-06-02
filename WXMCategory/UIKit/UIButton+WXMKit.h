@@ -16,6 +16,8 @@
 
 /** 点击 block */
 - (void)wxm_blockWithControlEventTouchUpInside:(void (^)(void))block;
+- (void)wxm_addTarget:(id)target action:(SEL)action;
+- (void)wxm_setBackgroundImage:(NSString *)imageName;
 
 /** 图片字体上下对齐 先设置frame且图片大小 < button 否则会盖住 */
 - (void)wxm_alineTextAlignment:(CGFloat)space;
