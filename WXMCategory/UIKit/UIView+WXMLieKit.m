@@ -64,4 +64,14 @@ static char doubleTap;
     UIGraphicsEndImageContext();
     return image;
 }
+
+/** 画图存到本地 */
+- (void)wxm_saveImageInlocation:(NSString *)imageName {
+    UIImage *image = [self wxm_makeImage];
+    NSString *document = NSHomeDirectory();
+    NSString *path = [NSString stringWithFormat:@"/Documents/%@.png",imageName];
+    NSString *imagePath = [document stringByAppendingString:path];
+    [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
+    NSLog(@"%@",imagePath);
+}
 @end

@@ -18,6 +18,7 @@
 
 /** 截图 */
 - (UIImage *)wxm_makeImage;
+- (void)wxm_saveImageInlocation:(NSString *)imageName;
 
 /** 手势 */
 - (void)wxm_addOnceTappedWithBlock:(void (^)(void))block;
