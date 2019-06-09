@@ -9,57 +9,52 @@
 #import "UIButton+WXMKit.h"
 #import <objc/runtime.h>
 
-static char touchUpInsideKey;
 static char topNameKey;
 static char bottomNameKey;
 static char leftNameKey;
 static char rightNameKey;
-static char responseKey;
 
 @implementation UIButton (WXMKit)
-@dynamic wxm_title;
-@dynamic wxm_titleColor;
-@dynamic wxm_respondTime;
 
-+ (void)load {
-    SEL method1 = @selector(sendAction:to:forEvent:);
-    SEL method2 = @selector(wxm__sendAction:to:forEvent:);
-    [self swizzleInstanceMethod:method1 with:method2];
+- (void)wxm_setFontOfSize:(CGFloat)size {
+    self.titleLabel.font = [UIFont systemFontOfSize:size];
 }
 
-/** -方法 */
-+ (BOOL)swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel {
-    Method original = class_getInstanceMethod(self, originalSel);
-    Method newMethod = class_getInstanceMethod(self, newSel);
-    if (!original || !newMethod) return NO;
-    
-    IMP originalImp = class_getMethodImplementation(self, originalSel);
-    IMP newMethodImp = class_getMethodImplementation(self, newSel);
-    class_addMethod(self, originalSel, originalImp, method_getTypeEncoding(original));
-    class_addMethod(self, newSel, newMethodImp, method_getTypeEncoding(newMethod));
-    method_exchangeImplementations(class_getInstanceMethod(self, originalSel), class_getInstanceMethod(self, newSel));
-    return YES;
+- (void)wxm_setTitleOfNormal:(NSString *)title {
+    [self setTitle:title forState:UIControlStateNormal];
 }
 
-/** 点击 block */
-- (void)wxm_blockWithControlEventTouchUpInside:(void (^)(void))block {
-    objc_setAssociatedObject(self, &touchUpInsideKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    [self addTarget:self action:@selector(callActionBlock:) forControlEvents:UIControlEventTouchUpInside];
+- (void)wxm_setTitleColorOfNormal:(UIColor *)color {
+    [self setTitleColor:color forState:UIControlStateNormal];
 }
 
-/** */
-- (void)wxm_addTarget:(nullable id)target action:(SEL)action {
-    [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+- (void)wxm_setImageOfNormal:(NSString *)imageName {
+    [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 }
 
-/** */
-- (void)wxm_setBackgroundImage:(NSString *)imageName {
+- (void)wxm_setImageOfSelected:(NSString *)imageName {
+    [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateSelected];
+}
+
+- (void)wxm_setImageOfDisable:(NSString *)imageName {
+    [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateDisabled];
+}
+
+
+- (void)wxm_setBackgroundImageOfNormal:(NSString *)imageName {
     [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 }
 
-- (void)callActionBlock:(id)sender {
-    void (^buttonBlock)(void) = (void (^)(void))objc_getAssociatedObject(self, &touchUpInsideKey);
-    if (buttonBlock) buttonBlock();
+- (void)wxm_setBackgroundImageOfSelected:(NSString *)imageName {
+    [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateSelected];
+}
+
+- (void)wxm_setBackgroundImageOfDisabled:(NSString *)imageName {
+    [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateDisabled];
+}
+
+- (void)wxm_addTarget:(nullable id)target action:(SEL)action {
+    [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 /**  设置图片字体上下对齐 */
@@ -112,37 +107,5 @@ static char responseKey;
     return CGRectContainsPoint(rect, point) ? self : nil;
 }
 
-
-- (void)setWxm_title:(NSString *)wxm_title {
-    [self setTitle:wxm_title forState:UIControlStateNormal];
-}
-- (void)setWxm_titleColor:(UIColor *)wxm_titleColor {
-    [self setTitleColor:wxm_titleColor forState:UIControlStateNormal];
-}
-
-- (void)setWxm_respondTime:(CGFloat)wxm_respondTime {
-    SEL sel = @selector(wxm_respondTime);
-    objc_setAssociatedObject(self, sel, @(wxm_respondTime), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-- (CGFloat)wxm_respondTime {
-    return [objc_getAssociatedObject(self, _cmd) floatValue];
-}
-
-/** 拦截系统 */
-- (void)wxm__sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
-    BOOL response = [objc_getAssociatedObject(self, &responseKey) boolValue];
-    if (response && self.wxm_respondTime > 0) {
-        NSLog(@"button暂时不能响应...");
-        return;
-    }
-    
-    if (self.wxm_respondTime > 0 && self.wxm_respondTime) {
-        CGFloat delay = self.wxm_respondTime * 1.0f;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (delay * NSEC_PER_SEC)),dispatch_get_main_queue(),^{
-            objc_setAssociatedObject(self, &responseKey, @(NO), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        });
-    }
-    [self wxm__sendAction:action to:target forEvent:event];
-}
 @end
 
