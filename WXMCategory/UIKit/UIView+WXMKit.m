@@ -73,19 +73,42 @@
 
 /** 相对定位 */
 - (void)setLayoutRight:(CGFloat)layoutRight {
-    if (self.left != 0 && self.width != 0) return;
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     if (self.superview) width = self.superview.width;
-    if (self.width == 0) self.width = width - self.left - layoutRight;
-    if (self.left == 0) self.left = width - self.width - layoutRight;
+    if (self.left == 0 && self.width > 0) {
+        self.left = width - self.width - layoutRight;
+    } else {
+        self.width = width - self.left - layoutRight;
+    }
 }
 
 - (void)setLayoutBottom:(CGFloat)layoutBottom {
-    if (self.top != 0 && self.height != 0) return;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     if (self.superview) height = self.superview.height;
-    if (self.height == 0) self.height = height - self.top - layoutBottom;
-    if (self.top == 0) self.top = height - self.height - layoutBottom;
+    if (self.top == 0 && self.height > 0) {
+        self.top = height - self.height - layoutBottom;
+    } else {
+        self.height = height - self.top - layoutBottom;
+    }
+}
+
+
+- (void)layoutRight:(UIView *)refer offset:(CGFloat)offset {
+    CGFloat width = refer.left - self.left;
+    if (self.left == 0 && self.width > 0) {
+        self.left = width - self.width - offset;
+    } else {
+        self.width = width - self.left - offset;
+    }
+}
+
+- (void)layoutBottom:(UIView *)refer offset:(CGFloat)offset {
+    CGFloat height = refer.top - self.top;
+    if (self.top == 0 && self.height > 0) {
+        self.top = height - self.height - offset;
+    } else {
+        self.height = height - self.top - offset;
+    }
 }
 
 - (void)setLayoutCenterSupView:(BOOL)layoutCenterSupView {

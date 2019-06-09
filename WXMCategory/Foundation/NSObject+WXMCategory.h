@@ -34,7 +34,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /** kvo block*/
-- (void)wxm_addObserverBlockForKeyPath:(NSString *)keyPath block:(void (^)(id obj, id oldVal, id newVal))block;
+- (void)wxm_addObserverBlockForKeyPath:(NSString *)keyPath
+                                 block:(void (^)(id obj, id oldVal, id newVal))block;
 - (void)wxm_removeObserverBlocksForKeyPath:(NSString *)keyPath;
 - (void)wxm_removeObserverBlocks;
 

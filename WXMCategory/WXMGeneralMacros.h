@@ -17,8 +17,8 @@
 #define KHeight [UIScreen mainScreen].bounds.size.height
 #define KScale  [UIScreen mainScreen].scale
 
-#define KIPHONEX ((KHeight == 812.0f) ? YES : NO)
-#define KBarH ((KIPHONEX) ? 88.0f : 64.0f)
+#define KIPhoneX ((KHeight == 812.0f) ? YES : NO)
+#define KBarHeight ((KIPhoneX) ? 88.0f : 64.0f)
 
 /** 颜色(RGB) */
 #define KRGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]

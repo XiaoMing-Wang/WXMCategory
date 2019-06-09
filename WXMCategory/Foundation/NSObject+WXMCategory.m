@@ -20,11 +20,13 @@ static char timers;
 @end
 
 @implementation NSObjectKVOBlockTarget
+
 - (id)initWithBlock:(void (^)(__weak id obj, id oldVal, id newVal))block {
     self = [super init];
     if (self) self.block = block;
     return self;
 }
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (!self.block) return;
     BOOL isPrior = [[change objectForKey:NSKeyValueChangeNotificationIsPriorKey] boolValue];
@@ -165,9 +167,11 @@ static char timers;
     [dic removeAllObjects];
 }
 #pragma mark____________________________________________________________geting
+
 - (void)setTimer:(dispatch_source_t)timer {
     objc_setAssociatedObject(self, &timers, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 - (dispatch_source_t)timer {
     return objc_getAssociatedObject(self, &timers);
 }
