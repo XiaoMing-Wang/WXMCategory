@@ -11,6 +11,7 @@
 @interface UIButton (WXMKit)
 
 - (void)wxm_addTarget:(id)target action:(SEL)action;
+- (void)wxm_blockWithControlEventTouchUpInside:(void (^)(void))block;
 
 /**  */
 - (void)wxm_setFontOfSize:(CGFloat)size;

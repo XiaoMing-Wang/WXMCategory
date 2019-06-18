@@ -11,7 +11,6 @@
 
 #import "WXMGeneralMacros.h"
 
-
 #import "NSDictionary+WXMCategory.h"
 #import "NSString+WXMCategory.h"
 #import "NSAttributedString+WXMCategory.h"
@@ -27,6 +26,7 @@
 #import "UIViewController+WXMKit.h"
 #import "UIBarButtonItem+WXMKit.h"
 #import "UIButton+WXMKit.h"
+#import "UIControl+WXMKit.h"
 #import "UILabel+WXMKit.h"
 
 
