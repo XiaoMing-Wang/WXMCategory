@@ -162,6 +162,7 @@ static char kimage_title;
     [wrapButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return item;
 }
+
 - (void)kimage_titleEvent:(UIButton *)wrapButton {
     void (^block) (void) = (void (^)(void))objc_getAssociatedObject(wrapButton, &kimage_title);
     if (block) block();

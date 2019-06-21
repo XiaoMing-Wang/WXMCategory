@@ -21,7 +21,7 @@ static char touchKey;
 }
 
 /** 点击 block */
-- (void)wxm_blockWithControlEventTouchUpInside:(void (^)(void))block {
+- (void)wxm_blockWithControlEventTouchUpInsideSup:(void (^)(void))block {
     objc_setAssociatedObject(self, &touchKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     UIControlEvents event = UIControlEventTouchUpInside;
     [self addTarget:self action:@selector(callActionBlock:) forControlEvents:event];

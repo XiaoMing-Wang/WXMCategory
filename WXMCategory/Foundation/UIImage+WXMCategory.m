@@ -93,7 +93,6 @@
     return newImage;
 }
 
-
 /** 拉伸 */
 - (UIImage *)wxm_imageWithStretching {
     return [self resizableImageWithCapInsets:UIEdgeInsetsZero

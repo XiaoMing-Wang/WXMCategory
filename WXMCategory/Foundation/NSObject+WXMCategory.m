@@ -13,7 +13,7 @@ NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).f
 #import <objc/runtime.h>
 
 static const int block_key;
-static char timers;
+static char holdTimerKey;
 
 @interface NSObjectKVOBlockTarget : NSObject
 @property (nonatomic, copy) void (^block)(__weak id obj, id oldVal, id newVal);
@@ -48,22 +48,40 @@ static char timers;
 
 /** GCD定时器 */
 - (dispatch_source_t)wxm_startTiming:(float)interval countdown:(BOOL(^)(void))countdown {
+    if (countdown == nil) return nil;
+    __weak typeof(self) weakSelf = self;
     dispatch_queue_t queue = dispatch_get_main_queue();
-    
-    self.timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(self.timer, dispatch_walltime(NULL, 0), interval * NSEC_PER_SEC, 0);
-    dispatch_source_set_event_handler(self.timer, ^{
-        
-        BOOL isStop = countdown();
-        if (countdown == nil || isStop == NO) {
-            
-            /**  取消定时器 */
-            dispatch_cancel(self.timer);
-            self.timer = nil;
-        }
+    self.holdTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(self.holdTimer, dispatch_walltime(NULL, 0), interval * NSEC_PER_SEC, 0);
+    dispatch_source_set_event_handler(self.holdTimer, ^{
+        if (countdown() == NO) [weakSelf wxm_stopTiming];
     });
-    dispatch_resume(self.timer);
-    return self.timer;
+    dispatch_resume(self.holdTimer);
+    return self.holdTimer;
+}
+
+- (dispatch_source_t)wxm_startTiming:(float)interval addTarget:(id)target action:(SEL)action {
+    if (target == nil || action == nil) return nil;
+    __weak typeof(self) weakTarget = target;
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    self.holdTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(self.holdTimer, dispatch_walltime(NULL, 0), interval * NSEC_PER_SEC, 0);
+    dispatch_source_set_event_handler(self.holdTimer, ^{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+        [weakTarget performSelector:action];
+#pragma clang diagnostic pop
+    });
+    dispatch_resume(self.holdTimer);
+    return self.holdTimer;
+}
+
+- (void)wxm_stopTiming {
+    if (self.holdTimer) {
+        dispatch_cancel(self.holdTimer);
+        self.holdTimer = nil;
+    }
 }
 
 /** -方法 */
@@ -111,7 +129,8 @@ static char timers;
     objc_property_t *propertys = class_copyPropertyList([self class], &count);
     for (int i = 0; i < count; i++) {
         objc_property_t property = propertys[i]; /** 获得每一个属性 */
-        NSString *pro = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
+        NSString *pro = [NSString stringWithCString:property_getName(property)
+                                           encoding:NSUTF8StringEncoding];
         [_arrayM addObject:pro];
     }
     return _arrayM;
@@ -122,7 +141,8 @@ static char timers;
 #pragma mark _____________________________________________________________________KVO
 
 /** 监听 有block的 */
-- (void)wxm_addObserverBlockForKeyPath:(NSString *)keyPath block:(void(^)(id obj,id oldVal,id newVal))block {
+- (void)wxm_addObserverBlockForKeyPath:(NSString *)keyPath
+                                 block:(void(^)(id obj,id oldVal,id newVal))block {
     if (!keyPath || !block) return;
     NSObjectKVOBlockTarget *target = [[NSObjectKVOBlockTarget alloc] initWithBlock:block];
     NSMutableDictionary *dic = [self allNSObjectObserverBlocks];
@@ -166,14 +186,15 @@ static char timers;
     }];
     [dic removeAllObjects];
 }
+
 #pragma mark____________________________________________________________geting
 
-- (void)setTimer:(dispatch_source_t)timer {
-    objc_setAssociatedObject(self, &timers, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setHoldTimer:(dispatch_source_t)holdTimer {
+    objc_setAssociatedObject(self, &holdTimerKey, holdTimer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (dispatch_source_t)timer {
-    return objc_getAssociatedObject(self, &timers);
+- (dispatch_source_t)holdTimer {
+    return objc_getAssociatedObject(self, &holdTimerKey);
 }
 
 #pragma mark____________________________________ 解归档 需实现归档协议

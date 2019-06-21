@@ -9,6 +9,7 @@
 #import "UIButton+WXMKit.h"
 #import <objc/runtime.h>
 
+static char touchKeyS;
 static char topNameKey;
 static char bottomNameKey;
 static char leftNameKey;
@@ -55,6 +56,18 @@ static char rightNameKey;
 
 - (void)wxm_addTarget:(nullable id)target action:(SEL)action {
     [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
+}
+
+/** 点击 block */
+- (void)wxm_blockWithControlEventTouchUpInside:(void (^)(void))block {
+    objc_setAssociatedObject(self, &touchKeyS, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    UIControlEvents event = UIControlEventTouchUpInside;
+    [self addTarget:self action:@selector(callActionBlock:) forControlEvents:event];
+}
+
+- (void)callActionBlock:(id)sender {
+    void (^buttonBlock)(void) = (void (^)(void))objc_getAssociatedObject(self, &touchKeyS);
+    if (buttonBlock) buttonBlock();
 }
 
 /**  设置图片字体上下对齐 */

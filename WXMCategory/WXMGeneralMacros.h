@@ -10,19 +10,15 @@
 #define WXMGeneralMacros_h
 
 /** 屏幕frame */
-#define KRect ([UIScreen mainScreen].bounds)
+#define KSRect ([UIScreen mainScreen].bounds)
 
 /** 屏幕宽高 */
-#define KWidth [UIScreen mainScreen].bounds.size.width
-#define KHeight [UIScreen mainScreen].bounds.size.height
-#define KScale  [UIScreen mainScreen].scale
+#define KSWidth [UIScreen mainScreen].bounds.size.width
+#define KSHeight [UIScreen mainScreen].bounds.size.height
+#define KSScale  [UIScreen mainScreen].scale
 
-#define KIPhoneX ((KHeight == 812.0f) ? YES : NO)
-#define KBarHeight ((KIPhoneX) ? 88.0f : 64.0f)
-
-/** 颜色(RGB) */
-#define KRGBColor(r, g, b) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:1]
-#define KRGBAColor(r, g, b, a) [UIColor colorWithRed:(r)/255.0f green:(g)/255.0f blue:(b)/255.0f alpha:a]
+#define KIPhoneX ((KSHeight == 812.0f || KSHeight == 896) ? YES : NO)
+#define KNBarHeight ((KIPhoneX) ? 88.0f : 64.0f)
 
 /** 获取系统版本 */
 #define KIOS_Version [[[UIDevice currentDevice] systemVersion] floatValue]
@@ -74,8 +70,14 @@ NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).f
 #define KNotificationCenter [NSNotificationCenter defaultCenter]
 #define KUserDefaults [NSUserDefaults standardUserDefaults]
 
+
+/** 颜色(RGB) */
+#define KRGBColor(r, g, b) KRGBAColor(r, g, b, 1)
+#define KRGBAColor(r, g, b, a) \
+[UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:a]
+
 /**  颜色(0xFFFFFF) 不用带 0x 和 @"" */
-#define COLOR_WITH_HEX(hexValue) \
+#define KCOLOR_WITH_HEX(hexValue) \
 [UIColor colorWith\
 Red:((float)((0x##hexValue & 0xFF0000) >> 16)) / 255.0 \
 green:((float)((0x##hexValue & 0xFF00) >> 8)) / 255.0 \
@@ -103,16 +105,16 @@ blue:((float)(0x##hexValue & 0xFF)) / 255.0 alpha:1.0f]
 
 /** 打印 */
 #ifdef DEBUG
-#define WXMLog(FORMAT, ...)                                                                                                                                                                       \
+#define KFormatLog(FORMAT, ...)           \
 fprintf(stderr, "%s  %d行 ------>:\t%s\n", \
 [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], \
 __LINE__, \
 [[NSString stringWithFormat:FORMAT,\
 ##__VA_ARGS__] UTF8String]);
 
-#define KNSLog(...) WXMLog(@"%@", KMASBoxValue(__VA_ARGS__));;
+#define KNSLog(...) KFormatLog(@"%@", KMASBoxValue(__VA_ARGS__));;
 #else
-#define WXMLog(FORMAT, ...) nil;
+#define KFormatLog(FORMAT, ...) nil;
 #define KNSLog(...) nil;
 #endif
 
@@ -191,8 +193,6 @@ static inline id aMASBoxValue(const char *type, ...) {
     va_end(v);
     return obj;
 }
-
-
 
 /** 归档解归档 */
 #define KSERIALIZE_CODER_DECODER()     \

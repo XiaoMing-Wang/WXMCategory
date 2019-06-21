@@ -12,6 +12,9 @@
 
 - (void)wxm_addTarget:(id)target action:(SEL)action;
 
+/** 点击 block */
+- (void)wxm_blockWithControlEventTouchUpInside:(void (^)(void))block;
+
 /**  */
 - (void)wxm_setFontOfSize:(CGFloat)size;
 - (void)wxm_setTitleOfNormal:(NSString *)title;

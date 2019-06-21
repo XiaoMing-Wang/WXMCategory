@@ -18,7 +18,7 @@
 }
 
 - (void)_dealloc {
-#if BEBUG
+#if DEBUG
     NSLog(@"%@ 被释放", NSStringFromClass([self class]));
 #endif
     
@@ -34,40 +34,37 @@
 }
 
 /* AlertController */
-- (UIAlertController *)showAlertViewControllerWithTitle:(NSString *)title
-                                                message:(NSString *)message
-                                                 cancel:(NSString *)cancleString {
-    NSString * tl = title;
-    NSString * ms = message;
-    [[NSNotificationCenter defaultCenter] postNotificationName:WXM_KEYS object:nil];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:tl message:ms preferredStyle:1];
-    UIAlertAction *cancle = [UIAlertAction actionWithTitle:cancleString style:1 handler:nil];
-    [alert addAction:cancle];
-    [(self.navigationController ?: self) presentViewController:alert animated:YES completion:nil];
-    return alert;
+- (UIAlertController *)wxm_showAlertViewControllerWithTitle:(NSString *)title
+                                                    message:(NSString *)message
+                                                     cancel:(NSString *)cancleString {
+    
+    return [self wxm_showAlertViewControllerWithTitle:title
+                                              message:message
+                                               cancel:cancleString
+                                          otherAction:nil
+                                        completeBlock:nil];
 }
 
 /* AlertController */
-- (UIAlertController *)showAlertViewControllerWithTitle:(NSString *)title
-                                                message:(NSString *)message
-                                                 cancel:(NSString *)cancle
-                                            otherAction:(NSArray *)otherAction
-                                          completeBlock:(void (^)(NSInteger buttonIndex))block {
+- (UIAlertController *)wxm_showAlertViewControllerWithTitle:(NSString *)title
+                                                    message:(NSString *)message
+                                                     cancel:(NSString *)cancle
+                                                otherAction:(NSArray *)otherAction
+                                              completeBlock:(void (^)(NSInteger buttonIndex))block {
     
-    NSString * tl = title;
-    NSString * ms = message;
     [[NSNotificationCenter defaultCenter] postNotificationName:WXM_KEYS object:nil];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:tl message:ms preferredStyle:1];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:1];
     
-    UIAlertAction *cl = [UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *action) {
+    UIAlertAction *cl = [UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *acn) {
         if (block) block(0);
     }];
     [alert addAction:cl];
     
-    
     [otherAction enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSString * ts = [otherAction objectAtIndex:idx];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:ts style:0 handler:^(UIAlertAction *action) {
+        UIAlertAction *action = [UIAlertAction actionWithTitle:ts style:0 handler:^(UIAlertAction *acn) {
             if (block) block(idx + 1);
         }];
         [alert addAction:action];
@@ -78,18 +75,17 @@
 }
 
 /** 警告框  Sheet*/
-- (UIAlertController *)showSheetViewControllerWithTitle:(NSString *)title
-                                                message:(NSString *)message
-                                                 cancel:(NSString *)cancle
-                                            otherAction:(NSArray *)otherAction
-                                          completeBlock:(void (^)(NSInteger buttonIndex))block {
-    
-    NSString * tl = title;
-    NSString * ms = message;
+- (UIAlertController *)wxm_showSheetViewControllerWithTitle:(NSString *)title
+                                                    message:(NSString *)message
+                                                     cancel:(NSString *)cancle
+                                                otherAction:(NSArray *)otherAction
+                                              completeBlock:(void (^)(NSInteger buttonIndex))block {
     [[NSNotificationCenter defaultCenter] postNotificationName:WXM_KEYS object:nil];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:tl message:ms preferredStyle:0];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
+                                                                   message:message
+                                                            preferredStyle:0];
     
-    UIAlertAction *cl = [UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *action) {
+    UIAlertAction *cl=[UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *action) {
         if (block) block(0);
     }];
     [alert addAction:cl];

@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** GCD定时器 */
 - (dispatch_source_t)wxm_startTiming:(float)interval countdown:(BOOL(^)(void))countdown;
-
+- (dispatch_source_t)wxm_startTiming:(float)interval addTarget:(id)target action:(SEL)action;
+- (void)wxm_stopTiming;
 
 /** runtime替换方法 */
 + (BOOL)wxm_swizzleClassMethod:(SEL)originalSel with:(SEL)newSel;    /** 类方法 */

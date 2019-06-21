@@ -10,7 +10,8 @@
 
 @implementation NSArray (Log)
 
-- (NSString *)descriptionWithLocale:(id)locale {
+- (NSString *)description {
+    if (self.count == 0) return @"[ ]";
     NSMutableString *string = [NSMutableString string];
     [string appendString:@"[\n"];
     [self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -24,7 +25,8 @@
 @end
 
 @implementation NSDictionary (Log)
-- (NSString *)descriptionWithLocale:(id)locale {
+- (NSString *)description {
+    if (self.allKeys.count == 0) return @"{ }";
     NSMutableString *string = [NSMutableString string];
     [string appendString:@"{\n"];
     [self enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {

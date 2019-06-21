@@ -154,7 +154,7 @@
 - (NSString *)wxm_timeForYYYY_MM_DD {
     return [self wxm_timeForTimesTampWithFormatter:@"yyyy-MM-dd"];
 }
-- (NSString *)timeForYYYY_MM_DD_HH_MM {
+- (NSString *)wxm_timeForYYYY_MM_DD_HH_MM; {
     return [self wxm_timeForTimesTampWithFormatter:@"yyyy-MM-dd HH:mm"];
 }
 - (NSString *)wxm_timeForTimesTampWithFormatter:(NSString *)formatter {
