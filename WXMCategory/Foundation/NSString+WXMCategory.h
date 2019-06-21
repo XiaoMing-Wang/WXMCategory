@@ -49,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 拼音 */
 - (NSString *)wxm_changePinyin;
+
+/** 获取字符行数 */
+- (NSInteger)wxm_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize;
 @end
 
 NS_ASSUME_NONNULL_END

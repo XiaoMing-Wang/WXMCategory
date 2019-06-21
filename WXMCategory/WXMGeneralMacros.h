@@ -11,6 +11,7 @@
 
 /** 屏幕frame */
 #define KSRect ([UIScreen mainScreen].bounds)
+#define KEdgeRect CGRectMake(0, KNBarHeight, KSWidth, KSHeight - KNBarHeight)
 
 /** 屏幕宽高 */
 #define KSWidth [UIScreen mainScreen].bounds.size.width
@@ -101,7 +102,8 @@ blue:((float)(0x##hexValue & 0xFF)) / 255.0 alpha:1.0f]
 #define GrayColor        [UIColor grayColor]
 
 /** 获取当前系统时间戳 */
-#define KGetCurentTime [NSString stringWithFormat:@"%zd", (long)[[NSDate date] timeIntervalSince1970]]
+#define KGetCurentTime \
+[NSString stringWithFormat:@"%zd", (long)[[NSDate date] timeIntervalSince1970]]
 
 /** 打印 */
 #ifdef DEBUG

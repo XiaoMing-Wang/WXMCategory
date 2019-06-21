@@ -25,7 +25,8 @@
                                               range:(NSRange)range {
     @try {
         
-        NSMutableAttributedString *atts = [[NSMutableAttributedString alloc] initWithSafestring:aString];
+        NSMutableAttributedString *atts = nil;
+        atts = [[NSMutableAttributedString alloc] initWithSafestring:aString];
         [atts addAttribute:NSForegroundColorAttributeName value:color range:range];
         return atts;
         
@@ -36,7 +37,8 @@
 + (NSMutableAttributedString *)wxm_changeHorizontalSpace:(NSString *)aString space:(CGFloat)space {
     @try {
         
-        NSMutableAttributedString *atts = [[NSMutableAttributedString alloc] initWithSafestring:aString];
+        NSMutableAttributedString *atts = nil;
+        atts = [[NSMutableAttributedString alloc] initWithSafestring:aString];
         NSRange range = NSMakeRange(0, atts.length);
         long number = space;
         CFNumberRef num = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt8Type, &number);
@@ -51,7 +53,8 @@
 + (NSMutableAttributedString *)wxm_changeVerticalSpace:(NSString *)aString lineSpace:(CGFloat)lineSpace {
     @try {
         
-        NSMutableAttributedString *atts = [[NSMutableAttributedString alloc] initWithSafestring:aString];
+        NSMutableAttributedString *atts = nil;
+        atts = [[NSMutableAttributedString alloc] initWithSafestring:aString];
         NSRange range = NSMakeRange(0, atts.length);
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         [paragraphStyle setLineSpacing:lineSpace];
@@ -66,7 +69,8 @@
 + (NSMutableAttributedString *)wxm_addUnderline:(NSString *)aString range:(NSRange)range {
     @try {
         
-        NSMutableAttributedString *atts = [[NSMutableAttributedString alloc] initWithSafestring:aString];
+        NSMutableAttributedString *atts = nil;
+        atts = [[NSMutableAttributedString alloc] initWithSafestring:aString];
         NSDictionary *attris = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
                                  NSForegroundColorAttributeName: [UIColor redColor],
                                  NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),

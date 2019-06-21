@@ -21,11 +21,9 @@
 + (NSMutableAttributedString *)wxm_changeHorizontalSpace:(NSString *)aString space:(CGFloat)space;
 
 /** 修改字符行间距距 行与行 */
-+ (NSMutableAttributedString *)wxm_changeVerticalSpace:(NSString *)aString lineSpace:(CGFloat)lineSpace;
-
++ (NSMutableAttributedString *)wxm_changeVerticalSpace:(NSString *)aString
+                                             lineSpace:(CGFloat)lineSpace;
 /** 链接 下划线 */
 + (NSMutableAttributedString *)wxm_addUnderline:(NSString *)aString range:(NSRange)range;
-
-
 
 @end

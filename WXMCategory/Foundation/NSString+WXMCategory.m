@@ -86,6 +86,7 @@
 - (CGFloat)wxm_getHeightWithFont:(CGFloat)fontSize {
     return [self wxm_getHeightWithFont:fontSize width:MAXFLOAT];
 }
+
 - (CGFloat)wxm_getHeightWithFont:(CGFloat)fontSize width:(CGFloat)width {
     if (!fontSize) fontSize = [UIFont systemFontSize];
     UIFont *font = [UIFont systemFontOfSize:fontSize];
@@ -93,6 +94,15 @@
                                      options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                   attributes:@{ NSFontAttributeName: font } context:nil];
     return rect.size.height;
+}
+
+/** 获取字符行数 */
+- (NSInteger)wxm_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize {
+    if (self.length == 0) return 0;
+    CGFloat allHeight = [self wxm_getHeightWithFont:fontSize width:maxWidth];
+    CGFloat lineHeight = [@"T" wxm_getHeightWithFont:fontSize];
+    NSInteger totalRow = (allHeight / lineHeight);
+    return totalRow;
 }
 
 /** 是否有字符*/

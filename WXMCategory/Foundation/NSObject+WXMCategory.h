@@ -12,8 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSObject (WXMCategory)
 
 /** GCD定时器 */
-- (dispatch_source_t)wxm_startTiming:(float)interval countdown:(BOOL(^)(void))countdown;
-- (dispatch_source_t)wxm_startTiming:(float)interval addTarget:(id)target action:(SEL)action;
+- (dispatch_source_t)wxm_startTimingInterval:(float)interval countdown:(BOOL(^)(void))countdown;
+- (dispatch_source_t)wxm_startTimingInterval:(float)interval
+                                   addTarget:(id)target
+                                      action:(SEL)action;
 - (void)wxm_stopTiming;
 
 /** runtime替换方法 */

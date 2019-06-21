@@ -18,6 +18,7 @@
 #import "NSObject+WXMCategory.h"
 #import "NSNotificationCenter+WXMCategory.h"
 #import "NSArray+Log.h"
+#import "UIColor+WXMCategory.h"
 
 #import "UIView+WXMKit.h"
 #import "UIView+WXMLieKit.h"

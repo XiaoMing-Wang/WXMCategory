@@ -12,7 +12,6 @@
 @interface NSNotificationCenter (WXMCategory)
 
 /** 自动释放 在view和控制器的dealloc里面 */
-
 - (void)wxm_addObserver:(UIViewController *)observer
                    name:(NSString *)name
                  object:(id)obj

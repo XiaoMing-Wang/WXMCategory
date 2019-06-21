@@ -49,6 +49,7 @@
 - (void)setContentInsetRight:(CGFloat)contentInsetRight {
     [self setContentInset:UIEdgeInsetsMake(self.contentInset.top, self.contentInset.left, self.contentInset.bottom, contentInsetRight)];
 }
+
 - (CGFloat)contentInsetTop {
     return self.contentInset.top;
 }

@@ -47,7 +47,7 @@ static char holdTimerKey;
 @implementation NSObject (DXPCategory)
 
 /** GCD定时器 */
-- (dispatch_source_t)wxm_startTiming:(float)interval countdown:(BOOL(^)(void))countdown {
+- (dispatch_source_t)wxm_startTimingInterval:(float)interval countdown:(BOOL(^)(void))countdown {
     if (countdown == nil) return nil;
     __weak typeof(self) weakSelf = self;
     dispatch_queue_t queue = dispatch_get_main_queue();
@@ -60,7 +60,9 @@ static char holdTimerKey;
     return self.holdTimer;
 }
 
-- (dispatch_source_t)wxm_startTiming:(float)interval addTarget:(id)target action:(SEL)action {
+- (dispatch_source_t)wxm_startTimingInterval:(float)interval
+                                   addTarget:(id)target
+                                      action:(SEL)action {
     if (target == nil || action == nil) return nil;
     __weak typeof(self) weakTarget = target;
     dispatch_queue_t queue = dispatch_get_main_queue();
@@ -94,7 +96,8 @@ static char holdTimerKey;
     IMP newMethodImp = class_getMethodImplementation(self, newSel);
     class_addMethod(self, originalSel, originalImp, method_getTypeEncoding(original));
     class_addMethod(self, newSel, newMethodImp, method_getTypeEncoding(newMethod));
-    method_exchangeImplementations(class_getInstanceMethod(self, originalSel), class_getInstanceMethod(self, newSel));
+    method_exchangeImplementations(class_getInstanceMethod(self, originalSel),
+                                   class_getInstanceMethod(self, newSel));
     return YES;
 }
 
@@ -203,7 +206,8 @@ static char holdTimerKey;
 - (BOOL)archiverWithPath:(NSString *)path {
     BOOL success = NO;
     @try {
-        success = [NSKeyedArchiver archiveRootObject:self toFile:[UserData stringByAppendingPathComponent:path]];
+        success = [NSKeyedArchiver archiveRootObject:self
+                                              toFile:[UserData stringByAppendingPathComponent:path]];
     } @catch (NSException *exception) {} @finally {}
     return success;
 }

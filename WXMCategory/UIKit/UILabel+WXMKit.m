@@ -22,7 +22,6 @@
     frame.origin = origin;
     self.frame = frame;
     self.lineBreakMode = NSLineBreakByTruncatingTail;
-    
     SEL sel = @selector(wxm_maxShowWidth);
     objc_setAssociatedObject(self, sel, @(wxm_maxShowWidth), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
@@ -34,12 +33,12 @@
 /** 行与行间隔 */
 - (void)setWxm_space:(CGFloat)wxm_space {
     CGPoint origin = self.frame.origin;
-    NSString *labelText = self.text;
+    NSString *text = self.text;
     
-    NSMutableAttributedString *atts = [[NSMutableAttributedString alloc] initWithString:labelText ?: @""];
+    NSMutableAttributedString *atts = [[NSMutableAttributedString alloc] initWithString:text ?: @""];
     NSMutableParagraphStyle *parag = [[NSMutableParagraphStyle alloc] init];
     [parag setLineSpacing:wxm_space];
-    [atts addAttribute:NSParagraphStyleAttributeName value:parag range:NSMakeRange(0, labelText.length)];
+    [atts addAttribute:NSParagraphStyleAttributeName value:parag range:NSMakeRange(0, text.length)];
     self.attributedText = atts;
     [self sizeToFit];
     
