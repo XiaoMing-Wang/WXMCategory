@@ -114,7 +114,7 @@ __LINE__, \
 [[NSString stringWithFormat:FORMAT,\
 ##__VA_ARGS__] UTF8String]);
 
-#define KNSLog(...) KFormatLog(@"%@", KMASBoxValue(__VA_ARGS__));;
+#define KNSLog(...) KFormatLog(@"%@", KMASBoxValue(__VA_ARGS__));
 #else
 #define KFormatLog(FORMAT, ...) nil;
 #define KNSLog(...) nil;
