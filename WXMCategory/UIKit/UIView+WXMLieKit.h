@@ -24,4 +24,7 @@
 - (void)wxm_addOnceTappedWithBlock:(void (^)(void))block;
 - (void)wxm_addDoubleTappedWithBlock:(void (^)(void))block;
 
+/** 居中设置 */
+- (void)wxm_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
+- (void)wxm_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval;
 @end

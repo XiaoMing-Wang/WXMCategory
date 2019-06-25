@@ -92,7 +92,6 @@
     }
 }
 
-
 - (void)layoutRight:(UIView *)refer offset:(CGFloat)offset {
     CGFloat width = refer.left - self.left;
     if (self.left == 0 && self.width > 0) {

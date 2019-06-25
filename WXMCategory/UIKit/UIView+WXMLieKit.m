@@ -12,7 +12,7 @@ static char onceTap;
 static char doubleTap;
 @implementation UIView (WXMLieKit)
 
-/**  */
+/** 当前控制器 */
 - (UIViewController *)wxm_responderViewController {
     UIResponder *next = self.nextResponder;
     do {
@@ -29,10 +29,12 @@ static char doubleTap;
     [self addTapGesture:1 touches:1 selector:@selector(viewTapped:)];
     objc_setAssociatedObject(self, &onceTap, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 - (void)wxm_addDoubleTappedWithBlock:(void (^)(void))block {
     [self addTapGesture:2 touches:1 selector:@selector(viewTapped:)];
     objc_setAssociatedObject(self, &doubleTap, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 - (void)viewTapped:(UITapGestureRecognizer *)tap {
     void (^touch)(void) = nil;
     if (tap.numberOfTapsRequired == 1) touch = objc_getAssociatedObject(self, &onceTap);
@@ -53,7 +55,8 @@ static char doubleTap;
 
 /** 在window中 */
 - (CGRect)wxm_locationWithWindow {
-    return [self convertRect:self.bounds toView:[[[UIApplication sharedApplication] delegate] window]];
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    return [self convertRect:self.bounds toView:window];
 }
 
 /** 截图 */
@@ -74,4 +77,36 @@ static char doubleTap;
     [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
     NSLog(@"%@",imagePath);
 }
+
+/** 上下居中对齐 */
+- (void)wxm_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval {
+    if (!above || !nether || self.frame.size.height == 0) return;
+    CGFloat totalHeight = self.frame.size.height;
+    CGFloat totalInterval = totalHeight - above.frame.size.height - nether.frame.size.height;
+    CGFloat topAbove = (totalInterval - interval) / 2.0;
+    CGRect rectAbove = above.frame;
+    rectAbove.origin.y = topAbove;
+    above.frame = rectAbove;
+    
+    CGRect rectNether = nether.frame;
+    rectNether.origin.y = totalHeight - topAbove - nether.frame.size.height;
+    nether.frame = rectNether;
+}
+
+/** 左右居中对齐 */
+- (void)wxm_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval {
+    if (!left || !right || self.frame.size.width == 0) return;
+    CGFloat totalWidth = self.frame.size.width;
+    CGFloat totalInterval = totalWidth - left.frame.size.width - right.frame.size.width;
+    CGFloat topAbove = (totalInterval - interval) / 2.0;
+    CGRect rectAbove = left.frame;
+    rectAbove.origin.x = topAbove;
+    left.frame = rectAbove;
+    
+    CGRect rectNether = right.frame;
+    rectNether.origin.x = totalWidth - topAbove - right.frame.size.width;
+    right.frame = rectNether;
+}
+
+
 @end
