@@ -125,7 +125,7 @@ static char holdTimerKey;
     return objc_getAssociatedObject(self, key);
 }
 
-/**获取所有属性 */
+/** 获取所有属性 */
 + (NSArray *)wxm_getFropertys {
     unsigned int count = 0;
     NSMutableArray *_arrayM = @[].mutableCopy;

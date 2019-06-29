@@ -62,10 +62,10 @@ static char rightNameKey;
 - (void)wxm_blockWithControlEventTouchUpInside:(void (^)(void))block {
     objc_setAssociatedObject(self, &touchKeyS, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     UIControlEvents event = UIControlEventTouchUpInside;
-    [self addTarget:self action:@selector(callActionBlock:) forControlEvents:event];
+    [self addTarget:self action:@selector(callActionBlockButton:) forControlEvents:event];
 }
 
-- (void)callActionBlock:(id)sender {
+- (void)callActionBlockButton:(id)sender {
     void (^buttonBlock)(void) = (void (^)(void))objc_getAssociatedObject(self, &touchKeyS);
     if (buttonBlock) buttonBlock();
 }
