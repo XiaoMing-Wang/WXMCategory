@@ -84,6 +84,13 @@ Red:((float)((0x##hexValue & 0xFF0000) >> 16)) / 255.0 \
 green:((float)((0x##hexValue & 0xFF00) >> 8)) / 255.0 \
 blue:((float)(0x##hexValue & 0xFF)) / 255.0 alpha:1.0f]
 
+/** 随机颜色 */
+#define KRandomColor  [UIColor \
+colorWithRed:((CGFloat) random() / (CGFloat) RAND_MAX) \
+green:((CGFloat) random() / (CGFloat) RAND_MAX) \
+blue:((CGFloat) random() / (CGFloat) RAND_MAX) \
+alpha:1.0];
+
 /** 颜色 */
 #define BlackColor       [UIColor blackColor]
 #define DarkGrayColor    [UIColor darkGrayColor]

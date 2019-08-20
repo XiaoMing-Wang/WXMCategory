@@ -21,19 +21,25 @@
     SEL objectForKey = @selector(objectForKey:);
     SEL safeObjectForKey = @selector(safeObjectForKey:);
     
-    [self swizzleClass:NSDictionaryI Method:setObject with:safeSetObject];
-    [self swizzleClass:NSDictionaryM Method:setObject with:safeSetObject];
-    [self swizzleClass:NSDictionaryI Method:objectForKey with:safeObjectForKey];
-    [self swizzleClass:NSDictionaryM Method:objectForKey with:safeObjectForKey];
+    [self wxm_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryI];
+    [self wxm_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryM];
+    
+    [self wxm_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryI];
+    [self wxm_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryM];
 }
 
-/** +方法 */
-+ (BOOL)swizzleClass:(Class)aclass Method:(SEL)originalSel with:(SEL)newSel {
-    Class class = object_getClass(aclass);
-    Method originalMethod = class_getInstanceMethod(class, originalSel);
-    Method newMethod = class_getInstanceMethod(class, newSel);
-    if (!originalMethod || !newMethod) return NO;
-    method_exchangeImplementations(originalMethod, newMethod);
+/** -方法 */
++ (BOOL)wxm_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel class:(Class)aclass {
+    Method original = class_getInstanceMethod(aclass, originalSel);
+    Method newMethod = class_getInstanceMethod(aclass, newSel);
+    if (!original || !newMethod) return NO;
+    
+    IMP originalImp = class_getMethodImplementation(aclass, originalSel);
+    IMP newMethodImp = class_getMethodImplementation(aclass, newSel);
+    class_addMethod(aclass, originalSel, originalImp, method_getTypeEncoding(original));
+    class_addMethod(aclass, newSel, newMethodImp, method_getTypeEncoding(newMethod));
+    method_exchangeImplementations(class_getInstanceMethod(aclass, originalSel),
+                                   class_getInstanceMethod(aclass, newSel));
     return YES;
 }
 
