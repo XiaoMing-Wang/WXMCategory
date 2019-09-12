@@ -134,13 +134,13 @@ __LINE__, \
 #define KiPhone6P ([UIScreen mainScreen].bounds.size.width > 400.0)
 
 /** 线程 */
-static inline void wxm_dispatch_async_on_main_queue(void (^block)(void)) {
+static inline void wk_dispatch_async_on_main_queue(void (^block)(void)) {
     dispatch_async(dispatch_get_main_queue(), block);
 }
-static inline void wxm_dispatch_async_on_global_queue(void (^block)(void)) {
+static inline void wk_dispatch_async_on_global_queue(void (^block)(void)) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 }
-static inline void wxm_dispatch_after_main_queue(CGFloat delay, void (^block)(void)) {
+static inline void wk_dispatch_after_main_queue(CGFloat delay, void (^block)(void)) {
     dispatch_queue_t queue = dispatch_get_main_queue();
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), queue, block);
 }

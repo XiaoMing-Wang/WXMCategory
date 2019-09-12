@@ -14,6 +14,7 @@ static char topNameKey;
 static char bottomNameKey;
 static char leftNameKey;
 static char rightNameKey;
+static char enabledKey;
 
 @implementation UIButton (WXMKit)
 
@@ -40,7 +41,6 @@ static char rightNameKey;
 - (void)wxm_setImageOfDisable:(NSString *)imageName {
     [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateDisabled];
 }
-
 
 - (void)wxm_setBackgroundImageOfNormal:(NSString *)imageName {
     [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
@@ -118,6 +118,43 @@ static char rightNameKey;
     CGRect rect = [self enlargedRect];
     if (CGRectEqualToRect(rect, self.bounds)) return [super hitTest:point withEvent:event];
     return CGRectContainsPoint(rect, point) ? self : nil;
+}
+
+/** 带动画的enabled */
+- (void)wxm_enabledAnimation:(BOOL)enabled {
+    if (enabled == self.enabled) return;
+    @synchronized (self) {
+        UIImageView *contentView = self.wxm_imageView;
+        if (!contentView) return;
+        UIImage *imageNormal= [self backgroundImageForState:UIControlStateNormal];
+        UIImage *imageDisabled = [self backgroundImageForState:UIControlStateDisabled];
+        if (!imageNormal || !imageDisabled) return;
+        
+        self.enabled = enabled;
+        self.userInteractionEnabled = NO;
+        UIViewAnimationOptions option = UIViewAnimationOptionCurveEaseInOut;
+        UIImageView *wrapView = [[UIImageView alloc] initWithFrame:contentView.bounds];
+        wrapView.image = (enabled ? imageDisabled : imageNormal);
+        
+        objc_setAssociatedObject(self, &enabledKey, @(YES), OBJC_ASSOCIATION_COPY_NONATOMIC);
+        [contentView insertSubview:wrapView atIndex:0];
+        [UIView animateWithDuration:.75 delay:0 options:option animations:^{
+            wrapView.alpha = 0;
+        } completion:^(BOOL finished) {
+            [wrapView removeFromSuperview];
+            self.userInteractionEnabled = YES;
+            objc_setAssociatedObject(self, &enabledKey, @(NO), OBJC_ASSOCIATION_COPY_NONATOMIC);
+        }];
+    }
+}
+
+/** 获取背景ImageView */
+- (UIImageView *)wxm_imageView {
+    __block UIImageView *imageView = nil;
+    [self.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL * stop) {
+        if ([obj isKindOfClass:[UIImageView class]]) imageView = (UIImageView *)obj;
+    }];
+    return imageView;
 }
 
 @end

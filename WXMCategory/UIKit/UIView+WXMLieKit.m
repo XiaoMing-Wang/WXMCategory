@@ -25,14 +25,16 @@ static char doubleTap;
 }
 
 /** 手势 */
-- (void)wxm_addOnceTappedWithBlock:(void (^)(void))block {
-    [self addTapGesture:1 touches:1 selector:@selector(viewTapped:)];
+- (UITapGestureRecognizer *)wxm_addOnceTappedWithBlock:(void (^)(void))block {
+    UITapGestureRecognizer *tap = [self addTapGesture:1 touches:1 selector:@selector(viewTapped:)];
     objc_setAssociatedObject(self, &onceTap, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return tap;
 }
 
-- (void)wxm_addDoubleTappedWithBlock:(void (^)(void))block {
-    [self addTapGesture:2 touches:1 selector:@selector(viewTapped:)];
+- (UITapGestureRecognizer *)wxm_addDoubleTappedWithBlock:(void (^)(void))block {
+    UITapGestureRecognizer *tap = [self addTapGesture:2 touches:1 selector:@selector(viewTapped:)];
     objc_setAssociatedObject(self, &doubleTap, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    return tap;
 }
 
 - (void)viewTapped:(UITapGestureRecognizer *)tap {
@@ -43,9 +45,11 @@ static char doubleTap;
 }
 
 /** 实例化手势 */
-- (UITapGestureRecognizer *)addTapGesture:(NSUInteger)taps touches:(NSUInteger)touches selector:(SEL)selector {
+- (UITapGestureRecognizer *)addTapGesture:(NSUInteger)taps
+                                  touches:(NSUInteger)touches
+                                 selector:(SEL)selector {
     self.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:selector];
+    UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self  action:selector];
     tapGes.delegate = self;
     tapGes.numberOfTapsRequired = taps;
     tapGes.numberOfTouchesRequired = touches;
@@ -75,7 +79,7 @@ static char doubleTap;
     NSString *path = [NSString stringWithFormat:@"/Documents/%@.png",imageName];
     NSString *imagePath = [document stringByAppendingString:path];
     [UIImagePNGRepresentation(image) writeToFile:imagePath atomically:YES];
-    NSLog(@"%@",imagePath);
+    /** NSLog(@"%@",imagePath); */
 }
 
 /** 上下居中对齐 */

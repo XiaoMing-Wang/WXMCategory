@@ -51,7 +51,7 @@
 
 - (void)safeSetObject:(id)anObject forKey:(id)aKey {
     if (aKey == nil || anObject == nil) {
-        NSLog(@"__________________________________________________字典插入对象为空");
+        NSLog(@"________________________字典插入对象为空__________________________");
         NSLog(@"__________________________________________________字典插入对象为空");
         NSLog(@"__________________________________________________字典插入对象为空");
         NSLog(@"键名 key === %@", aKey);
@@ -65,4 +65,7 @@
     if (object == [NSNull null]) return nil;
     return object;
 }
+
+- (void)setNilValueForKey:(NSString *)key { }
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {}
 @end

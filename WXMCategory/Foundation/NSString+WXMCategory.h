@@ -26,7 +26,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** json字符串转字典 */
 - (NSDictionary *)wxm_jsonToDictionary;
 
-
 /** 正则 */
 - (BOOL)wxm_number;
 - (BOOL)wxm_chinese;

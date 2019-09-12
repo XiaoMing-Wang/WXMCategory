@@ -21,8 +21,8 @@
 - (void)wxm_saveImageInlocation:(NSString *)imageName;
 
 /** 手势 */
-- (void)wxm_addOnceTappedWithBlock:(void (^)(void))block;
-- (void)wxm_addDoubleTappedWithBlock:(void (^)(void))block;
+- (UITapGestureRecognizer *)wxm_addOnceTappedWithBlock:(void (^)(void))block;
+- (UITapGestureRecognizer *)wxm_addDoubleTappedWithBlock:(void (^)(void))block;
 
 /** 居中设置 */
 - (void)wxm_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
