@@ -29,5 +29,6 @@
 #import "UIButton+WXMKit.h"
 #import "UIControl+WXMKit.h"
 #import "UILabel+WXMKit.h"
+#import "UITableViewCell+WXMKit.h"
 
 #endif /* WXMCategoryHeader_h */
