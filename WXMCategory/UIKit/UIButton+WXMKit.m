@@ -18,48 +18,48 @@ static char enabledKey;
 
 @implementation UIButton (WXMKit)
 
-- (void)wxm_setFontOfSize:(CGFloat)size {
+- (void)wc_setFontOfSize:(CGFloat)size {
     self.titleLabel.font = [UIFont systemFontOfSize:size];
 }
 
-- (void)wxm_setTitleOfNormal:(NSString *)title {
+- (void)wc_setTitle:(NSString *)title {
     [self setTitle:title forState:UIControlStateNormal];
 }
 
-- (void)wxm_setTitleColorOfNormal:(UIColor *)color {
+- (void)wc_setTitleColor:(UIColor *)color {
     [self setTitleColor:color forState:UIControlStateNormal];
 }
 
-- (void)wxm_setImageOfNormal:(NSString *)imageName {
+- (void)wc_setImage:(NSString *)imageName {
     [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 }
 
-- (void)wxm_setImageOfSelected:(NSString *)imageName {
+- (void)wc_setImageOfSelected:(NSString *)imageName {
     [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateSelected];
 }
 
-- (void)wxm_setImageOfDisable:(NSString *)imageName {
+- (void)wc_setImageOfDisable:(NSString *)imageName {
     [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateDisabled];
 }
 
-- (void)wxm_setBackgroundImageOfNormal:(NSString *)imageName {
+- (void)wc_setBackgroundImage:(NSString *)imageName {
     [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 }
 
-- (void)wxm_setBackgroundImageOfSelected:(NSString *)imageName {
+- (void)wc_setBackgroundImageOfSelected:(NSString *)imageName {
     [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateSelected];
 }
 
-- (void)wxm_setBackgroundImageOfDisabled:(NSString *)imageName {
+- (void)wc_setBackgroundImageOfDisabled:(NSString *)imageName {
     [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateDisabled];
 }
 
-- (void)wxm_addTarget:(nullable id)target action:(SEL)action {
+- (void)wc_addTarget:(nullable id)target action:(SEL)action {
     [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 /** 点击 block */
-- (void)wxm_blockWithControlEventTouchUpInside:(void (^)(void))block {
+- (void)wc_blockWithControlEventTouchUpInside:(void (^)(void))block {
     objc_setAssociatedObject(self, &touchKeyS, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     UIControlEvents event = UIControlEventTouchUpInside;
     [self addTarget:self action:@selector(callActionBlockButton:) forControlEvents:event];
@@ -71,7 +71,7 @@ static char enabledKey;
 }
 
 /**  设置图片字体上下对齐 */
-- (void)wxm_alineTextAlignment:(CGFloat)space {
+- (void)wc_alineTextAlignment:(CGFloat)space {
     CGSize imageSize = self.imageView.frame.size;
     CGSize titleSize = self.titleLabel.frame.size;
     CGSize textSize = [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName : self.titleLabel.font}];
@@ -84,7 +84,7 @@ static char enabledKey;
 }
 
 /** 左图右字 */
-- (void)wxm_horizontalCenterTitleimage:(CGFloat)space {
+- (void)wc_horizontalCenterTitleimage:(CGFloat)space {
     CGSize imageSize = self.imageView.frame.size;
     CGSize titleSize = self.titleLabel.frame.size;
     self.titleEdgeInsets = UIEdgeInsetsMake(0.0, -imageSize.width, 0.0, imageSize.width + space / 2);
@@ -93,7 +93,7 @@ static char enabledKey;
 }
 
 /** 扩大点击 */
-- (void)wxm_setEnlargeEdgeWithTop:(CGFloat)top left:(CGFloat)left right:(CGFloat)right bottom:(CGFloat)bottom {
+- (void)wc_setEnlargeEdgeWithTop:(CGFloat)top left:(CGFloat)left right:(CGFloat)right bottom:(CGFloat)bottom {
     objc_setAssociatedObject(self, &topNameKey, @(top), OBJC_ASSOCIATION_COPY_NONATOMIC);
     objc_setAssociatedObject(self, &rightNameKey, @(right), OBJC_ASSOCIATION_COPY_NONATOMIC);
     objc_setAssociatedObject(self, &bottomNameKey, @(bottom), OBJC_ASSOCIATION_COPY_NONATOMIC);
@@ -121,10 +121,10 @@ static char enabledKey;
 }
 
 /** 带动画的enabled */
-- (void)wxm_enabledAnimation:(BOOL)enabled {
+- (void)wc_enabledAnimation:(BOOL)enabled {
     if (enabled == self.enabled) return;
     @synchronized (self) {
-        UIImageView *contentView = self.wxm_imageView;
+        UIImageView *contentView = self.wc_imageView;
         if (!contentView) return;
         UIImage *imageNormal= [self backgroundImageForState:UIControlStateNormal];
         UIImage *imageDisabled = [self backgroundImageForState:UIControlStateDisabled];
@@ -149,7 +149,7 @@ static char enabledKey;
 }
 
 /** 获取背景ImageView */
-- (UIImageView *)wxm_imageView {
+- (UIImageView *)wc_imageView {
     __block UIImageView *imageView = nil;
     [self.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL * stop) {
         if ([obj isKindOfClass:[UIImageView class]]) imageView = (UIImageView *)obj;

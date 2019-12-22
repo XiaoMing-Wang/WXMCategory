@@ -10,35 +10,39 @@
 #import <objc/runtime.h>
 
 @implementation UILabel (WXMKit)
-@dynamic wxm_space;
-@dynamic wxm_wordSpace;
+@dynamic wc_space;
+@dynamic wc_wordSpace;
 
 /** 设置最大宽度  */
-- (void)setWxm_maxShowWidth:(CGFloat)wxm_maxShowWidth {
-    if (self.frame.size.width <= wxm_maxShowWidth) return;
+- (void)setWc_maxShowWidth:(CGFloat)wc_maxShowWidth {
+    if (self.frame.size.width <= wc_maxShowWidth) return;
     CGPoint origin = self.frame.origin;
     CGRect frame = self.frame;
-    frame.size.width = wxm_maxShowWidth;
+    frame.size.width = wc_maxShowWidth;
     frame.origin = origin;
     self.frame = frame;
     self.lineBreakMode = NSLineBreakByTruncatingTail;
-    SEL sel = @selector(wxm_maxShowWidth);
-    objc_setAssociatedObject(self, sel, @(wxm_maxShowWidth), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    SEL sel = @selector(wc_maxShowWidth);
+    objc_setAssociatedObject(self, sel, @(wc_maxShowWidth), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CGFloat)wxm_maxShowWidth {
+- (CGFloat)wc_maxShowWidth {
     return [objc_getAssociatedObject(self, _cmd) floatValue];
 }
 
 /** 行与行间隔 */
-- (void)setWxm_space:(CGFloat)wxm_space {
+- (void)setWc_space:(CGFloat)wc_space {
     CGPoint origin = self.frame.origin;
     NSString *text = self.text;
     
-    NSMutableAttributedString *atts = [[NSMutableAttributedString alloc] initWithString:text ?: @""];
+    NSMutableAttributedString *atts = nil;
+    atts = [[NSMutableAttributedString alloc] initWithString:text ?: @""];
+    
     NSMutableParagraphStyle *parag = [[NSMutableParagraphStyle alloc] init];
-    [parag setLineSpacing:wxm_space];
-    [atts addAttribute:NSParagraphStyleAttributeName value:parag range:NSMakeRange(0, text.length)];
+    [parag setLineSpacing:wc_space];
+    
+    NSRange range = NSMakeRange(0, text.length);
+    [atts addAttribute:NSParagraphStyleAttributeName value:parag range:range];
     self.attributedText = atts;
     [self sizeToFit];
     
@@ -48,14 +52,17 @@
 }
 
 /** 字间距 */
-- (void)setWxm_wordSpace:(CGFloat)wxm_wordSpace {
+- (void)setWc_wordSpace:(CGFloat)wc_wordSpace {
     CGPoint origin = self.frame.origin;
     NSString *text = self.text;
     
-    NSDictionary * pa = @{NSKernAttributeName:@(wxm_wordSpace)};
-    NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:text attributes:pa];
+    NSDictionary * pa = @{NSKernAttributeName:@(wc_wordSpace)};
+    NSMutableAttributedString *att = nil;
+    att = [[NSMutableAttributedString alloc] initWithString:text attributes:pa];
+    
+    NSRange range = NSMakeRange(0, text.length);
     NSMutableParagraphStyle *parag = [[NSMutableParagraphStyle alloc] init];
-    [att addAttribute:NSParagraphStyleAttributeName value:parag range:NSMakeRange(0, text.length)];
+    [att addAttribute:NSParagraphStyleAttributeName value:parag range:range];
     self.attributedText = att;
     [self sizeToFit];
     

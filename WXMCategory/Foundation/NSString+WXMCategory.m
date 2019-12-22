@@ -31,18 +31,18 @@
 }
 
 /** 判断是否可用 */
-- (BOOL)wxm_isAvailable {
+- (BOOL)wc_available {
     return (self && [self isKindOfClass:[NSString class]] && self.length != 0);
 }
 
 /** 去掉空格 */
-- (NSString *)wxm_removeSpace {
-    if (self.wxm_isAvailable == NO) return nil;
+- (NSString *)wc_removeSpace {
+    if (self.wc_available == NO) return nil;
     return [self stringByReplacingOccurrencesOfString:@" " withString:@""];
 }
 
 /** json字符串转字典*/
-- (NSDictionary *)wxm_jsonToDictionary {
+- (NSDictionary *)wc_jsonToDictionary {
     NSData *jsonData = [self dataUsingEncoding:NSUTF8StringEncoding];
     if (!jsonData) return nil;
     return [NSJSONSerialization JSONObjectWithData:jsonData
@@ -51,7 +51,7 @@
 }
 
 /* 保留小数 */
-- (NSString *)wxm_preciseTdigits:(NSInteger)digits {
+- (NSString *)wc_preciseTdigits:(NSInteger)digits {
     NSInteger currentDigits = [self componentsSeparatedByString:@"."].lastObject.length;
     if ([self containsString:@"."] && (digits == currentDigits)) return self;
     NSString *format = [NSString stringWithFormat:@"%%.%ldf",(long)digits];
@@ -59,7 +59,7 @@
 }
 
 /** md5 */
-- (NSString *)wxm_md5String {
+- (NSString *)wc_md5String {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
     CC_MD5(data.bytes, (CC_LONG) data.length, result);
@@ -73,7 +73,7 @@
 }
 
 /** 求 width */
-- (CGFloat)wxm_getWidthWithFont:(CGFloat)fontSize {
+- (CGFloat)wc_getWidthWithFont:(CGFloat)fontSize {
     if (!fontSize) fontSize = [UIFont systemFontSize];
     UIFont *font = [UIFont systemFontOfSize:fontSize];
     CGRect rect = [self boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
@@ -83,11 +83,11 @@
 }
 
 /** 求 height */
-- (CGFloat)wxm_getHeightWithFont:(CGFloat)fontSize {
-    return [self wxm_getHeightWithFont:fontSize width:MAXFLOAT];
+- (CGFloat)wc_getHeightWithFont:(CGFloat)fontSize {
+    return [self wc_getHeightWithFont:fontSize width:MAXFLOAT];
 }
 
-- (CGFloat)wxm_getHeightWithFont:(CGFloat)fontSize width:(CGFloat)width {
+- (CGFloat)wc_getHeightWithFont:(CGFloat)fontSize width:(CGFloat)width {
     if (!fontSize) fontSize = [UIFont systemFontSize];
     UIFont *font = [UIFont systemFontOfSize:fontSize];
     CGRect rect = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
@@ -97,10 +97,10 @@
 }
 
 /** 获取字符行数 */
-- (NSInteger)wxm_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize {
+- (NSInteger)wc_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize {
     if (self.length == 0) return 0;
-    CGFloat allHeight = [self wxm_getHeightWithFont:fontSize width:maxWidth];
-    CGFloat lineHeight = [@"T" wxm_getHeightWithFont:fontSize];
+    CGFloat allHeight = [self wc_getHeightWithFont:fontSize width:maxWidth];
+    CGFloat lineHeight = [@"T" wc_getHeightWithFont:fontSize];
     NSInteger totalRow = (allHeight / lineHeight);
     return totalRow;
 }
@@ -115,7 +115,7 @@
 }
 
 /** 验证是否是数字*/
-- (BOOL)wxm_number {
+- (BOOL)wc_number {
     if (self.length == 0) return NO;
     NSString *isNumber = @"^[0-9]*$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", isNumber];
@@ -123,7 +123,7 @@
 }
 
 /** 中文 */
-- (BOOL)wxm_chinese {
+- (BOOL)wc_chinese {
     if (self.length == 0) return NO;
     NSString *phoneRegex = @"[\u4e00-\u9fa5]";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
@@ -131,7 +131,7 @@
 }
 
 /** 英文字母 */
-- (BOOL)wxm_english {
+- (BOOL)wc_english {
     if (self.length == 0) return NO;
     NSString *phoneRegex = @"^[A-Za-z]+$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
@@ -139,11 +139,11 @@
 }
 
 /** 判断包含数字字母中文纯符号 */
-- (BOOL)wxm_allCharacterString {
+- (BOOL)wc_allCharacterString {
     BOOL allCharacter = YES;
     for (int i = 0; i < self.length; i++) {
         NSString *subStr = [self substringWithRange:NSMakeRange(i, 1)];
-        if (subStr.wxm_number || subStr.wxm_chinese || self.wxm_english) {
+        if (subStr.wc_number || subStr.wc_chinese || self.wc_english) {
             allCharacter = NO;
             break;
         }
@@ -152,7 +152,7 @@
 }
 
 /** 拼音 */
-- (NSString *)wxm_changePinyin {
+- (NSString *)wc_changePinyin {
     NSMutableString *string = [NSMutableString stringWithString:self];
     CFStringTransform((__bridge CFMutableStringRef) string, NULL, kCFStringTransformMandarinLatin, NO);
     CFStringTransform((__bridge CFMutableStringRef) string, NULL, kCFStringTransformStripDiacritics, NO);
@@ -161,13 +161,13 @@
 #pragma mark _____________________________________________ 时间转化
 
 /** 时间戳转换string */
-- (NSString *)wxm_timeForYYYY_MM_DD {
-    return [self wxm_timeForTimesTampWithFormatter:@"yyyy-MM-dd"];
+- (NSString *)wc_timeForYYYY_MM_DD {
+    return [self wc_timeForTimesTampWithFormatter:@"yyyy-MM-dd"];
 }
-- (NSString *)wxm_timeForYYYY_MM_DD_HH_MM; {
-    return [self wxm_timeForTimesTampWithFormatter:@"yyyy-MM-dd HH:mm"];
+- (NSString *)wc_timeForYYYY_MM_DD_HH_MM; {
+    return [self wc_timeForTimesTampWithFormatter:@"yyyy-MM-dd HH:mm"];
 }
-- (NSString *)wxm_timeForTimesTampWithFormatter:(NSString *)formatter {
+- (NSString *)wc_timeForTimesTampWithFormatter:(NSString *)formatter {
     NSString * timeFormatter = self;
     if (timeFormatter.length >= 10) timeFormatter = [timeFormatter substringToIndex:10];
     NSDate *detaildate = [NSDate dateWithTimeIntervalSince1970:[timeFormatter doubleValue]];
@@ -177,10 +177,10 @@
 }
 
 /** string转换成时间戳 */
-- (NSInteger)wxm_timestampForYYYY_MM_DD {
-    return [self wxm_timestampWithFormatter:@"yyyy-MM-dd"];
+- (NSInteger)wc_timestampForYYYY_MM_DD {
+    return [self wc_timestampWithFormatter:@"yyyy-MM-dd"];
 }
-- (NSInteger)wxm_timestampWithFormatter:(NSString *)formatter {
+- (NSInteger)wc_timestampWithFormatter:(NSString *)formatter {
     NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
     [dateformatter setDateFormat:formatter];
     NSDate *fromDate = [dateformatter dateFromString:self];

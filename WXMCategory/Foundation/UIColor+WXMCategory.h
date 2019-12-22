@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+/** RR wxm_=wc_ */
 @interface UIColor (WXMCategory)
 
 /**
@@ -21,14 +21,14 @@ NS_ASSUME_NONNULL_BEGIN
  *
  *  @return 渐变颜色
  */
-+ (UIColor *)wxm_gradientFromColor:(UIColor *)c1
-                           toColor:(UIColor *)c2
-                        withHeight:(int)height;
++ (UIColor *)wc_gradientFromColor:(UIColor *)c1
+                          toColor:(UIColor *)c2
+                       withHeight:(int)height;
 
 
 
 /** 随机色 */
-+ (UIColor *)wxm_randomColor;
++ (UIColor *)wc_randomColor;
 
 @end
 

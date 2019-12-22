@@ -13,7 +13,7 @@ static char doubleTap;
 @implementation UIView (WXMLieKit)
 
 /** 当前控制器 */
-- (UIViewController *)wxm_responderViewController {
+- (UIViewController *)wc_responderViewController {
     UIResponder *next = self.nextResponder;
     do {
         if ([next isKindOfClass:[UIViewController class]]) {
@@ -25,13 +25,13 @@ static char doubleTap;
 }
 
 /** 手势 */
-- (UITapGestureRecognizer *)wxm_addOnceTappedWithBlock:(void (^)(void))block {
+- (UITapGestureRecognizer *)wc_addOnceTappedWithBlock:(void (^)(void))block {
     UITapGestureRecognizer *tap = [self addTapGesture:1 touches:1 selector:@selector(viewTapped:)];
     objc_setAssociatedObject(self, &onceTap, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return tap;
 }
 
-- (UITapGestureRecognizer *)wxm_addDoubleTappedWithBlock:(void (^)(void))block {
+- (UITapGestureRecognizer *)wc_addDoubleTappedWithBlock:(void (^)(void))block {
     UITapGestureRecognizer *tap = [self addTapGesture:2 touches:1 selector:@selector(viewTapped:)];
     objc_setAssociatedObject(self, &doubleTap, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return tap;
@@ -58,13 +58,13 @@ static char doubleTap;
 }
 
 /** 在window中 */
-- (CGRect)wxm_locationWithWindow {
+- (CGRect)wc_locationWithWindow {
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     return [self convertRect:self.bounds toView:window];
 }
 
 /** 截图 */
-- (UIImage *)wxm_makeImage {
+- (UIImage *)wc_makeImage {
     UIGraphicsBeginImageContextWithOptions(self.frame.size, NO, [UIScreen mainScreen].scale);
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
@@ -73,8 +73,8 @@ static char doubleTap;
 }
 
 /** 画图存到本地 */
-- (void)wxm_saveImageInlocation:(NSString *)imageName {
-    UIImage *image = [self wxm_makeImage];
+- (void)wc_saveImageInlocation:(NSString *)imageName {
+    UIImage *image = [self wc_makeImage];
     NSString *document = NSHomeDirectory();
     NSString *path = [NSString stringWithFormat:@"/Documents/%@.png",imageName];
     NSString *imagePath = [document stringByAppendingString:path];
@@ -83,7 +83,7 @@ static char doubleTap;
 }
 
 /** 上下居中对齐 */
-- (void)wxm_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval {
+- (void)wc_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval {
     if (!above || !nether || self.frame.size.height == 0) return;
     CGFloat totalHeight = self.frame.size.height;
     CGFloat totalInterval = totalHeight - above.frame.size.height - nether.frame.size.height;
@@ -98,7 +98,7 @@ static char doubleTap;
 }
 
 /** 左右居中对齐 */
-- (void)wxm_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval {
+- (void)wc_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval {
     if (!left || !right || self.frame.size.width == 0) return;
     CGFloat totalWidth = self.frame.size.width;
     CGFloat totalInterval = totalWidth - left.frame.size.width - right.frame.size.width;

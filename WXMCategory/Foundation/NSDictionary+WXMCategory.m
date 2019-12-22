@@ -44,7 +44,7 @@
 }
 
 /** 转字符串 */
-- (NSString *)wxm_jsonRepresentation {
+- (NSString *)wc_jsonRepresentation {
     NSData *data = [NSJSONSerialization dataWithJSONObject:self options:0 error:nil];
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
@@ -64,6 +64,11 @@
     id object = [self safeObjectForKey:anAttribute];
     if (object == [NSNull null]) return nil;
     return object;
+}
+
+/** 判断字典是否可用 */
+- (BOOL)wc_available {
+    return (self && [self isKindOfClass:[NSDictionary class]] && self.allKeys.count != 0);
 }
 
 - (void)setNilValueForKey:(NSString *)key { }

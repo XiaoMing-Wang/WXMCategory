@@ -11,13 +11,13 @@
 @interface UILabel (WXMKit)
 
 /** 设置最大宽度 */
-@property (nonatomic, assign) CGFloat wxm_maxShowWidth;
+@property (nonatomic, assign) CGFloat wc_maxShowWidth;
 
 /** 行与行间隔 */
-@property (nonatomic, assign) CGFloat wxm_space;
+@property (nonatomic, assign) CGFloat wc_space;
 
 /** 字间距 */
-@property (nonatomic, assign) CGFloat wxm_wordSpace;
+@property (nonatomic, assign) CGFloat wc_wordSpace;
 
 
 @end

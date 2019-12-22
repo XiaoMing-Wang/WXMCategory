@@ -12,10 +12,10 @@
 /** 在viewcontroller+dxpclass类别里面做了自动释放 */
 @implementation NSNotificationCenter (WXMCategory)
 
-- (void)wxm_addObserver:(UIViewController *)observer
-                   name:(NSString *)name
-                 object:(id)obj
-             usingBlock:(void (^)(NSNotification *note))block {
+- (void)wc_addObserver:(UIViewController *)observer
+                  name:(NSString *)name
+                object:(id)obj
+            usingBlock:(void (^)(NSNotification *note))block {
     
     NSNotificationCenter * notification = [NSNotificationCenter defaultCenter];
     NSObject *object = [notification addObserverForName:name object:obj queue:nil usingBlock:block];

@@ -47,22 +47,24 @@ static char holdTimerKey;
 @implementation NSObject (DXPCategory)
 
 /** GCD定时器 */
-- (dispatch_source_t)wxm_startTimingInterval:(float)interval countdown:(BOOL(^)(void))countdown {
+- (dispatch_source_t)wc_startTimingInterval:(float)interval countdown:(BOOL(^)(void))countdown {
     if (countdown == nil) return nil;
     __weak typeof(self) weakSelf = self;
     dispatch_queue_t queue = dispatch_get_main_queue();
+    dispatch_time_t start = dispatch_walltime(NULL, 0);
+    
     self.holdTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(self.holdTimer, dispatch_walltime(NULL, 0),interval *NSEC_PER_SEC, 0);
+    dispatch_source_set_timer(self.holdTimer, start, interval * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(self.holdTimer, ^{
-        if (countdown() == NO) [weakSelf wxm_stopTiming];
+        if (countdown() == NO) [weakSelf wc_stopTiming];
     });
     dispatch_resume(self.holdTimer);
     return self.holdTimer;
 }
 
-- (dispatch_source_t)wxm_startTimingInterval:(float)interval
-                                   addTarget:(id)target
-                                      action:(SEL)action {
+- (dispatch_source_t)wc_startTimingInterval:(float)interval
+                                  addTarget:(id)target
+                                     action:(SEL)action {
     if (target == nil || action == nil) return nil;
     __weak typeof(self) weakTarget = target;
     dispatch_queue_t queue = dispatch_get_main_queue();
@@ -79,7 +81,7 @@ static char holdTimerKey;
     return self.holdTimer;
 }
 
-- (void)wxm_stopTiming {
+- (void)wc_stopTiming {
     @try {
         
         if (self.holdTimer) {
@@ -91,7 +93,7 @@ static char holdTimerKey;
 }
 
 /** -方法 */
-+ (BOOL)wxm_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel {
++ (BOOL)wc_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel {
     Method original = class_getInstanceMethod(self, originalSel);
     Method newMethod = class_getInstanceMethod(self, newSel);
     if (!original || !newMethod) return NO;
@@ -106,7 +108,7 @@ static char holdTimerKey;
 }
 
 /** +方法 */
-+ (BOOL)wxm_swizzleClassMethod:(SEL)originalSel with:(SEL)newSel {
++ (BOOL)wc_swizzleClassMethod:(SEL)originalSel with:(SEL)newSel {
     Class class = object_getClass(self);
     Method originalMethod = class_getInstanceMethod(class, originalSel);
     Method newMethod = class_getInstanceMethod(class, newSel);
@@ -116,21 +118,21 @@ static char holdTimerKey;
 }
 
 /** 绑定 */
-- (void)wxm_setAssociateValue:(id)value withKey:(void *)key {
+- (void)wc_setAssociateValue:(id)value withKey:(void *)key {
     objc_setAssociatedObject(self, key, value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (void)wxm_setAssociateWeakValue:(id)value withKey:(void *)key {
+- (void)wc_setAssociateWeakValue:(id)value withKey:(void *)key {
     objc_setAssociatedObject(self, key, value, OBJC_ASSOCIATION_ASSIGN);
 }
 
 /** 获取 */
-- (id)wxm_getAssociatedValueForKey:(void *)key {
+- (id)wc_getAssociatedValueForKey:(void *)key {
     return objc_getAssociatedObject(self, key);
 }
 
 /** 获取所有属性 */
-+ (NSArray *)wxm_getFropertys {
++ (NSArray *)wc_getFropertys {
     unsigned int count = 0;
     NSMutableArray *_arrayM = @[].mutableCopy;
     objc_property_t *propertys = class_copyPropertyList([self class], &count);
@@ -148,8 +150,8 @@ static char holdTimerKey;
 #pragma mark _____________________________________________________________________KVO
 
 /** 监听 有block的 */
-- (void)wxm_addObserverBlockForKeyPath:(NSString *)keyPath
-                                 block:(void(^)(id obj,id oldVal,id newVal))block {
+- (void)wc_addObserverBlockForKeyPath:(NSString *)keyPath
+                                block:(void(^)(id obj,id oldVal,id newVal))block {
     if (!keyPath || !block) return;
     NSObjectKVOBlockTarget *target = [[NSObjectKVOBlockTarget alloc] initWithBlock:block];
     NSMutableDictionary *dic = [self allNSObjectObserverBlocks];
@@ -176,7 +178,7 @@ static char holdTimerKey;
 }
 
 /** 删掉监听的key */
-- (void)wxm_removeObserverBlocksForKeyPath:(NSString *)keyPath {
+- (void)wc_removeObserverBlocksForKeyPath:(NSString *)keyPath {
     if (!keyPath) return;
     NSMutableDictionary *dic = [self allNSObjectObserverBlocks];
     NSMutableArray *arr = dic[keyPath];
@@ -187,7 +189,7 @@ static char holdTimerKey;
 }
 
 /** 删掉监听的block */
-- (void)wxm_removeObserverBlocks {
+- (void)wc_removeObserverBlocks {
     NSMutableDictionary *dic = [self allNSObjectObserverBlocks];
     [dic enumerateKeysAndObjectsUsingBlock: ^(NSString *key, NSArray *arr, BOOL *stop) {
         [arr enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
@@ -210,7 +212,7 @@ static char holdTimerKey;
 #pragma mark____________________________________ 解归档 需实现归档协议
 
 /** 归档 */
-- (BOOL)archiverWithPath:(NSString *)path {
+- (BOOL)wc_archiverWithPath:(NSString *)path {
     BOOL success = NO;
     @try {
         success = [NSKeyedArchiver archiveRootObject:self
@@ -220,14 +222,14 @@ static char holdTimerKey;
 }
 
 /** 解归档 */
-+ (instancetype)unArchiverWithPath:(NSString *)path {
++ (instancetype)wc_unArchiverWithPath:(NSString *)path {
     @try {
         id newFolder = [NSKeyedUnarchiver unarchiveObjectWithFile:[UserData stringByAppendingPathComponent:path]];
         return newFolder;
     } @catch (NSException *exception) {} @finally {}
 }
 
-+ (UINib *)nib {
++ (UINib *)wc_nib {
     return [UINib nibWithNibName:NSStringFromClass(self) bundle:nil];
 }
 

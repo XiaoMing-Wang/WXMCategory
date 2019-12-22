@@ -12,7 +12,7 @@
 @implementation UIImage (WXMCategory)
 
 /** 根据颜色绘制图片 */
-+ (UIImage *)wxm_imageFromColor:(UIColor *)color {
++ (UIImage *)wc_imageFromColor:(UIColor *)color {
     CGRect rect = CGRectMake(0, 0, 1, 1);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -24,15 +24,15 @@
 }
 
 /** 模糊效果 */
-- (UIImage *)wxm_imageWithBlurNumber:(CGFloat)blur {
-    return [self wxm_applyBlurWithRadius:blur
-                               tintColor:[UIColor colorWithWhite:0 alpha:0.0]
-                   saturationDeltaFactor:1.4
-                               maskImage:nil];
+- (UIImage *)wc_imageWithBlurNumber:(CGFloat)blur {
+    return [self wc_applyBlurWithRadius:blur
+                              tintColor:[UIColor colorWithWhite:0 alpha:0.0]
+                  saturationDeltaFactor:1.4
+                              maskImage:nil];
 }
 
 /** 修改image的大小 */
-- (UIImage *)wxm_imageToSize:(CGSize)targetSize {
+- (UIImage *)wc_imageToSize:(CGSize)targetSize {
     UIImage *sourceImage = self;
     UIImage *newImage = nil;
     CGSize imageSize = sourceImage.size;
@@ -73,7 +73,7 @@
     return newImage;
 }
 
-- (UIImage*)wxm_scaleToSize:(CGSize)size {
+- (UIImage*)wc_scaleToSize:(CGSize)size {
     if ([[UIScreen mainScreen] scale] == 0.0) {
         UIGraphicsBeginImageContext(size);
     } else {
@@ -86,7 +86,7 @@
 }
 
 /** 裁剪图片的一部分 */
-- (UIImage *)wxm_tailorImageWithRect:(CGRect)rect {
+- (UIImage *)wc_tailorImageWithRect:(CGRect)rect {
     CGImageRef sourceImageRef = [self CGImage];
     CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, rect);
     UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
@@ -94,13 +94,13 @@
 }
 
 /** 拉伸 */
-- (UIImage *)wxm_imageWithStretching {
+- (UIImage *)wc_imageWithStretching {
     return [self resizableImageWithCapInsets:UIEdgeInsetsZero
                                 resizingMode:UIImageResizingModeStretch];
 }
 
 /** 获取启动图 */
-+ (UIImage *)wxm_getLaunchImage {
++ (UIImage *)wc_getLaunchImage {
     NSString *viewOrientation = @"Portrait";
     NSString *launchImageName = nil;
     NSArray *imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
@@ -115,10 +115,10 @@
 }
 
 /** 模糊图片 */
-- (UIImage *)wxm_applyBlurWithRadius:(CGFloat)blurRadius
-                           tintColor:(UIColor *)tintColor
-               saturationDeltaFactor:(CGFloat)saturationDeltaFactor
-                           maskImage:(UIImage *)maskImage {
+- (UIImage *)wc_applyBlurWithRadius:(CGFloat)blurRadius
+                          tintColor:(UIColor *)tintColor
+              saturationDeltaFactor:(CGFloat)saturationDeltaFactor
+                          maskImage:(UIImage *)maskImage {
     
     if (self.size.width < 1 || self.size.height < 1) return nil;
     if (!self.CGImage) return nil;

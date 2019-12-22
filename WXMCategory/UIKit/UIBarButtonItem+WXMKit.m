@@ -20,9 +20,9 @@ static char kimage_title;
 @implementation UIBarButtonItem (WXMKit)
 
 /** title */
-+ (UIBarButtonItem *)wxm_titleItem:(NSString *)title
-                         tintColor:(UIColor *)tintColor
-                            action:(void (^)(void))action {
++ (UIBarButtonItem *)wc_titleItem:(NSString *)title
+                        tintColor:(UIColor *)tintColor
+                           action:(void (^)(void))action {
     
     UIFont *font = [UIFont systemFontOfSize:WXM_FontSize];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:title
@@ -37,15 +37,16 @@ static char kimage_title;
     item.tintColor = tintColor ?: WXM_TinColor;
     return item;
 }
+
 - (void)eventTouchUpInside {
     void (^block)(void) = (void (^)(void))objc_getAssociatedObject(self, &touch);
     if (block) block();
 }
 
 /** title */
-+ (UIBarButtonItem *)wxm_titleCustomItem:(NSString *)title
-                               tintColor:(UIColor *)tintColor
-                                  action:(void (^)(void))action {
++ (UIBarButtonItem *)wc_titleCustomItem:(NSString *)title
+                              tintColor:(UIColor *)tintColor
+                                 action:(void (^)(void))action {
     
     UIFont *font = [UIFont systemFontOfSize:WXM_FontSize];
     CGRect rect = [title boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
@@ -53,7 +54,7 @@ static char kimage_title;
                                    attributes:@{ NSFontAttributeName: font }
                                       context:nil];
     
-    UIButton *wrapButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, rect.size.width, 20)];
+    UIButton *wrapButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0,rect.size.width,20)];
     [wrapButton setTitle:title forState:UIControlStateNormal];
     [wrapButton setTitleColor:tintColor ?: WXM_TinColor forState:UIControlStateNormal];
     wrapButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
@@ -65,13 +66,14 @@ static char kimage_title;
     [wrapButton addTarget:item action:@selector(wrapEvent:) forControlEvents:UIControlEventTouchUpInside];
     return item;
 }
+
 - (void)wrapEvent:(UIButton *)wrapButton {
     void (^block)(void) = (void (^)(void))objc_getAssociatedObject(wrapButton, &rightTouch);
     if (block) block();
 }
 
 /** button 图片 */
-+ (UIBarButtonItem *)wxm_imageItem:(NSString *)imageName action:(void (^)(void))action {
++ (UIBarButtonItem *)wc_imageItem:(NSString *)imageName action:(void (^)(void))action {
     
     UIButton *wrapButton = [[UIButton alloc] init];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:wrapButton];
@@ -84,9 +86,10 @@ static char kimage_title;
     
     return item;
 }
-+ (UIBarButtonItem *)wxm_imageItem:(NSString *)imageName
-                            target:(id)target
-                            action:(SEL)action {
+
++ (UIBarButtonItem *)wc_imageItem:(NSString *)imageName
+                           target:(id)target
+                           action:(SEL)action {
     
     UIButton *wrapButton = [[UIButton alloc] init];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:wrapButton];
@@ -97,11 +100,11 @@ static char kimage_title;
     [wrapButton addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     return item;
 }
+
 - (void)kimageEvent:(UIButton *)wrapButton {
     void (^block)(void) = (void (^)(void))objc_getAssociatedObject(wrapButton, &kimage);
     if (block) block();
 }
-
 
 /** wrapButton 自定义带图片带文字 */
 + (UIBarButtonItem *)barItemWithImageName:(NSString *)imageName

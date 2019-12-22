@@ -12,7 +12,6 @@
 
 - (NSString *)description {
     @try {
-        
         if (self.count == 0) return @"[ ]";
         NSMutableString *string = [NSMutableString string];
         [string appendString:@"[\n"];
@@ -33,7 +32,6 @@
 @implementation NSDictionary (Log)
 - (NSString *)description {
     @try {
-    
         if (self.allKeys.count == 0) return @"{ }";
         NSMutableString *string = [NSMutableString string];
         [string appendString:@"{\n"];

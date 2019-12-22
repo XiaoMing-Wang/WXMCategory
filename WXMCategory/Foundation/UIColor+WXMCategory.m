@@ -19,9 +19,9 @@
  *
  *  @return 渐变颜色
  */
-+ (UIColor *)wxm_gradientFromColor:(UIColor *)c1
-                           toColor:(UIColor *)c2
-                        withHeight:(int)height {
++ (UIColor *)wc_gradientFromColor:(UIColor *)c1
+                          toColor:(UIColor *)c2
+                       withHeight:(int)height {
     
     CGSize size = CGSizeMake(1, height);
     UIGraphicsBeginImageContextWithOptions(size, NO, 0);
@@ -42,7 +42,7 @@
     return [UIColor colorWithPatternImage:image];
 }
 
-+ (UIColor *)wxm_randomColor {
++ (UIColor *)wc_randomColor {
     CGFloat red = (CGFloat) random() / (CGFloat) RAND_MAX;
     CGFloat blue = (CGFloat) random() / (CGFloat) RAND_MAX;
     CGFloat green = (CGFloat) random() / (CGFloat) RAND_MAX;

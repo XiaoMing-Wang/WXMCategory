@@ -11,10 +11,10 @@
 @interface NSArray (WXMCategory)
 
 /** 判断数组是否可用 */
-- (BOOL)wxm_isAvailable;
+- (BOOL)wc_available;
 
 /** 加载plist文件 */
-+ (NSArray *)wxm_arrayWithPlist:(NSString *)plistName;
++ (NSArray *)wc_arrayWithPlist:(NSString *)plistName;
 
 @end
 

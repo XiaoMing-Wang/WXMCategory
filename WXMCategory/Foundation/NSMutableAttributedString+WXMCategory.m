@@ -22,9 +22,9 @@
 }
 
 /** 部分换颜色 */
-+ (NSMutableAttributedString *)wxm_attributedString:(NSString *)aString
-                                              color:(UIColor *)color
-                                              range:(NSRange)range {
++ (NSMutableAttributedString *)wc_attributedString:(NSString *)aString
+                                             color:(UIColor *)color
+                                             range:(NSRange)range {
     @try {
         NSMutableAttributedString *atts = WXMCreatAttributedString(aString);
         [atts addAttribute:NSForegroundColorAttributeName value:color range:range];
@@ -33,8 +33,8 @@
 }
 
 /** 修改字符间距 字与字 */
-+ (NSMutableAttributedString *)wxm_changeVerticalSpace:(NSString *)aString
-                                                 space:(CGFloat)space {
++ (NSMutableAttributedString *)wc_changeVerticalSpace:(NSString *)aString
+                                                space:(CGFloat)space {
     @try {
         
         NSMutableAttributedString *atts = WXMCreatAttributedString(aString);
@@ -48,8 +48,8 @@
 }
 
 /** 修改字符行间距距 行与行 */
-+ (NSMutableAttributedString *)wxm_changeHorizontalSpace:(NSString *)aString
-                                                   space:(CGFloat)space {
++ (NSMutableAttributedString *)wc_changeHorizontalSpace:(NSString *)aString
+                                                  space:(CGFloat)space {
     @try {
         NSMutableAttributedString *atts = WXMCreatAttributedString(aString);
         NSRange range = NSMakeRange(0, atts.length);
@@ -61,8 +61,8 @@
 }
 
 /** 链接下划线 */
-+ (NSMutableAttributedString *)wxm_addUnderline:(NSString *)aString
-                                          range:(NSRange)range {
++ (NSMutableAttributedString *)wc_addUnderline:(NSString *)aString
+                                         range:(NSRange)range {
     @try {
         NSMutableAttributedString *atts = WXMCreatAttributedString(aString);
         NSDictionary *attris = @{NSFontAttributeName: [UIFont systemFontOfSize:14],
@@ -74,7 +74,7 @@
     } @catch (NSException *exception) {} @finally {};
 }
 
-- (void)wxm_addLineSpace:(CGFloat)space {
+- (void)wc_addLineSpace:(CGFloat)space {
     NSMutableParagraphStyle *parag = [[NSMutableParagraphStyle alloc] init];
     [parag setLineSpacing:space];
     
@@ -82,12 +82,12 @@
     [self addAttribute:NSParagraphStyleAttributeName value:parag range:range];
 }
 
-- (void)wxm_addColor:(UIColor *)color range:(NSRange)range {
+- (void)wc_addColor:(UIColor *)color range:(NSRange)range {
     if (self.length == 0) return;
     [self addAttribute:NSForegroundColorAttributeName value:color range:range];
 }
 
-- (void)wxm_addLineWithColor:(UIColor *)lineColor range:(NSRange)range {
+- (void)wc_addLineWithColor:(UIColor *)lineColor range:(NSRange)range {
     if (self.length == 0) return;
     NSDictionary *attris = @{NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle),
                              NSUnderlineColorAttributeName: lineColor };
@@ -95,7 +95,7 @@
     
 }
 
-- (void)wxm_setFontSize:(NSInteger)fontSize range:(NSRange)range {
+- (void)wc_setFontSize:(NSInteger)fontSize range:(NSRange)range {
     if (self.length == 0) return;
     NSDictionary *attris = @{NSFontAttributeName: [UIFont systemFontOfSize:fontSize] };
     [self setAttributes:attris range:range];

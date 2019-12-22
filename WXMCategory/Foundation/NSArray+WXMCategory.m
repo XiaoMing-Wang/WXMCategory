@@ -67,12 +67,12 @@
 }
 
 /** 判断数组是否可用 */
-- (BOOL)wxm_isAvailable {
+- (BOOL)wc_available {
     return (self && [self isKindOfClass:[NSArray class]] && self.count != 0);
 }
 
 /** 加载plist文件 */
-+ (NSArray *)wxm_arrayWithPlist:(NSString *)plistName {
++ (NSArray *)wc_arrayWithPlist:(NSString *)plistName {
     return [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle]
                                              pathForResource:plistName
                                              ofType:@"plist"]];

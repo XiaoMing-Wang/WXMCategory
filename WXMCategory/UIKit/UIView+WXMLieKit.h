@@ -11,20 +11,20 @@
 @interface UIView (WXMLieKit) <UIGestureRecognizerDelegate>
 
 /** 当前控制器 */
-- (UIViewController *)wxm_responderViewController;
+- (UIViewController *)wc_responderViewController;
 
 /** 在window中 */
-- (CGRect)wxm_locationWithWindow;
+- (CGRect)wc_locationWithWindow;
 
 /** 截图 */
-- (UIImage *)wxm_makeImage;
-- (void)wxm_saveImageInlocation:(NSString *)imageName;
+- (UIImage *)wc_makeImage;
+- (void)wc_saveImageInlocation:(NSString *)imageName;
 
 /** 手势 */
-- (UITapGestureRecognizer *)wxm_addOnceTappedWithBlock:(void (^)(void))block;
-- (UITapGestureRecognizer *)wxm_addDoubleTappedWithBlock:(void (^)(void))block;
+- (UITapGestureRecognizer *)wc_addOnceTappedWithBlock:(void (^)(void))block;
+- (UITapGestureRecognizer *)wc_addDoubleTappedWithBlock:(void (^)(void))block;
 
 /** 居中设置 */
-- (void)wxm_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
-- (void)wxm_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval;
+- (void)wc_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
+- (void)wc_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval;
 @end
