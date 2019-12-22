@@ -52,7 +52,7 @@ static char holdTimerKey;
     __weak typeof(self) weakSelf = self;
     dispatch_queue_t queue = dispatch_get_main_queue();
     self.holdTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(self.holdTimer, dispatch_walltime(NULL, 0), interval * NSEC_PER_SEC, 0);
+    dispatch_source_set_timer(self.holdTimer, dispatch_walltime(NULL, 0),interval *NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(self.holdTimer, ^{
         if (countdown() == NO) [weakSelf wxm_stopTiming];
     });
@@ -80,10 +80,14 @@ static char holdTimerKey;
 }
 
 - (void)wxm_stopTiming {
-    if (self.holdTimer) {
-        dispatch_cancel(self.holdTimer);
-        self.holdTimer = nil;
-    }
+    @try {
+        
+        if (self.holdTimer) {
+            dispatch_cancel(self.holdTimer);
+            self.holdTimer = nil;
+        }
+        
+    } @catch (NSException *exception) { } @finally { }
 }
 
 /** -方法 */
@@ -125,7 +129,7 @@ static char holdTimerKey;
     return objc_getAssociatedObject(self, key);
 }
 
-/**获取所有属性 */
+/** 获取所有属性 */
 + (NSArray *)wxm_getFropertys {
     unsigned int count = 0;
     NSMutableArray *_arrayM = @[].mutableCopy;
@@ -155,7 +159,10 @@ static char holdTimerKey;
         dic[keyPath] = arr;
     }
     [arr addObject:target];
-    [self addObserver:target forKeyPath:keyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:NULL];
+    [self addObserver:target
+           forKeyPath:keyPath
+              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+              context:NULL];
 }
 
 /** 监听的key字典 */

@@ -13,6 +13,9 @@
 - (void)wxm_addTarget:(id)target action:(SEL)action;
 - (void)wxm_blockWithControlEventTouchUpInside:(void (^)(void))block;
 
+/** 带动画的enabled */
+- (void)wxm_enabledAnimation:(BOOL)enabled;
+
 /**  */
 - (void)wxm_setFontOfSize:(CGFloat)size;
 - (void)wxm_setTitleOfNormal:(NSString *)title;

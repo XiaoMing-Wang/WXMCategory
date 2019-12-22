@@ -75,40 +75,27 @@
 - (void)setLayoutRight:(CGFloat)layoutRight {
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     if (self.superview) width = self.superview.width;
-    if (self.left == 0 && self.width > 0) {
-        self.left = width - self.width - layoutRight;
-    } else {
-        self.width = width - self.left - layoutRight;
-    }
+    if (self.width == 0) self.width = width - self.left - layoutRight;
+    else self.left = width - self.width - layoutRight;
 }
 
 - (void)setLayoutBottom:(CGFloat)layoutBottom {
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     if (self.superview) height = self.superview.height;
-    if (self.top == 0 && self.height > 0) {
-        self.top = height - self.height - layoutBottom;
-    } else {
-        self.height = height - self.top - layoutBottom;
-    }
+    if (self.height == 0) self.height = height - self.top - layoutBottom;
+    else self.top = height - self.height - layoutBottom;
 }
-
 
 - (void)layoutRight:(UIView *)refer offset:(CGFloat)offset {
     CGFloat width = refer.left - self.left;
-    if (self.left == 0 && self.width > 0) {
-        self.left = width - self.width - offset;
-    } else {
-        self.width = width - self.left - offset;
-    }
+    if (self.width == 0) self.width = width - self.left - offset;
+    else self.left = width - self.width - offset;
 }
 
 - (void)layoutBottom:(UIView *)refer offset:(CGFloat)offset {
     CGFloat height = refer.top - self.top;
-    if (self.top == 0 && self.height > 0) {
-        self.top = height - self.height - offset;
-    } else {
-        self.height = height - self.top - offset;
-    }
+    if (self.height == 0) self.height = height - self.top - offset;
+    else self.top = height - self.height - offset;
 }
 
 - (void)setLayoutCenterSupView:(BOOL)layoutCenterSupView {

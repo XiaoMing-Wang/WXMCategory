@@ -20,14 +20,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (UIAlertController *)wxm_showAlertViewControllerWithTitle:(NSString *)title
                                                     message:(NSString *)message
                                                      cancel:(NSString *)cancle
-                                                otherAction:(NSArray *)otherAction
-                                              completeBlock:(void (^)(NSInteger index))block;
+                                                otherAction:(NSArray *_Nullable)otherAction
+                                              completeBlock:(void (^_Nullable)(NSInteger idx))block;
 /** UIAlertController sheet */
 - (UIAlertController *)wxm_showSheetViewControllerWithTitle:(NSString *)title
                                                     message:(NSString *)message
                                                      cancel:(NSString *)cancle
-                                                otherAction:(NSArray *)otherAction
-                                              completeBlock:(void (^)(NSInteger index))block;
+                                                otherAction:(NSArray *_Nullable)otherAction
+                                              completeBlock:(void (^_Nullable)(NSInteger idx))block;
 
 @end
 

@@ -38,16 +38,28 @@
 }
 
 - (void)setContentInsetTop:(CGFloat)contentInsetTop {
-    [self setContentInset:UIEdgeInsetsMake(contentInsetTop, self.contentInset.left, self.contentInset.bottom, self.contentInset.right)];
+    [self setContentInset:UIEdgeInsetsMake(contentInsetTop,
+                                           self.contentInset.left,
+                                           self.contentInset.bottom,
+                                           self.contentInset.right)];
 }
 - (void)setContentInsetLeft:(CGFloat)contentInsetLeft {
-    [self setContentInset:UIEdgeInsetsMake(self.contentInset.top, contentInsetLeft, self.contentInset.bottom, self.contentInset.right)];
+    [self setContentInset:UIEdgeInsetsMake(self.contentInset.top,
+                                           contentInsetLeft,
+                                           self.contentInset.bottom,
+                                           self.contentInset.right)];
 }
 - (void)setContentInsetBottom:(CGFloat)contentInsetBottom {
-    [self setContentInset:UIEdgeInsetsMake(self.contentInset.top, self.contentInset.left, contentInsetBottom, self.contentInset.right)];
+    [self setContentInset:UIEdgeInsetsMake(self.contentInset.top,
+                                           self.contentInset.left,
+                                           contentInsetBottom,
+                                           self.contentInset.right)];
 }
 - (void)setContentInsetRight:(CGFloat)contentInsetRight {
-    [self setContentInset:UIEdgeInsetsMake(self.contentInset.top, self.contentInset.left, self.contentInset.bottom, contentInsetRight)];
+    [self setContentInset:UIEdgeInsetsMake(self.contentInset.top,
+                                           self.contentInset.left,
+                                           self.contentInset.bottom,
+                                           contentInsetRight)];
 }
 
 - (CGFloat)contentInsetTop {

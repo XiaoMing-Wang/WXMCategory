@@ -30,5 +30,4 @@
 #import "UIControl+WXMKit.h"
 #import "UILabel+WXMKit.h"
 
-
 #endif /* WXMCategoryHeader_h */

@@ -50,21 +50,22 @@
                                                     message:(NSString *)message
                                                      cancel:(NSString *)cancle
                                                 otherAction:(NSArray *)otherAction
-                                              completeBlock:(void (^)(NSInteger buttonIndex))block {
+                                              completeBlock:(void (^)(NSInteger idx))block {
     
     [[NSNotificationCenter defaultCenter] postNotificationName:WXM_KEYS object:nil];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:message
-                                                            preferredStyle:1];
+    UIAlertController *alert = nil;
+    alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:1];
     
-    UIAlertAction *cl = [UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *acn) {
+    UIAlertAction *cancleAction = nil;
+    cancleAction = [UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *acn) {
         if (block) block(0);
     }];
-    [alert addAction:cl];
+    [alert addAction:cancleAction];
     
     [otherAction enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSString * ts = [otherAction objectAtIndex:idx];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:ts style:0 handler:^(UIAlertAction *acn) {
+        UIAlertAction *action = nil;
+        action = [UIAlertAction actionWithTitle:ts style:0 handler:^(UIAlertAction *a) {
             if (block) block(idx + 1);
         }];
         [alert addAction:action];
@@ -79,21 +80,21 @@
                                                     message:(NSString *)message
                                                      cancel:(NSString *)cancle
                                                 otherAction:(NSArray *)otherAction
-                                              completeBlock:(void (^)(NSInteger buttonIndex))block {
+                                              completeBlock:(void (^)(NSInteger idx))block {
     [[NSNotificationCenter defaultCenter] postNotificationName:WXM_KEYS object:nil];
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title
-                                                                   message:message
-                                                            preferredStyle:0];
+    UIAlertController *alert = nil;
+    alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:0];
     
-    UIAlertAction *cl=[UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *action) {
+    UIAlertAction *cancleAction = nil;
+    cancleAction = [UIAlertAction actionWithTitle:cancle style:1 handler:^(UIAlertAction *a) {
         if (block) block(0);
     }];
-    [alert addAction:cl];
-    
+    [alert addAction:cancleAction];
     
     [otherAction enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSString * ts = [otherAction objectAtIndex:idx];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:ts style:0 handler:^(UIAlertAction *action) {
+        UIAlertAction *action = nil;
+        action = [UIAlertAction actionWithTitle:ts style:0 handler:^(UIAlertAction *a) {
             if (block) block(idx + 1);
         }];
         [alert addAction:action];
@@ -222,7 +223,8 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 - (void)setWxm_messageFont:(UIFont *)wxm_messageFont {
     if (self.message == nil) return;
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:self.message];
-    [att addAttribute:NSFontAttributeName value:wxm_messageFont range:NSMakeRange(0, self.message.length)];
+    NSRange range = NSMakeRange(0, self.message.length);
+    [att addAttribute:NSFontAttributeName value:wxm_messageFont range:range];
     self.message = @"";
     [self setValue:att forKey:@"attributedMessage"];
 }
