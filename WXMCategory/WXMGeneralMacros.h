@@ -10,39 +10,49 @@
 #define WXMGeneralMacros_h
 
 /** 屏幕frame */
-#define KSRect ([UIScreen mainScreen].bounds)
-#define KEdgeRect CGRectMake(0, KNBarHeight, KSWidth, KSHeight - KNBarHeight)
+#define kSRect ([UIScreen mainScreen].bounds)
+#define kEdgeRect CGRectMake(0, kNBarHeight, kSWidth, kSHeight - kNBarHeight)
+
+/** 导航栏高度 安全高度 */
+#define kNBarHeight ((kIPhoneX) ? 88.0f : 64.0f)
+#define kSafeHeight ((kIPhoneX) ? 35.0f : 0.0f)
+
+/** iphoneX */
+#define kIPhoneX \
+({BOOL isPhoneX = NO;\
+if (@available(iOS 11.0, *)) {\
+isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom > 0.0;\
+}\
+(isPhoneX);\
+})
 
 /** 屏幕宽高 */
-#define KSWidth [UIScreen mainScreen].bounds.size.width
-#define KSHeight [UIScreen mainScreen].bounds.size.height
-#define KSScale  [UIScreen mainScreen].scale
-
-#define KIPhoneX ((KSHeight == 812.0f || KSHeight == 896) ? YES : NO)
-#define KNBarHeight ((KIPhoneX) ? 88.0f : 64.0f)
+#define kSWidth [UIScreen mainScreen].bounds.size.width
+#define kSHeight [UIScreen mainScreen].bounds.size.height
+#define kSScale  [UIScreen mainScreen].scale
 
 /** 获取系统版本 */
-#define KIOS_Version [[[UIDevice currentDevice] systemVersion] floatValue]
-#define KCurrentSystemVersion [[UIDevice currentDevice] systemVersion]
+#define kIOS_Version [[[UIDevice currentDevice] systemVersion] floatValue]
+#define kCurrentSystemVersion [[UIDevice currentDevice] systemVersion]
 
 /** 获取当前语言 */
-#define KCurrentLanguage ([[NSLocale preferredLanguages] objectAtIndex:0])
+#define kCurrentLanguage ([[NSLocale preferredLanguages] objectAtIndex:0])
 
 /** Library 路径 */
-#define KLibraryboxPath \
+#define kLibraryboxPath \
 NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject
 
 /** 强弱引用 */
 #ifndef weakify
 #if DEBUG
 #if __has_feature(objc_arc)
-#define weakify(object) autoreleasepool{} __weak __typeof__(object) weak##_##object = object;
+#define weakify(object) autoreleasepool{} __weak __typeof__(object) object##_##weak = object;
 #else
 #define weakify(object) autoreleasepool{} __block __typeof__(object) block##_##object = object;
 #endif
 #else
 #if __has_feature(objc_arc)
-#define weakify(object) try{} @finally{} {} __weak __typeof__(object) weak##_##object = object;
+#define weakify(object) try{} @finally{} {} __weak __typeof__(object) object##_##weak = object;
 #else
 #define weakify(object) try{} @finally{} {} __block __typeof__(object) block##_##object = object;
 #endif
@@ -52,13 +62,13 @@ NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).f
 #ifndef strongify
 #if DEBUG
 #if __has_feature(objc_arc)
-#define strongify(object) autoreleasepool{} __typeof__(object) object = weak##_##object;
+#define strongify(object) autoreleasepool{} __typeof__(object) object = object##_##weak;
 #else
 #define strongify(object) autoreleasepool{} __typeof__(object) object = block##_##object;
 #endif
 #else
 #if __has_feature(objc_arc)
-#define strongify(object) try{} @finally{} __typeof__(object) object = weak##_##object;
+#define strongify(object) try{} @finally{} __typeof__(object) object = object##_##weak;
 #else
 #define strongify(object) try{} @finally{} __typeof__(object) object = block##_##object;
 #endif
@@ -66,23 +76,29 @@ NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).f
 #endif
 
 /** Window AppDelegate 通知中心和UserDefaults */
-#define KWindow [[[UIApplication sharedApplication] delegate] window]
-#define KAppDelegate ((AppDelegate *)([UIApplication sharedApplication].delegate))
-#define KNotificationCenter [NSNotificationCenter defaultCenter]
-#define KUserDefaults [NSUserDefaults standardUserDefaults]
-
+#define kWindow [[[UIApplication sharedApplication] delegate] window]
+#define kAppDelegate ((AppDelegate *)([UIApplication sharedApplication].delegate))
+#define kNotificationCenter [NSNotificationCenter defaultCenter]
+#define kUserDefaults [NSUserDefaults standardUserDefaults]
 
 /** 颜色(RGB) */
-#define KRGBColor(r, g, b) KRGBAColor(r, g, b, 1)
-#define KRGBAColor(r, g, b, a) \
+#define kRGBColor(r, g, b) kRGBAColor(r, g, b, 1)
+#define kRGBAColor(r, g, b, a) \
 [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:a]
 
 /**  颜色(0xFFFFFF) 不用带 0x 和 @"" */
-#define KCOLOR_WITH_HEX(hexValue) \
+#define kCOLOR_WITH_HEX(hexValue) \
 [UIColor colorWith\
 Red:((float)((0x##hexValue & 0xFF0000) >> 16)) / 255.0 \
 green:((float)((0x##hexValue & 0xFF00) >> 8)) / 255.0 \
 blue:((float)(0x##hexValue & 0xFF)) / 255.0 alpha:1.0f]
+
+/** 随机颜色 */
+#define kRandomColor  [UIColor \
+colorWithRed:((CGFloat) random() / (CGFloat) RAND_MAX) \
+green:((CGFloat) random() / (CGFloat) RAND_MAX) \
+blue:((CGFloat) random() / (CGFloat) RAND_MAX) \
+alpha:1.0];
 
 /** 颜色 */
 #define BlackColor       [UIColor blackColor]
@@ -102,41 +118,95 @@ blue:((float)(0x##hexValue & 0xFF)) / 255.0 alpha:1.0f]
 #define GrayColor        [UIColor grayColor]
 
 /** 获取当前系统时间戳 */
-#define KGetCurentTime \
+#define kGetCurentTime \
 [NSString stringWithFormat:@"%zd", (long)[[NSDate date] timeIntervalSince1970]]
+
+/*! 复制文字内容 */
+#define kCopyContent(aString) [[UIPasteboard generalPasteboard] setString:aString]
+
+/** 图片 */
+#define kImageName(aString) [UIImage imageNamed:[NSString stringWithFormat:@"%@",aString]]
+
+/** 空对象 */
+#define kEmptyObject(object) (object == nil \
+|| [object isKindOfClass:[NSNull class]] \
+|| ([object respondsToSelector:@selector(length)] && [(NSData *)object length] == 0) \
+|| ([object respondsToSelector:@selector(count)] && [(NSArray *)object count] == 0)) \
+|| ([object respondsToSelector:@selector(allKeys)] && \
+[[(NSDictionary *)object allKeys] count] == 0))
+
+/** 用safari打开URL */
+#define kOpenUrl(aString) \
+[[UIApplication sharedApplication] openURL:[NSURL URLWithString:aString]]
+
+/** 角度转弧度 */
+#define kDegreesToRadian(x) (M_PI * (x) / 180.0)
+
+/** 弧度转角度 */
+#define kRadianToDegrees(radian) (radian * 180.0)/(M_PI)
 
 /** 打印 */
 #ifdef DEBUG
-#define KFormatLog(FORMAT, ...)           \
+#define kFormatLog(FORMAT, ...)           \
 fprintf(stderr, "%s  %d行 ------>:\t%s\n", \
 [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], \
 __LINE__, \
 [[NSString stringWithFormat:FORMAT,\
 ##__VA_ARGS__] UTF8String]);
 
-#define KNSLog(...) KFormatLog(@"%@", KMASBoxValue(__VA_ARGS__));
+#define kNSLog(...) kFormatLog(@"%@", kMASBoxValue(__VA_ARGS__));
 #else
-#define KFormatLog(FORMAT, ...) nil;
-#define KNSLog(...) nil;
+#define kFormatLog(FORMAT, ...) nil;
+#define kNSLog(...) nil;
 #endif
 
-#define KMASBoxValue(value) aMASBoxValue(@encode(__typeof__(value)), (value))
-#define KiOS9 [[UIDevice currentDevice] systemVersion].floatValue >= 9.0
-#define Kiphone5 (CGRectGetHeight([UIScreen mainScreen].bounds) == 568.0)
-#define KiPhone6 (CGRectGetHeight([UIScreen mainScreen].bounds) == 667.0)
-#define KiPhone6P ([UIScreen mainScreen].bounds.size.width > 400.0)
+#define kMASBoxValue(value) aMASBoxValue(@encode(__typeof__(value)), (value))
+#define kiOS9 [[UIDevice currentDevice] systemVersion].floatValue >= 9.0
+#define kIphone5 (CGRectGetHeight([UIScreen mainScreen].bounds) == 568.0)
+#define kIPhone6 (CGRectGetHeight([UIScreen mainScreen].bounds) == 667.0)
+#define kIPhone6P ([UIScreen mainScreen].bounds.size.width > 400.0)
 
 /** 线程 */
-static inline void wxm_dispatch_async_on_main_queue(void (^block)(void)) {
+static inline void wk_dispatch_async_on_main_queue(void (^block)(void)) {
     dispatch_async(dispatch_get_main_queue(), block);
 }
-static inline void wxm_dispatch_async_on_global_queue(void (^block)(void)) {
+
+static inline void wk_dispatch_async_on_global_queue(void (^block)(void)) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 }
-static inline void wxm_dispatch_after_main_queue(CGFloat delay, void (^block)(void)) {
+
+static inline void wk_dispatch_after_main_queue(CGFloat delay, void (^block)(void)) {
     dispatch_queue_t queue = dispatch_get_main_queue();
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), queue, block);
+    int64_t delay64 = (int64_t)(delay * NSEC_PER_SEC);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay64), queue, block);
 }
+
+/** block */
+typedef void (^kVoidCallback)(void);
+typedef BOOL (^kBoolCallback)(void);
+typedef int  (^kIntCallback) (void);
+typedef id   (^kIdCallback)  (void);
+
+typedef void (^kVoidCallback_Int)(int index);
+typedef BOOL (^kBoolCallback_Int)(int index);
+typedef int  (^kIntCallback_Int) (int index);
+typedef id   (^kIdCallback_Int)  (int index);
+
+typedef void (^kVoidCallback_Str)(NSString *aString);
+typedef BOOL (^kBoolCallback_Str)(NSString *aString);
+typedef int  (^kIntCallback_Str) (NSString *aString);
+typedef id   (^kIdCallback_Str)  (NSString *aString);
+
+typedef void (^kVoidCallback_Id)(id obj);
+typedef BOOL (^kBoolCallback_Id)(id obj);
+typedef int  (^kIntCallback_Id) (id obj);
+typedef id   (^kIdCallback_Id)  (id obj);
+
+/**  执行回调 */
+#define kBlock_exec(block, ...) if (block) { block(__VA_ARGS__); }
+
+/**  判断string */
+#define kEqualString(aString, bString)  [aString isEqualToString:bString]
 
 /** 将括号内的类型转化成id类型 */
 static inline id aMASBoxValue(const char *type, ...) {
