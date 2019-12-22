@@ -25,6 +25,15 @@ static char doubleTap;
 }
 
 /** 手势 */
+- (void)wc_addTapped:(id)target action:(SEL)action {
+    UITapGestureRecognizer *tapGes = nil;
+    tapGes = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
+    tapGes.numberOfTapsRequired = 1;
+    tapGes.numberOfTouchesRequired = 1;
+    self.userInteractionEnabled = YES;
+    [self addGestureRecognizer:tapGes];
+}
+
 - (UITapGestureRecognizer *)wc_addOnceTappedWithBlock:(void (^)(void))block {
     UITapGestureRecognizer *tap = [self addTapGesture:1 touches:1 selector:@selector(viewTapped:)];
     objc_setAssociatedObject(self, &onceTap, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -112,5 +121,8 @@ static char doubleTap;
     right.frame = rectNether;
 }
 
-
+/** 获取nib文件 */
++ (instancetype)xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex {
+    return [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil][currentIdex];
+}
 @end
