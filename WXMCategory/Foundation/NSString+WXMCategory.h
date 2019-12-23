@@ -36,13 +36,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGFloat)wc_getHeightWithFont:(CGFloat)fontSize;
 - (CGFloat)wc_getWidthWithFont:(CGFloat)fontSize;
 - (CGFloat)wc_getHeightWithFont:(CGFloat)fontSize width:(CGFloat)width;
+- (CGFloat)wc_getHeightOtherWithFont:(CGFloat)fontSize width:(CGFloat)width;
 
-/* 时间转化 */
+/* 时间戳转化String */
 - (NSString *)wc_timeForYYYY_MM_DD;
 - (NSString *)wc_timeForYYYY_MM_DD_HH_MM;
-- (NSString *)wc_timeForTimesTampWithFormatter:(NSString *)formatter;
+- (NSString *)wc_timeWithFormatter:(NSString *)formatter;
 
-/** 转换成时间戳 */
+/** String转换成时间戳 */
 - (NSInteger)wc_timestampForYYYY_MM_DD;
 - (NSInteger)wc_timestampWithFormatter:(NSString *)formatter;
 
@@ -51,6 +52,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 获取字符行数 */
 - (NSInteger)wc_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize;
+
+/** 转换为Base64编码 */
+- (NSString *)base64EncodedString;
+
+/** Base64解码 */
+- (NSString *)base64DecodedString ;
 @end
 
 NS_ASSUME_NONNULL_END

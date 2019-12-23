@@ -15,6 +15,8 @@ static char bottomNameKey;
 static char leftNameKey;
 static char rightNameKey;
 static char enabledKey;
+static char indicatorViewKey;
+static char buttonTextObjectKey;
 
 @implementation UIButton (WXMKit)
 
@@ -157,5 +159,33 @@ static char enabledKey;
     return imageView;
 }
 
+/** 显示菊花 */
+- (void)wc_showIndicator {
+    UIActivityIndicatorViewStyle style = UIActivityIndicatorViewStyleWhite;
+    UIActivityIndicatorView *indicator = nil;
+    indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:style];
+    
+    indicator.center = CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
+    [indicator startAnimating];
+    
+    NSString *currentButtonText = self.titleLabel.text;
+    objc_setAssociatedObject(self, &buttonTextObjectKey, currentButtonText, 1);
+    objc_setAssociatedObject(self, &indicatorViewKey, indicator, 1);
+    
+    self.enabled = NO;
+    [self setTitle:@"" forState:UIControlStateNormal];
+    [self addSubview:indicator];
+}
+
+/** 隐藏菊花 */
+- (void)wc_hideIndicator {
+    self.enabled = YES;
+    UIActivityIndicatorView *indicator = nil;
+    NSString *currentText = objc_getAssociatedObject(self, &buttonTextObjectKey);
+    indicator = (UIActivityIndicatorView *)objc_getAssociatedObject(self, &indicatorViewKey);
+        
+    [indicator removeFromSuperview];
+    [self setTitle:currentText forState:UIControlStateNormal];
+}
 @end
 

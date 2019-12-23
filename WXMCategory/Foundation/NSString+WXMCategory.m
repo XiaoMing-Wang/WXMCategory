@@ -6,11 +6,11 @@
 //  Copyright © 2016年 WQ. All rights reserved.
 //
 
-#import "NSString+WXMCategory.h"
+#include <zlib.h>
 #include <CommonCrypto/CommonCrypto.h>
 #import <CoreText/CoreText.h>
-#include <zlib.h>
 #import <objc/runtime.h>
+#import "NSString+WXMCategory.h"
 
 @implementation NSString (WXMCategory)
 
@@ -96,6 +96,21 @@
     return rect.size.height;
 }
 
+/** 求高 */
+- (CGFloat)wc_getHeightOtherWithFont:(CGFloat)fontSize width:(CGFloat)width {
+    if (fontSize == 0) fontSize = [UIFont systemFontSize];
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    style.lineBreakMode = NSLineBreakByCharWrapping;
+    style.alignment = NSTextAlignmentLeft;
+    
+    NSDictionary *dict = @{NSFontAttributeName:[UIFont systemFontOfSize:fontSize], NSParagraphStyleAttributeName:style};
+    NSAttributedString *string = [[NSAttributedString alloc]initWithString:self attributes:dict];
+    CGSize size =  [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
+                                        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+    CGFloat height = ceil(size.height) + 1;
+    return height;
+}
+
 /** 获取字符行数 */
 - (NSInteger)wc_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize {
     if (self.length == 0) return 0;
@@ -160,14 +175,18 @@
 }
 #pragma mark _____________________________________________ 时间转化
 
-/** 时间戳转换string */
+/* 时间戳转化String */
 - (NSString *)wc_timeForYYYY_MM_DD {
-    return [self wc_timeForTimesTampWithFormatter:@"yyyy-MM-dd"];
+    return [self wc_timeWithFormatter:@"yyyy-MM-dd"];
 }
+
+/* 时间戳转化String */
 - (NSString *)wc_timeForYYYY_MM_DD_HH_MM; {
-    return [self wc_timeForTimesTampWithFormatter:@"yyyy-MM-dd HH:mm"];
+    return [self wc_timeWithFormatter:@"yyyy-MM-dd HH:mm"];
 }
-- (NSString *)wc_timeForTimesTampWithFormatter:(NSString *)formatter {
+
+/* 时间戳转化String */
+- (NSString *)wc_timeWithFormatter:(NSString *)formatter {
     NSString * timeFormatter = self;
     if (timeFormatter.length >= 10) timeFormatter = [timeFormatter substringToIndex:10];
     NSDate *detaildate = [NSDate dateWithTimeIntervalSince1970:[timeFormatter doubleValue]];
@@ -176,15 +195,29 @@
     return [dateFormatter stringFromDate:detaildate];
 }
 
-/** string转换成时间戳 */
-- (NSInteger)wc_timestampForYYYY_MM_DD {
-    return [self wc_timestampWithFormatter:@"yyyy-MM-dd"];
-}
+/** String转换成时间戳 */
 - (NSInteger)wc_timestampWithFormatter:(NSString *)formatter {
     NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
     [dateformatter setDateFormat:formatter];
     NSDate *fromDate = [dateformatter dateFromString:self];
-    return (long) [fromDate timeIntervalSince1970];
+    return (long)[fromDate timeIntervalSince1970];
+}
+
+/** String转换成时间戳 */
+- (NSInteger)wc_timestampForYYYY_MM_DD {
+    return [self wc_timestampWithFormatter:@"yyyy-MM-dd"];
+}
+
+/**  转换为Base64编码 */
+- (NSString *)base64EncodedString {
+    NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
+    return [data base64EncodedStringWithOptions:0];
+}
+
+/**  将Base64编码还原 */
+- (NSString *)base64DecodedString {
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:self options:0];
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 @end
 

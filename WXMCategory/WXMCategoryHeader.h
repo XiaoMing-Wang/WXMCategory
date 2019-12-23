@@ -10,7 +10,6 @@
 #define WXMCategoryHeader_h
 
 #import "WXMGeneralMacros.h"
-
 #import "NSDictionary+WXMCategory.h"
 #import "NSString+WXMCategory.h"
 #import "NSMutableAttributedString+WXMCategory.h"
@@ -19,6 +18,7 @@
 #import "NSNotificationCenter+WXMCategory.h"
 #import "NSArray+Log.h"
 #import "UIColor+WXMCategory.h"
+#import "NSDate+WXMCategory.h"
 
 #import "UIView+WXMKit.h"
 #import "UIView+WXMLieKit.h"
@@ -30,5 +30,9 @@
 #import "UIControl+WXMKit.h"
 #import "UILabel+WXMKit.h"
 #import "UITableViewCell+WXMKit.h"
+#import "UITableView+WXMKit.h"
+
+#import "WXMAuthorityAssistant.h"
+#import "WXMRunLoopTransactions.h"
 
 #endif /* WXMCategoryHeader_h */

@@ -16,6 +16,12 @@
 /** 带动画的enabled */
 - (void)wc_enabledAnimation:(BOOL)enabled;
 
+/** 显示菊花 */
+- (void)wc_showIndicator;
+
+/** 隐藏菊花 */
+- (void)wc_hideIndicator;
+
 /**  */
 - (void)wc_setFontOfSize:(CGFloat)size;
 - (void)wc_setTitle:(NSString *)title;

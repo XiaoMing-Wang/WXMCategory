@@ -77,5 +77,23 @@
                                              pathForResource:plistName
                                              ofType:@"plist"]];
 }
+
+/** 重复的object只添加一次 */
+- (void)wc_addRepeatObject:(NSString *)object {
+    if (!object) return;
+    if (![self containsObject:object] && [self isKindOfClass:[NSMutableArray class]]) {
+        NSMutableArray *arrays = (NSMutableArray *)self;
+        [arrays addObject:object];
+    }
+}
+
+- (NSArray *)wc_reverseArray {
+    NSMutableArray *arrayTemp = [NSMutableArray arrayWithCapacity:self.count];
+    NSEnumerator *enumerator = [self reverseObjectEnumerator];
+    for (id element in enumerator) {
+        [arrayTemp addObject:element];
+    }
+    return arrayTemp;
+}
 @end
 

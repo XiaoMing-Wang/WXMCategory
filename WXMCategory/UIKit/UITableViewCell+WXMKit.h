@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 复用ID */
 + (NSString *)identifier;
 
+/** nib */
 + (UINib *)nib;
 
 @end

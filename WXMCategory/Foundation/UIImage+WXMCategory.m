@@ -248,4 +248,83 @@
     
     return outputImage;
 }
+
+/**
+画圆角遮罩图片
+@param radius    半径
+@param rectSize  大小
+@param fillColor 圆角被切掉的颜色
+@return 切好的图片
+*/
++ (UIImage *)wc_drawRoundedCornerImageWithRadius:(CGFloat)radius
+                                        rectSize:(CGSize)rectSize
+                                       fillColor:(UIColor *)fillColor {
+    
+    UIGraphicsBeginImageContextWithOptions(rectSize, false, [[UIScreen mainScreen] scale]);
+    CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    
+    UIBezierPath *bezierPath = [UIBezierPath bezierPath];
+
+    CGPoint hLeftUpPoint = CGPointMake(radius, 0);
+    CGPoint hRightUpPoint = CGPointMake(rectSize.width - radius, 0);
+    CGPoint hLeftDownPoint = CGPointMake(radius, rectSize.height);
+    
+    CGPoint vLeftUpPoint = CGPointMake(0, radius);
+    CGPoint vRightDownPoint = CGPointMake(rectSize.width, rectSize.height - radius);
+    
+    CGPoint centerLeftUp = CGPointMake(radius, radius);
+    CGPoint centerRightUp = CGPointMake(rectSize.width - radius, radius);
+    CGPoint centerLeftDown = CGPointMake(radius, rectSize.height - radius);
+    CGPoint centerRightDown = CGPointMake(rectSize.width - radius, rectSize.height - radius);
+    
+    [bezierPath moveToPoint:hLeftUpPoint];
+    [bezierPath addLineToPoint:hRightUpPoint];
+    
+    [bezierPath addArcWithCenter:centerRightUp
+                          radius:radius
+                      startAngle:(M_PI * 3 / 2)
+                        endAngle:(M_PI * 2)
+                       clockwise:YES];
+
+    [bezierPath addLineToPoint:vRightDownPoint];
+    [bezierPath addArcWithCenter:centerRightDown
+                          radius:radius
+                      startAngle:0
+                        endAngle:(M_PI / 2)
+                       clockwise:YES];
+
+    [bezierPath addLineToPoint:hLeftDownPoint];
+    [bezierPath addArcWithCenter:centerLeftDown
+                          radius:radius
+                      startAngle:(M_PI / 2)
+                        endAngle:(M_PI)
+                       clockwise:YES];
+
+    [bezierPath addLineToPoint:vLeftUpPoint];
+    [bezierPath addArcWithCenter:centerLeftUp
+                          radius:radius
+                      startAngle:(M_PI)
+                        endAngle:(M_PI * 3 / 2)
+                       clockwise:YES];
+
+    [bezierPath addLineToPoint:hLeftUpPoint];
+    [bezierPath closePath];
+
+    // If draw drection of outer path is same with inner path, final result is just outer path.
+    [bezierPath moveToPoint:CGPointZero];
+    [bezierPath addLineToPoint:CGPointMake(0, rectSize.height)];
+    [bezierPath addLineToPoint:CGPointMake(rectSize.width, rectSize.height)];
+    [bezierPath addLineToPoint:CGPointMake(rectSize.width, 0)];
+    [bezierPath addLineToPoint:CGPointZero];
+    [bezierPath closePath];
+
+    [fillColor setFill];
+    [bezierPath fill];
+
+    CGContextDrawPath(currentContext, kCGPathFillStroke);
+    UIImage *antiRoundedCornerImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return antiRoundedCornerImage;
+    
+}
 @end

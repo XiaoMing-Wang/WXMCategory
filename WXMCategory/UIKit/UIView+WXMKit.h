@@ -32,6 +32,8 @@
 @property (nonatomic, assign) CGFloat layoutRight;
 @property (nonatomic, assign) CGFloat layoutBottom;
 
+@property (nonatomic, assign) CGFloat layCornerRadius;
+
 - (void)layoutRight:(UIView *)refer offset:(CGFloat)offset;
 - (void)layoutBottom:(UIView *)refer offset:(CGFloat)offset;
 @end
