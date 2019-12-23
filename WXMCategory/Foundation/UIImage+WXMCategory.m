@@ -327,4 +327,51 @@
     return antiRoundedCornerImage;
     
 }
+
+/**  压缩图片*/
++ (UIImage *)wc_compressionImageWithOriginalImage:(UIImage *)image {
+    
+    /**  宽高比 */
+    CGFloat ratio = image.size.width / image.size.height;
+
+    /**  目标大小 */
+    CGFloat targetW = 1280;
+    CGFloat targetH = 1280;
+
+    /**  宽高均 <= 1280，图片尺寸大小保持不变 */
+    if (image.size.width < 1280 && image.size.height < 1280) {
+        return image;
+    } else if (image.size.width > 1280 && image.size.height > 1280) {
+
+        /** 宽大于高 取较小值(高)等于1280，较大值等比例压缩 */
+        if (ratio > 1) {
+            targetH = 1280;
+            targetW = targetH * ratio;
+        } else {
+            targetW = 1280;
+            targetH = targetW / ratio;
+        }
+    } else {
+        /**  宽或高 > 1280 宽图 图片尺寸大小保持不变 */
+        if (ratio > 2) {
+            targetW = image.size.width;
+            targetH = image.size.height;
+        } else if (ratio < 0.5) {
+            /**   长图 图片尺寸大小保持不变 */
+            targetW = image.size.width;
+            targetH = image.size.height;
+        } else if (ratio > 1) {
+            /**  宽大于高 取较大值(宽)等于1280，较小值等比例压缩 */
+            targetW = 1280;
+            targetH = targetW / ratio;
+        } else {
+            /**  高大于宽 取较大值(高)等于1280，较小值等比例压缩 */
+            targetH = 1280;
+            targetW = targetH * ratio;
+        }
+    }
+    
+    return [image wc_imageToSize:CGSizeMake(targetW, targetW)];
+}
+
 @end

@@ -28,6 +28,9 @@
 /** 获取启动图 */
 + (UIImage *)wc_getLaunchImage;
 
+/** 按比例重绘图片 */
++ (UIImage *)wc_compressionImageWithOriginalImage:(UIImage *)image;
+
 /**
  画圆角遮罩图片
  @param radius    半径
