@@ -31,13 +31,13 @@
 }
 
 /** 判断是否可用 */
-- (BOOL)wc_available {
+- (BOOL)available {
     return (self && [self isKindOfClass:[NSString class]] && self.length != 0);
 }
 
 /** 去掉空格 */
 - (NSString *)wc_removeSpace {
-    if (self.wc_available == NO) return nil;
+    if (self.available == NO) return nil;
     return [self stringByReplacingOccurrencesOfString:@" " withString:@""];
 }
 
@@ -59,7 +59,7 @@
 }
 
 /** md5 */
-- (NSString *)wc_md5String {
+- (NSString *)md5String {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
     unsigned char result[CC_MD5_DIGEST_LENGTH];
     CC_MD5(data.bytes, (CC_LONG) data.length, result);

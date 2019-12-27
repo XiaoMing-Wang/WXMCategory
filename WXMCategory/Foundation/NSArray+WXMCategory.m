@@ -67,7 +67,7 @@
 }
 
 /** 判断数组是否可用 */
-- (BOOL)wc_available {
+- (BOOL)available {
     return (self && [self isKindOfClass:[NSArray class]] && self.count != 0);
 }
 

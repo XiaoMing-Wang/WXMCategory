@@ -31,7 +31,6 @@
 @property (nonatomic, assign) BOOL layoutCenterSupView;
 @property (nonatomic, assign) CGFloat layoutRight;
 @property (nonatomic, assign) CGFloat layoutBottom;
-
 @property (nonatomic, assign) CGFloat layCornerRadius;
 
 - (void)layoutRight:(UIView *)refer offset:(CGFloat)offset;

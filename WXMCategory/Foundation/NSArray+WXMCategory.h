@@ -11,7 +11,7 @@
 @interface NSArray (WXMCategory)
 
 /** 判断数组是否可用 */
-- (BOOL)wc_available;
+- (BOOL)available;
 
 /** 加载plist文件 */
 + (NSArray *)wc_arrayWithPlist:(NSString *)plistName;

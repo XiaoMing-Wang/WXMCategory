@@ -11,7 +11,7 @@
 @interface NSDictionary (WXMCategory)
 
 /** 判断字典是否可用 */
-- (BOOL)wc_available;
+- (BOOL)available;
 
 /** 转字符串 */
 - (NSString *)wc_jsonRepresentation;

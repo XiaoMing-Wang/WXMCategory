@@ -8,7 +8,6 @@
 #define WXM_LP ([UIScreen mainScreen].bounds.size.width > 375) ? YES : NO
 #define WXM_FontSize WXM_LP ? 17 : 16
 #define WXM_TinColor [UIColor blueColor]
-
 #import "UIBarButtonItem+WXMKit.h"
 #import <objc/runtime.h>
 
@@ -53,8 +52,8 @@ static char kimage_title;
                                       options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                    attributes:@{ NSFontAttributeName: font }
                                       context:nil];
-    
-    UIButton *wrapButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0,rect.size.width,20)];
+
+    UIButton *wrapButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, rect.size.width, 20)];
     [wrapButton setTitle:title forState:UIControlStateNormal];
     [wrapButton setTitleColor:tintColor ?: WXM_TinColor forState:UIControlStateNormal];
     wrapButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
@@ -74,16 +73,14 @@ static char kimage_title;
 
 /** button 图片 */
 + (UIBarButtonItem *)wc_imageItem:(NSString *)imageName action:(void (^)(void))action {
-    
     UIButton *wrapButton = [[UIButton alloc] init];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:wrapButton];
     [wrapButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
     [wrapButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateHighlighted];
     CGSize size = wrapButton.currentBackgroundImage.size;
     wrapButton.frame = CGRectMake(0, 0, size.width, size.height);
-    [wrapButton addTarget:item action:@selector(kimageEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [wrapButton addTarget:item action:@selector(imageEvent:) forControlEvents:UIControlEventTouchUpInside];
     objc_setAssociatedObject(wrapButton, &kimage, action, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
     return item;
 }
 
@@ -101,17 +98,17 @@ static char kimage_title;
     return item;
 }
 
-- (void)kimageEvent:(UIButton *)wrapButton {
+- (void)imageEvent:(UIButton *)wrapButton {
     void (^block)(void) = (void (^)(void))objc_getAssociatedObject(wrapButton, &kimage);
     if (block) block();
 }
 
 /** wrapButton 自定义带图片带文字 */
-+ (UIBarButtonItem *)barItemWithImageName:(NSString *)imageName
-                                    title:(NSString *)title
-                                   action:(void (^)(void))action {
++ (UIBarButtonItem *)wc_imageWithTitleItem:(NSString *)imageName
+                                     title:(NSString *)title
+                                    action:(void (^)(void))action {
     
-    SEL sel = @selector(kimage_titleEvent:);
+    SEL sel = @selector(image_titleEvent:);
     UIImage *iconImage = [UIImage imageNamed:imageName];
     UIButton *wrapButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:wrapButton];
@@ -137,10 +134,10 @@ static char kimage_title;
     return item;
 }
 
-+ (UIBarButtonItem *)barItemWithImageName:(NSString *)imageName
-                                    title:(NSString *)title
-                                   target:(id)target
-                                   action:(SEL)action {
++ (UIBarButtonItem *)wc_imageWithTitleItem:(NSString *)imageName
+                                     title:(NSString *)title
+                                    target:(id)target
+                                    action:(SEL)action {
     
     UIImage *iconImage = [UIImage imageNamed:imageName];
     UIButton *wrapButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
@@ -166,7 +163,7 @@ static char kimage_title;
     return item;
 }
 
-- (void)kimage_titleEvent:(UIButton *)wrapButton {
+- (void)image_titleEvent:(UIButton *)wrapButton {
     void (^block) (void) = (void (^)(void))objc_getAssociatedObject(wrapButton, &kimage_title);
     if (block) block();
 }

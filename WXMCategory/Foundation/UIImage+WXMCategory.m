@@ -329,26 +329,27 @@
 }
 
 /**  压缩图片*/
+#define WCCOMPRESS_MAXWIDTH 1280
 + (UIImage *)wc_compressionImageWithOriginalImage:(UIImage *)image {
     
     /**  宽高比 */
     CGFloat ratio = image.size.width / image.size.height;
 
     /**  目标大小 */
-    CGFloat targetW = 1280;
-    CGFloat targetH = 1280;
+    CGFloat targetW = WCCOMPRESS_MAXWIDTH;
+    CGFloat targetH = WCCOMPRESS_MAXWIDTH;
 
     /**  宽高均 <= 1280，图片尺寸大小保持不变 */
-    if (image.size.width < 1280 && image.size.height < 1280) {
+    if (image.size.width < WCCOMPRESS_MAXWIDTH && image.size.height < WCCOMPRESS_MAXWIDTH) {
         return image;
-    } else if (image.size.width > 1280 && image.size.height > 1280) {
+    } else if (image.size.width > WCCOMPRESS_MAXWIDTH && image.size.height > WCCOMPRESS_MAXWIDTH) {
 
         /** 宽大于高 取较小值(高)等于1280，较大值等比例压缩 */
         if (ratio > 1) {
-            targetH = 1280;
+            targetH = WCCOMPRESS_MAXWIDTH;
             targetW = targetH * ratio;
         } else {
-            targetW = 1280;
+            targetW = WCCOMPRESS_MAXWIDTH;
             targetH = targetW / ratio;
         }
     } else {
@@ -362,11 +363,11 @@
             targetH = image.size.height;
         } else if (ratio > 1) {
             /**  宽大于高 取较大值(宽)等于1280，较小值等比例压缩 */
-            targetW = 1280;
+            targetW = WCCOMPRESS_MAXWIDTH;
             targetH = targetW / ratio;
         } else {
             /**  高大于宽 取较大值(高)等于1280，较小值等比例压缩 */
-            targetH = 1280;
+            targetH = WCCOMPRESS_MAXWIDTH;
             targetW = targetH * ratio;
         }
     }
