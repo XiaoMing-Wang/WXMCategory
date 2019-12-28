@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)wc_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel; /** 对象方法 */
 
 /** runtime获取所有属性 */
-+ (NSArray *)wxm_getFropertys;
++ (NSArray *)wc_getFropertys;
 
 /** 绑定 */
 - (void)wc_setAssociateValue:(nullable id)value withKey:(void *)key;

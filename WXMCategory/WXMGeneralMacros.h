@@ -125,7 +125,7 @@ alpha:1.0];
 #define kCopyContent(aString) [[UIPasteboard generalPasteboard] setString:aString]
 
 /** 图片 */
-#define kImageName(aString) [UIImage imageNamed:[NSString stringWithFormat:@"%@",aString]]
+#define kImageWithName(aString) [UIImage imageNamed:[NSString stringWithFormat:@"%@",aString]]
 
 /** 空对象 */
 #define kEmptyObject(object) (object == nil \
@@ -162,6 +162,7 @@ __LINE__, \
 
 #define kMASBoxValue(value) aMASBoxValue(@encode(__typeof__(value)), (value))
 #define kiOS9 [[UIDevice currentDevice] systemVersion].floatValue >= 9.0
+#define kWidth320 (kSWidth == 320)
 #define kIphone5 (CGRectGetHeight([UIScreen mainScreen].bounds) == 568.0)
 #define kIPhone6 (CGRectGetHeight([UIScreen mainScreen].bounds) == 667.0)
 #define kIPhone6P ([UIScreen mainScreen].bounds.size.width > 400.0)
