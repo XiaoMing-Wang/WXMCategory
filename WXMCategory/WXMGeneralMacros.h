@@ -127,6 +127,9 @@ alpha:1.0];
 /** 图片 */
 #define kImageWithName(aString) [UIImage imageNamed:[NSString stringWithFormat:@"%@",aString]]
 
+/** indexPath */
+#define kIndexPath(row) [NSIndexPath indexPathForRow:row inSection:0]
+
 /** 空对象 */
 #define kEmptyObject(object) (object == nil \
 || [object isKindOfClass:[NSNull class]] \
