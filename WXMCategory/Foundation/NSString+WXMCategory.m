@@ -36,9 +36,15 @@
 }
 
 /** 去掉空格 */
-- (NSString *)wc_removeSpace {
+- (NSString *)removeSpace {
     if (self.available == NO) return nil;
     return [self stringByReplacingOccurrencesOfString:@" " withString:@""];
+}
+
+/** 转换成url */
+- (NSURL *)convertUrl {
+    if (self.available == NO) return nil;
+    return [NSURL URLWithString:self];
 }
 
 /** json字符串转字典*/
@@ -55,7 +61,7 @@
     NSInteger currentDigits = [self componentsSeparatedByString:@"."].lastObject.length;
     if ([self containsString:@"."] && (digits == currentDigits)) return self;
     NSString *format = [NSString stringWithFormat:@"%%.%ldf",(long)digits];
-    return [NSString stringWithFormat:format, self.floatValue];
+    return [NSString stringWithFormat:format, self.doubleValue];
 }
 
 /** md5 */
@@ -72,7 +78,7 @@
             ].lowercaseString;
 }
 
-/** 求 width */
+/** 求width */
 - (CGFloat)wc_getWidthWithFont:(CGFloat)fontSize {
     if (!fontSize) fontSize = [UIFont systemFontSize];
     UIFont *font = [UIFont systemFontOfSize:fontSize];
@@ -96,14 +102,16 @@
     return rect.size.height;
 }
 
-/** 求高 */
 - (CGFloat)wc_getHeightOtherWithFont:(CGFloat)fontSize width:(CGFloat)width {
     if (fontSize == 0) fontSize = [UIFont systemFontSize];
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.lineBreakMode = NSLineBreakByCharWrapping;
     style.alignment = NSTextAlignmentLeft;
+    NSDictionary *dict = @{
+        NSFontAttributeName: [UIFont systemFontOfSize:fontSize],
+        NSParagraphStyleAttributeName: style
+    };
     
-    NSDictionary *dict = @{NSFontAttributeName:[UIFont systemFontOfSize:fontSize], NSParagraphStyleAttributeName:style};
     NSAttributedString *string = [[NSAttributedString alloc]initWithString:self attributes:dict];
     CGSize size =  [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
                                         options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
@@ -115,7 +123,7 @@
 - (NSInteger)wc_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize {
     if (self.length == 0) return 0;
     CGFloat allHeight = [self wc_getHeightWithFont:fontSize width:maxWidth];
-    CGFloat lineHeight = [@"T" wc_getHeightWithFont:fontSize];
+    CGFloat lineHeight = [self wc_getHeightWithFont:fontSize];
     NSInteger totalRow = (allHeight / lineHeight);
     return totalRow;
 }

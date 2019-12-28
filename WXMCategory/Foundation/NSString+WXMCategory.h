@@ -17,11 +17,14 @@ NS_ASSUME_NONNULL_BEGIN
 /** 判断是否可用 */
 - (BOOL)available;
 
+/** 是去掉空格*/
+- (NSString *)removeSpace;
+
+/** 转换成url */
+- (NSURL *)convertUrl;
+
 /* 保留小数 */
 - (NSString *)wc_preciseTdigits:(NSInteger)digits;
-
-/** 是去掉空格*/
-- (NSString *)wc_removeSpace;
 
 /** json字符串转字典 */
 - (NSDictionary *)wc_jsonToDictionary;
