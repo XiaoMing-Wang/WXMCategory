@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)removeSpace;
 
 /** 转换成url */
-- (NSURL *)convertUrl;
+- (NSURL *)urlConvert;
 
 /* 保留小数 */
 - (NSString *)wc_preciseTdigits:(NSInteger)digits;

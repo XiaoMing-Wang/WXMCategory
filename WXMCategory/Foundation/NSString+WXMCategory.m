@@ -42,7 +42,7 @@
 }
 
 /** 转换成url */
-- (NSURL *)convertUrl {
+- (NSURL *)urlConvert {
     if (self.available == NO) return nil;
     return [NSURL URLWithString:self];
 }

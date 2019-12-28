@@ -4,8 +4,8 @@
 //  Created by edz on 2019/4/30.
 //  Copyright © 2019年 wq. All rights reserved.
 //
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #ifndef WXMGeneralMacros_h
 #define WXMGeneralMacros_h
 

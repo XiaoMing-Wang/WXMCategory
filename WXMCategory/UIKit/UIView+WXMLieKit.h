@@ -26,8 +26,8 @@
 - (UITapGestureRecognizer *)wc_addDoubleTappedWithBlock:(void (^)(void))block;
 
 /** 居中设置 */
-- (void)wc_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
 - (void)wc_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval;
+- (void)wc_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
 
 /** 获取xib */
 + (instancetype)xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex;
