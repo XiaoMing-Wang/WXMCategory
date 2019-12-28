@@ -67,7 +67,7 @@
 }
 
 /** 判断字典是否可用 */
-- (BOOL)wc_available {
+- (BOOL)available {
     return (self && [self isKindOfClass:[NSDictionary class]] && self.allKeys.count != 0);
 }
 

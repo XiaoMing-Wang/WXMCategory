@@ -12,10 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSString (WXMCategory)
 
 /** md5 */
-- (NSString *)wc_md5String;
+- (NSString *)md5String;
 
 /** 判断是否可用 */
-- (BOOL)wc_available;
+- (BOOL)available;
 
 /* 保留小数 */
 - (NSString *)wc_preciseTdigits:(NSInteger)digits;

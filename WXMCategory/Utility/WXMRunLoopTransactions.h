@@ -15,11 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** runloop */
 + (void)delayRunSEL:(SEL)sel object:(id)object;
 
-
 /** runloop */
-+ (WXMRunLoopTransactions *)transactionsWithTarget:(id)target
-                                          selector:(SEL)selector
-                                            object:(id)object;
++ (WXMRunLoopTransactions *)transactionsWithTarget:(id)target selector:(SEL)selector object:(id)object;
+
 /** runloop */
 - (void)commit;
 

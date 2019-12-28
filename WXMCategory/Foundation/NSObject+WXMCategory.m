@@ -145,8 +145,6 @@ static char holdTimerKey;
     return _arrayM;
 }
 
-- (void)setNilValueForKey:(NSString *)key {}
-
 #pragma mark _____________________________________________________________________KVO
 
 /** 监听 有block的 */
@@ -215,8 +213,7 @@ static char holdTimerKey;
 - (BOOL)wc_archiverWithPath:(NSString *)path {
     BOOL success = NO;
     @try {
-        success = [NSKeyedArchiver archiveRootObject:self
-                                              toFile:[UserData stringByAppendingPathComponent:path]];
+        success = [NSKeyedArchiver archiveRootObject:self toFile:[UserData stringByAppendingPathComponent:path]];
     } @catch (NSException *exception) {} @finally {}
     return success;
 }
@@ -231,6 +228,23 @@ static char holdTimerKey;
 
 + (UINib *)wc_nib {
     return [UINib nibWithNibName:NSStringFromClass(self) bundle:nil];
+}
+
+- (void)setNilValueForKey:(NSString *)key {}
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {}
+- (instancetype)deepsCopy {
+    @try {
+        
+        NSObject *object = [[self class] new];
+        [[[self class] wc_getFropertys] enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
+            if (key) {
+                id value = [self valueForKey:key];
+                if (key && value) [object setValue:value forKey:key];
+            }
+        }];
+        return object;
+        
+    } @catch (NSException *exception) {} @finally {}
 }
 
 @end

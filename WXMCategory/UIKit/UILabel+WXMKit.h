@@ -19,5 +19,4 @@
 /** 字间距 */
 @property (nonatomic, assign) CGFloat wc_wordSpace;
 
-
 @end
