@@ -42,9 +42,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)wc_archiverWithPath:(NSString *)path;
 + (instancetype)wc_unArchiverWithPath:(NSString *)path;
 
+/** nib文件 */
 + (UINib *)wc_nib;
 
 /** 深拷贝 */
 - (instancetype)deepsCopy;
+
 @end
 NS_ASSUME_NONNULL_END
