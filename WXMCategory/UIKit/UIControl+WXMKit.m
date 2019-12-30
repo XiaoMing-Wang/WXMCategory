@@ -16,7 +16,7 @@ static char touchKey;
 
 + (void)load {
     SEL method1 = @selector(sendAction:to:forEvent:);
-    SEL method2 = @selector(wxm_sendAction:to:forEvent:);
+    SEL method2 = @selector(wc_sendAction:to:forEvent:);
     [self swizzleInstanceMethod:method1 with:method2];
 }
 
@@ -48,7 +48,7 @@ static char touchKey;
 }
 
 /** 拦截系统 */
-- (void)wxm_sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
+- (void)wc_sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
     if ([self isKindOfClass:[UIButton class]]) {
         BOOL interruptResponse = [objc_getAssociatedObject(self, &responseKey) boolValue];
         if (interruptResponse && self.respondInterval > 0) {
@@ -66,7 +66,7 @@ static char touchKey;
         }
     }
     
-    [self wxm_sendAction:action to:target forEvent:event];
+    [self wc_sendAction:action to:target forEvent:event];
 }
 
 - (void)setRespondInterval:(CGFloat)respondInterval {

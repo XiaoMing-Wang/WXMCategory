@@ -14,8 +14,6 @@
 + (UIBarButtonItem *)wc_titleItem:(NSString *)title
                         tintColor:(UIColor *)tintColor
                            action:(void (^)(void))action;
-
-/** title  */
 + (UIBarButtonItem *)wc_titleCustomItem:(NSString *)title
                               tintColor:(UIColor *)tintColor
                                  action:(void (^)(void))action;

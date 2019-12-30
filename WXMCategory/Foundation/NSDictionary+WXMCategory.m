@@ -21,15 +21,15 @@
     SEL objectForKey = @selector(objectForKey:);
     SEL safeObjectForKey = @selector(safeObjectForKey:);
     
-    [self wxm_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryI];
-    [self wxm_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryM];
+    [self wc_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryI];
+    [self wc_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryM];
     
-    [self wxm_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryI];
-    [self wxm_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryM];
+    [self wc_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryI];
+    [self wc_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryM];
 }
 
 /** -方法 */
-+ (BOOL)wxm_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel class:(Class)aclass {
++ (BOOL)wc_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel class:(Class)aclass {
     Method original = class_getInstanceMethod(aclass, originalSel);
     Method newMethod = class_getInstanceMethod(aclass, newSel);
     if (!original || !newMethod) return NO;

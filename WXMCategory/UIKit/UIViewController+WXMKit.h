@@ -51,7 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)wc_haveChildViewControllers:(NSString *)vcName;
 
 /** 添加子控制器到NavigationController*/
-- (void)wxm_insertViewControlle:(NSString *)vcName index:(NSInteger)index;
+- (void)wc_insertViewControlle:(NSString *)vcName index:(NSInteger)index;
 
 @end
 
