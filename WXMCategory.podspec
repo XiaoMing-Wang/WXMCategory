@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
 
 
   s.name         = "WXMCategory"
-  s.version      = "1.0.4"
+  s.version      = "1.0.5"
   s.summary      = "类别"
   s.description  = <<-DESC
 			一些常用工具类的工具类别
@@ -15,7 +15,8 @@ Pod::Spec.new do |s|
   s.platform     = :ios, "9.0"
   s.source       = { :git => "https://github.com/XiaoMing-Wang/WXMCategory.git", :tag => "#{s.version}" }
 
-  s.source_files  = "WXMCategory"
+  #s.source_files  = "Class"
+  s.source_files = 'Class'
 
   s.requires_arc = true
   #s.dependency "SDWebImage", "~> 4.4.2"
