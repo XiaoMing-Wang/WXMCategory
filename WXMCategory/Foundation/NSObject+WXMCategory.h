@@ -48,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 深拷贝 */
 - (instancetype)deepsCopy;
+- (NSDictionary *)debugAllKeyValue;
 
 @end
 NS_ASSUME_NONNULL_END

@@ -8,7 +8,7 @@
 //Library 路径
 #define KLibraryboxPath \
 NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject
-#define UserData [KLibraryboxPath stringByAppendingPathComponent:@"UserData"]
+#define kUserData [KLibraryboxPath stringByAppendingPathComponent:@"UserData"]
 #import "NSObject+WXMCategory.h"
 #import <objc/runtime.h>
 
@@ -213,7 +213,8 @@ static char holdTimerKey;
 - (BOOL)wc_archiverWithPath:(NSString *)path {
     BOOL success = NO;
     @try {
-        success = [NSKeyedArchiver archiveRootObject:self toFile:[UserData stringByAppendingPathComponent:path]];
+        path = [kUserData stringByAppendingPathComponent:path];
+        success = [NSKeyedArchiver archiveRootObject:self toFile:path];
     } @catch (NSException *exception) {} @finally {}
     return success;
 }
@@ -221,7 +222,8 @@ static char holdTimerKey;
 /** 解归档 */
 + (instancetype)wc_unArchiverWithPath:(NSString *)path {
     @try {
-        id newFolder = [NSKeyedUnarchiver unarchiveObjectWithFile:[UserData stringByAppendingPathComponent:path]];
+        path = [kUserData stringByAppendingPathComponent:path];
+        id newFolder = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
         return newFolder;
     } @catch (NSException *exception) {} @finally {}
 }
@@ -233,18 +235,49 @@ static char holdTimerKey;
 - (void)setNilValueForKey:(NSString *)key {}
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key {}
 - (instancetype)deepsCopy {
-    @try {
-        
-        NSObject *object = [[self class] new];
-        [[[self class] wc_getFropertys] enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
-            if (key) {
+    NSObject *object = [[self class] new];
+    [[[self class] wc_getFropertys] enumerateObjectsUsingBlock:^(NSString *key, NSUInteger idx, BOOL *stop) {
+        if (key) {
+            @try {
                 id value = [self valueForKey:key];
                 if (key && value) [object setValue:value forKey:key];
-            }
-        }];
-        return object;
-        
-    } @catch (NSException *exception) {} @finally {}
+            } @catch (NSException *exception) {} @finally {}
+        }
+    }];
+    return object;
 }
 
+/** 打印model的值 */
+- (NSString *)debugDescription {
+    if ([self isKindOfClass:[NSArray class]] || [self isKindOfClass:[NSDictionary class]] || [self isKindOfClass:[NSString class]] || [self isKindOfClass:[NSNumber class]]) {
+        return [self debugDescription];
+    }
+   
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    uint count;
+    objc_property_t *properties = class_copyPropertyList([self class], &count);
+    for (int i = 0; i<count; i++) {
+        objc_property_t property = properties[i];
+        NSString *name = @(property_getName(property));
+        id value = [self valueForKey:name]?:@"nil";
+        [dictionary setObject:value forKey:name];
+    }
+    
+    free(properties);
+    return [NSString stringWithFormat:@"<%@: %p> -- %@",[self class],self, dictionary];
+}
+
+- (NSDictionary *)debugAllKeyValue {
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    uint count;
+    objc_property_t *properties = class_copyPropertyList([self class], &count);
+    for (int i = 0; i<count; i++) {
+        objc_property_t property = properties[i];
+        NSString *name = @(property_getName(property));
+        id value = [self valueForKey:name]?:@"nil";
+        [dictionary setObject:value forKey:name];
+    }
+    free(properties);
+    return dictionary;
+}
 @end

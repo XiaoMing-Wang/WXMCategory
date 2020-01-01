@@ -125,4 +125,23 @@ static char doubleTap;
 + (instancetype)xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex {
     return [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil][currentIdex];
 }
+
+/**
+ UIView任意边角画圆角
+ 
+ @param rectCorner 圆角边
+ @param cornerRadius 圆角大小
+ */
+- (void)wc_drawSemicircleWithRectCorner:(UIRectCorner)rectCorner
+                           cornerRadius:(CGFloat)cornerRadius {
+    CGSize size = CGSizeMake(cornerRadius,cornerRadius);
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                   byRoundingCorners:(rectCorner)
+                                                         cornerRadii:size];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc] init];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.layer.mask = maskLayer;
+}
+
 @end

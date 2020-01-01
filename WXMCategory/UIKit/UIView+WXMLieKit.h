@@ -31,4 +31,13 @@
 
 /** 获取xib */
 + (instancetype)xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex;
+
+/**
+ UIView任意边角画圆角
+ 
+ @param rectCorner 圆角边
+ @param cornerRadius 圆角大小
+ */
+- (void)wc_drawSemicircleWithRectCorner:(UIRectCorner)rectCorner
+                           cornerRadius:(CGFloat)cornerRadius;
 @end
