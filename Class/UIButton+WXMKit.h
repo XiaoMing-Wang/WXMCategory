@@ -22,7 +22,6 @@
 /** 隐藏菊花 */
 - (void)wc_hideIndicator;
 
-/**  */
 - (void)wc_setFontOfSize:(CGFloat)size;
 - (void)wc_setTitle:(NSString *)title;
 - (void)wc_setTitleColor:(UIColor *)color;

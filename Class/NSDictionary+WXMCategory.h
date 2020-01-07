@@ -16,4 +16,7 @@
 /** 转字符串 */
 - (NSString *)wc_jsonRepresentation;
 
+/** 加载plist文件 */
++ (NSDictionary *)wc_dictionaryWithPlist:(NSString *)plistName;
+
 @end
