@@ -86,7 +86,7 @@ NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).f
 #define kRGBAColor(r, g, b, a) \
 [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:a]
 
-/**  颜色(0xFFFFFF) 不用带 0x 和 @"" */
+/**  16进制颜色(0xFFFFFF) 不用带 0x 和 @"" */
 #define kCOLOR_WITH_HEX(hexValue) \
 [UIColor colorWith\
 Red:((float)((0x##hexValue & 0xFF0000) >> 16)) / 255.0 \
@@ -147,6 +147,13 @@ alpha:1.0];
 
 /** 弧度转角度 */
 #define kRadianToDegrees(radian) (radian * 180.0)/(M_PI)
+
+/** 通知 */
+#define kNotificationPost(name, object) \
+[[NSNotificationCenter defaultCenter] postNotificationName:name object:object];
+
+#define kNotificationObserver(target, sel, name) \
+[[NSNotificationCenter defaultCenter] addObserver:target selector:sel name:name object:nil];
 
 /** 打印 */
 #ifdef DEBUG

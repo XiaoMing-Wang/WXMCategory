@@ -372,7 +372,7 @@
         }
     }
     
-    return [image wc_imageToSize:CGSizeMake(targetW, targetW)];
+    return [image wc_imageToSize:CGSizeMake(targetW, targetH)];
 }
 
 @end
