@@ -21,6 +21,12 @@
     SEL addObject = @selector(addObject:);
     SEL wc_SafeAddObject = @selector(wc_SafeAddObject:);
     
+    SEL objectAtIndexedSubscript = @selector(objectAtIndexedSubscript:);
+    SEL wc_SafeObjectAtIndexedSubscript = @selector(wc_SafeObjectAtIndexedSubscript:);
+    
+    [self wc_swizzleInstanceMethod:objectAtIndexedSubscript with:wc_SafeObjectAtIndexedSubscript class:__ArrayI];
+    [self wc_swizzleInstanceMethod:objectAtIndexedSubscript with:wc_SafeObjectAtIndexedSubscript class:__ArrayM];
+    
     [self wc_swizzleInstanceMethod:objectAtIndex with:wc_SafeObjectAtIndex class:__ArrayI];
     [self wc_swizzleInstanceMethod:objectAtIndex with:wc_SafeObjectAtIndex class:__ArrayM];
     
@@ -52,6 +58,17 @@
         NSLog(@"数组个数:%zd____下标index:%zd", self.count, index);
         return nil;
     } else return [self wc_SafeObjectAtIndex:index];
+}
+
+/** 防止数组越界崩溃 */
+- (id)wc_SafeObjectAtIndexedSubscript:(NSUInteger)index {
+    if (self.count <= index  || self.count == 0) {
+        NSLog(@"____________________________________________________________数组越界");
+        NSLog(@"____________________________________________________________数组越界");
+        NSLog(@"____________________________________________________________数组越界");
+        NSLog(@"数组个数:%zd____下标index:%zd", self.count, index);
+        return nil;
+    } else return [self wc_SafeObjectAtIndexedSubscript:index];
 }
 
 /** 防止插入数组对象为空崩溃 */
