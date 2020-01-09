@@ -34,8 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id)wc_getAssociatedValueForKey:(void *)key;
 
 /** kvo block*/
-- (void)wc_addObserverBlockForKeyPath:(NSString *)keyPath
-                                block:(void (^)(id obj, id oldVal, id newVal))block;
+- (void)wc_addObserverBlockForKeyPath:(NSString *)keyPath block:(void (^)(id obj, id oldVal, id newVal))block;
 - (void)wc_removeObserverBlocksForKeyPath:(NSString *)keyPath;
 - (void)wc_removeObserverBlocks;
 

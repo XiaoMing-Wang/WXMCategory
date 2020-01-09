@@ -172,20 +172,20 @@ static char buttonTextObjectKey;
     objc_setAssociatedObject(self, &buttonTextObjectKey, currentButtonText, 1);
     objc_setAssociatedObject(self, &indicatorViewKey, indicator, 1);
     
-    self.enabled = NO;
+    self.userInteractionEnabled = NO;
     [self setTitle:@"" forState:UIControlStateNormal];
     [self addSubview:indicator];
 }
 
 /** 隐藏菊花 */
 - (void)wc_hideIndicator {
-    self.enabled = YES;
+    self.userInteractionEnabled = YES;
     UIActivityIndicatorView *indicator = nil;
     NSString *currentText = objc_getAssociatedObject(self, &buttonTextObjectKey);
     indicator = (UIActivityIndicatorView *)objc_getAssociatedObject(self, &indicatorViewKey);
-        
     [indicator removeFromSuperview];
     [self setTitle:currentText forState:UIControlStateNormal];
 }
+
 @end
 

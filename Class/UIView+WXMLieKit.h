@@ -38,6 +38,5 @@
  @param rectCorner 圆角边
  @param cornerRadius 圆角大小
  */
-- (void)wc_drawSemicircleWithRectCorner:(UIRectCorner)rectCorner
-                           cornerRadius:(CGFloat)cornerRadius;
+- (void)wc_drawSemicircleWithRectCorner:(UIRectCorner)rectCorner cornerRadius:(CGFloat)cornerRadius;
 @end

@@ -49,6 +49,13 @@
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
+/** 加载plist文件 */
++ (NSDictionary *)wc_dictionaryWithPlist:(NSString *)plistName {
+    return [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle]
+                                                       pathForResource:plistName
+                                                       ofType:@"plist"]];
+}
+
 - (void)safeSetObject:(id)anObject forKey:(id)aKey {
     if (aKey == nil || anObject == nil) {
         NSLog(@"________________________字典插入对象为空__________________________");
