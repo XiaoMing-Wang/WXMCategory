@@ -84,4 +84,17 @@
 - (CGFloat)contentInsetRight {
     return self.contentInset.right;
 }
+
+/** 滚到到顶部 */
+- (void)wc_crollsToTopWithAnimation:(BOOL)animation {
+    [self setContentOffset:CGPointZero animated:animation];
+}
+
+/** 尾部 */
+- (void)wc_crollsToBottomWithAnimation:(BOOL)animation {
+    if (self.contentSize.height > self.frame.size.height) {
+        CGPoint offset = CGPointMake(0, self.contentSize.height - self.frame.size.height);
+        [self setContentOffset:offset animated:animation];
+    }
+}
 @end

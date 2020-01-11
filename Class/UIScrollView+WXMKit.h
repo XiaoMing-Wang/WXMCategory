@@ -19,4 +19,10 @@
 @property (nonatomic, assign) CGFloat contentInsetBottom;
 @property (nonatomic, assign) CGFloat contentInsetRight;
 
+/** 滚到到顶部 */
+- (void)wc_crollsToTopWithAnimation:(BOOL)animation;
+
+/** 尾部 */
+- (void)wc_crollsToBottomWithAnimation:(BOOL)animation;
+
 @end

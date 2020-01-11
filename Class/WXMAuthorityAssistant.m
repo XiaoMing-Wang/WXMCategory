@@ -12,22 +12,83 @@
 @implementation WXMAuthorityAssistant
 
 /** 相册权限 */
-+ (BOOL)wp_photoAuthority {
-    if (PHPhotoLibrary.authorizationStatus == AVAuthorizationStatusNotDetermined ||
-        PHPhotoLibrary.authorizationStatus == AVAuthorizationStatusAuthorized) {
-        return YES;
-    }
++ (void)wp_photoAuthorityWithCallback:(void (^)(BOOL authorized))callback {
+    if (!callback) return;
     
-    NSString *message = @"请在系统设置中打开“允许访问照片”，否则将无法获取照片";
-    NSURL *settingUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-    [self showAlertViewControllerWithTitle:@"提示"
-                                   message:message
-                                    cancel:@"取消"
-                               otherAction:@[@"去开启"]
-                             completeBlock:^(NSInteger index) {
-        if (index)[[UIApplication sharedApplication] openURL:settingUrl];
-    }];
-    return NO;
+    if (PHPhotoLibrary.authorizationStatus == AVAuthorizationStatusAuthorized) {
+        
+        callback(YES);
+    } else if (PHPhotoLibrary.authorizationStatus == AVAuthorizationStatusRestricted ||
+               PHPhotoLibrary.authorizationStatus == AVAuthorizationStatusDenied) {
+        
+        callback(NO);
+        NSString *message = @"请在系统设置中打开“允许访问照片”，否则将无法获取照片";
+        NSURL *settingUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [self showAlertViewControllerWithTitle:@"提示"
+                                       message:message
+                                        cancel:@"取消"
+                                   otherAction:@[@"去开启"]
+                                 completeBlock:^(NSInteger index) {
+            if (index)[[UIApplication sharedApplication] openURL:settingUrl];
+        }];
+    } else {
+        
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            callback(status == PHAuthorizationStatusAuthorized);
+        }];
+    }
+}
+
+/** 相机权限 */
++ (void)wp_cameraAuthorityWithCallback:(void (^)(BOOL authorized))callback {
+    if (!callback) return;
+    
+    AVMediaType media = AVMediaTypeVideo;
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:media];
+    if (status == AVAuthorizationStatusAuthorized) {
+        
+        callback(YES);
+    } else if (status == AVAuthorizationStatusRestricted || status == AVAuthorizationStatusDenied) {
+        
+        callback(NO);
+        NSString *message = @"请在系统设置中打开“允许访问相机”，否则将无法使用相机功能";
+        NSURL *settingUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [self showAlertViewControllerWithTitle:@"提示"
+                                       message:message
+                                        cancel:@"取消"
+                                   otherAction:@[@"去开启"]
+                                 completeBlock:^(NSInteger index) {
+            if (index) [[UIApplication sharedApplication] openURL:settingUrl];
+        }];
+    } else {
+        [AVCaptureDevice requestAccessForMediaType:media completionHandler:callback];
+    }
+}
+
+/** 麦克风权限 */
++ (void)wp_audioAuthorityWithCallback:(void (^)(BOOL authorized))callback {
+    if (!callback) return;
+    
+    AVMediaType media = AVMediaTypeAudio;
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:media];
+    if (status == AVAuthorizationStatusAuthorized) {
+        
+        callback(YES);
+    } else if (status == AVAuthorizationStatusRestricted || status == AVAuthorizationStatusDenied) {
+        
+        callback(NO);
+        NSString *message = @"请在系统设置中打开“允许访问麦克风”，否则将无法使用麦克风功能";
+        NSURL *settingUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [self showAlertViewControllerWithTitle:@"提示"
+                                       message:message
+                                        cancel:@"取消"
+                                   otherAction:@[@"去开启"]
+                                 completeBlock:^(NSInteger index) {
+            if (index)[[UIApplication sharedApplication] openURL:settingUrl];
+        }];
+    } else {
+        [AVCaptureDevice requestAccessForMediaType:media completionHandler:callback];
+    }
 }
 
 /** 位置权限 */
@@ -41,50 +102,6 @@
     }
     
     NSString *message = @"请在系统设置中打开“允许访问位置信息”，否则将无法获取位置信息";
-    NSURL *settingUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-    [self showAlertViewControllerWithTitle:@"提示"
-                                   message:message
-                                    cancel:@"取消"
-                               otherAction:@[@"去开启"]
-                             completeBlock:^(NSInteger index) {
-        if (index)[[UIApplication sharedApplication] openURL:settingUrl];
-    }];
-    
-    return NO;
-}
-
-/** 相机权限 */
-+ (BOOL)wp_cameraAuthority {
-    AVAuthorizationStatus status =
-    [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (status == AVAuthorizationStatusAuthorized ||
-        status == AVAuthorizationStatusNotDetermined) {
-        return YES;
-    }
-    
-    NSString *message = @"请在系统设置中打开“允许访问相机”，否则将无法使用相机功能";
-    NSURL *settingUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-    [self showAlertViewControllerWithTitle:@"提示"
-                                   message:message
-                                    cancel:@"取消"
-                               otherAction:@[@"去开启"]
-                             completeBlock:^(NSInteger index) {
-        if (index)[[UIApplication sharedApplication] openURL:settingUrl];
-    }];
-    
-    return NO;
-}
-
-/** 麦克风权限 */
-+ (BOOL)wp_audioAuthority {
-    AVAuthorizationStatus status =
-    [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeAudio];
-    if (status == AVAuthorizationStatusNotDetermined ||
-        status == AVAuthorizationStatusAuthorized) {
-        return YES;
-    }
-    
-    NSString *message = @"请在系统设置中打开“允许访问麦克风”，否则将无法使用麦克风功能";
     NSURL *settingUrl = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
     [self showAlertViewControllerWithTitle:@"提示"
                                    message:message
