@@ -22,9 +22,7 @@
 }
 
 /** 部分换颜色 */
-+ (NSMutableAttributedString *)wc_attributedString:(NSString *)aString
-                                             color:(UIColor *)color
-                                             range:(NSRange)range {
++ (NSMutableAttributedString *)wc_attributedString:(NSString *)aString color:(UIColor *)color range:(NSRange)range {
     @try {
         NSMutableAttributedString *atts = WXMCreatAttributedString(aString);
         [atts addAttribute:NSForegroundColorAttributeName value:color range:range];
@@ -33,8 +31,7 @@
 }
 
 /** 修改字符间距 字与字 */
-+ (NSMutableAttributedString *)wc_changeVerticalSpace:(NSString *)aString
-                                                space:(CGFloat)space {
++ (NSMutableAttributedString *)wc_verticalSpace:(NSString *)aString space:(CGFloat)space {
     @try {
         
         NSMutableAttributedString *atts = WXMCreatAttributedString(aString);
@@ -48,8 +45,7 @@
 }
 
 /** 修改字符行间距距 行与行 */
-+ (NSMutableAttributedString *)wc_changeHorizontalSpace:(NSString *)aString
-                                                  space:(CGFloat)space {
++ (NSMutableAttributedString *)wc_horizontalSpace:(NSString *)aString space:(CGFloat)space {
     @try {
         NSMutableAttributedString *atts = WXMCreatAttributedString(aString);
         NSRange range = NSMakeRange(0, atts.length);
@@ -61,8 +57,7 @@
 }
 
 /** 链接下划线 */
-+ (NSMutableAttributedString *)wc_addUnderline:(NSString *)aString
-                                         range:(NSRange)range {
++ (NSMutableAttributedString *)wc_underline:(NSString *)aString range:(NSRange)range {
     @try {
         NSMutableAttributedString *atts = WXMCreatAttributedString(aString);
         NSDictionary *attris = @{NSFontAttributeName: [UIFont systemFontOfSize:14],

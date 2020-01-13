@@ -18,6 +18,8 @@
 
 /** 截图 */
 - (UIImage *)wc_makeImage;
+
+/** view截图存在本地 */
 - (void)wc_saveImageInlocation:(NSString *)imageName;
 
 /** 手势 */
@@ -32,12 +34,9 @@
 /** 获取xib */
 + (instancetype)xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex;
 
-/**
- UIView任意边角画圆角
- 
- @param rectCorner 圆角边
- @param cornerRadius 圆角大小
- */
-- (void)wc_drawSemicircleWithRectCorner:(UIRectCorner)rectCorner
-                           cornerRadius:(CGFloat)cornerRadius;
+/// UIView任意边角画圆角
+/// @param rectCorner 圆角边
+/// @param cornerRadius  圆角大小
+- (void)wc_drawSemicircleWithRectCorner:(UIRectCorner)rectCorner cornerRadius:(CGFloat)cornerRadius;
+
 @end

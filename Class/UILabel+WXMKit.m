@@ -59,15 +59,16 @@
     NSDictionary * pa = @{NSKernAttributeName:@(wc_wordSpace)};
     NSMutableAttributedString *att = nil;
     att = [[NSMutableAttributedString alloc] initWithString:text attributes:pa];
-    
+
     NSRange range = NSMakeRange(0, text.length);
     NSMutableParagraphStyle *parag = [[NSMutableParagraphStyle alloc] init];
     [att addAttribute:NSParagraphStyleAttributeName value:parag range:range];
     self.attributedText = att;
     [self sizeToFit];
-    
+
     CGRect frame = self.frame;
     frame.origin = origin;
     self.frame = frame;
 }
+
 @end

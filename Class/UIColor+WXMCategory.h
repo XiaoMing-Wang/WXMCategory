@@ -12,15 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIColor (WXMCategory)
 
-/**
- *  @brief  渐变颜色
- *
- *  @param c1     开始颜色
- *  @param c2     结束颜色
- *  @param height 渐变高度
- *
- *  @return 渐变颜色
- */
+/// 渐变颜色
+/// @param c1 开始颜色
+/// @param c2 结束颜色
+/// @param height 渐变高度
 + (UIColor *)wc_gradientFromColor:(UIColor *)c1
                           toColor:(UIColor *)c2
                        withHeight:(int)height;

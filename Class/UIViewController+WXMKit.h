@@ -40,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** 删除NavigationController子控制器 */
 - (void)wc_removeViewControllerWithControllerName:(NSString *)vcName;
+- (void)wc_removeViewControllerWithControllers:(NSArray *)controllers;
 
 /** 跳到某个界面 */
 - (void)wc_popToViewControllerWithControllerName:(NSString *)vcName animated:(BOOL)animated;

@@ -18,6 +18,7 @@
 }
 
 - (void)_dealloc {
+
 #if DEBUG
     NSLog(@"%@ 被释放", NSStringFromClass([self class]));
 #endif
@@ -109,6 +110,7 @@
 /** 导航控制器  */
 @implementation UINavigationController (WXMKit)
 
+/** 颜色画图 */
 static inline UIImage *WXM_colorConversionImage(UIColor *color) {
     CGRect rect = CGRectMake(0, 0, 1, 1);
     UIGraphicsBeginImageContext(rect.size);
@@ -164,15 +166,33 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
     [self setViewControllers:arrayVC.copy];
 }
 
-/** 删除NavigationController子控制器*/
+/** 删除NavigationController子控制器 */
 - (void)wc_removeViewControllerWithControllerName:(NSString *)vcName {
     NSMutableArray *arrayM = @[].mutableCopy;
     NSArray *viewControllers = self.viewControllers;
     if (viewControllers.count <= 1) return;
     [viewControllers enumerateObjectsUsingBlock:^(UIViewController *obj, NSUInteger idx, BOOL *stop) {
-        if (![obj isKindOfClass:NSClassFromString(vcName)]) [arrayM addObject:obj];
+        if (![obj isKindOfClass:NSClassFromString(vcName)] || obj == self.visibleViewController) {
+            [arrayM addObject:obj];
+        }
     }];
     [self setViewControllers:arrayM];
+}
+
+/** 删除NavigationController子控制器 */
+- (void)wc_removeViewControllerWithControllers:(NSArray *)controllers {
+    @synchronized (self.navigationController) {
+        NSMutableArray *arrayM = @[].mutableCopy;
+        NSArray *viewControllers = self.viewControllers;
+        if (viewControllers.count <= 1) return;
+        [viewControllers enumerateObjectsUsingBlock:^(UIViewController *obj, NSUInteger idx, BOOL *stop) {
+            NSString *vcString = NSStringFromClass(obj.class);
+            if (![controllers containsObject:vcString] || obj == self.visibleViewController) {
+                [arrayM addObject:obj];
+            }
+        }];
+        [self setViewControllers:arrayM];
+    }
 }
 
 /** 回退到第几个界面 */

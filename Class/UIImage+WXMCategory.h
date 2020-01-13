@@ -28,16 +28,14 @@
 /** 获取启动图 */
 + (UIImage *)wc_getLaunchImage;
 
-/** 按比例重绘图片 */
-+ (UIImage *)wc_compressionImageWithOriginalImage:(UIImage *)image;
+/** 按比例重绘图片 最大宽度1280 (1280大约等于iphoneX三倍像素) */
++ (UIImage *)wc_compressionImage1280:(UIImage *)image;
++ (UIImage *)wc_compressionImage:(UIImage *)image maxWH:(CGFloat)maxWH;
 
-/**
- 画圆角遮罩图片
- @param radius    半径
- @param rectSize  大小
- @param fillColor 圆角被切掉的颜色
- @return 切好的图片
- */
+/// 画圆角遮罩图片
+/// @param radius 半径
+/// @param rectSize 大小
+/// @param fillColor 圆角被切掉的颜色
 + (UIImage *)wc_drawRoundedCornerImageWithRadius:(CGFloat)radius
                                         rectSize:(CGSize)rectSize
                                        fillColor:(UIColor *)fillColor;
