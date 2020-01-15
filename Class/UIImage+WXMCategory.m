@@ -73,14 +73,14 @@
     return newImage;
 }
 
-- (UIImage*)wc_scaleToSize:(CGSize)size {
+- (UIImage *)wc_scaleToSize:(CGSize)size {
     if ([[UIScreen mainScreen] scale] == 0.0) {
         UIGraphicsBeginImageContext(size);
     } else {
         UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
     }
     [self drawInRect:CGRectMake(0, 0, size.width, size.height)];
-    UIImage* scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *scaledImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return scaledImage;
 }
@@ -95,8 +95,7 @@
 
 /** 拉伸 */
 - (UIImage *)wc_imageWithStretching {
-    return [self resizableImageWithCapInsets:UIEdgeInsetsZero
-                                resizingMode:UIImageResizingModeStretch];
+    return [self resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch];
 }
 
 /** 获取启动图 */
@@ -249,13 +248,10 @@
     return outputImage;
 }
 
-/**
-画圆角遮罩图片
-@param radius    半径
-@param rectSize  大小
-@param fillColor 圆角被切掉的颜色
-@return 切好的图片
-*/
+/// 画圆角遮罩图片
+/// @param radius 半径
+/// @param rectSize 大小
+/// @param fillColor 圆角被切掉的颜色
 + (UIImage *)wc_drawRoundedCornerImageWithRadius:(CGFloat)radius
                                         rectSize:(CGSize)rectSize
                                        fillColor:(UIColor *)fillColor {
@@ -328,51 +324,55 @@
     
 }
 
-/**  压缩图片*/
+/** 按比例重绘图片 最大宽度maxWH */
 #define WCCOMPRESS_MAXWIDTH 1280
-+ (UIImage *)wc_compressionImageWithOriginalImage:(UIImage *)image {
++ (UIImage *)wc_compressionImage1280:(UIImage *)image {
+    return [self wc_compressionImage:image maxWH:WCCOMPRESS_MAXWIDTH];
+}
+
+/** 按比例重绘图片 最大宽度maxWH */
++ (UIImage *)wc_compressionImage:(UIImage *)image maxWH:(CGFloat)maxWH {
     
     /**  宽高比 */
-    CGFloat ratio = image.size.width / image.size.height;
+     CGFloat ratio = image.size.width / image.size.height;
 
-    /**  目标大小 */
-    CGFloat targetW = WCCOMPRESS_MAXWIDTH;
-    CGFloat targetH = WCCOMPRESS_MAXWIDTH;
+     /**  目标大小 */
+     CGFloat targetW = maxWH;
+     CGFloat targetH = maxWH;
 
-    /**  宽高均 <= 1280，图片尺寸大小保持不变 */
-    if (image.size.width < WCCOMPRESS_MAXWIDTH && image.size.height < WCCOMPRESS_MAXWIDTH) {
-        return image;
-    } else if (image.size.width > WCCOMPRESS_MAXWIDTH && image.size.height > WCCOMPRESS_MAXWIDTH) {
+     /**  宽高均 <= maxWH，图片尺寸大小保持不变 */
+     if (image.size.width < maxWH && image.size.height < maxWH) {
+         return image;
+     } else if (image.size.width > maxWH && image.size.height > maxWH) {
 
-        /** 宽大于高 取较小值(高)等于1280，较大值等比例压缩 */
-        if (ratio > 1) {
-            targetH = WCCOMPRESS_MAXWIDTH;
-            targetW = targetH * ratio;
-        } else {
-            targetW = WCCOMPRESS_MAXWIDTH;
-            targetH = targetW / ratio;
-        }
-    } else {
-        /**  宽或高 > 1280 宽图 图片尺寸大小保持不变 */
-        if (ratio > 2) {
-            targetW = image.size.width;
-            targetH = image.size.height;
-        } else if (ratio < 0.5) {
-            /**   长图 图片尺寸大小保持不变 */
-            targetW = image.size.width;
-            targetH = image.size.height;
-        } else if (ratio > 1) {
-            /**  宽大于高 取较大值(宽)等于1280，较小值等比例压缩 */
-            targetW = WCCOMPRESS_MAXWIDTH;
-            targetH = targetW / ratio;
-        } else {
-            /**  高大于宽 取较大值(高)等于1280，较小值等比例压缩 */
-            targetH = WCCOMPRESS_MAXWIDTH;
-            targetW = targetH * ratio;
-        }
-    }
-    
-    return [image wc_imageToSize:CGSizeMake(targetW, targetH)];
+         /** 宽大于高 取较小值(高)等于maxWH，较大值等比例压缩 */
+         if (ratio > 1) {
+             targetH = maxWH;
+             targetW = targetH * ratio;
+         } else {
+             targetW = maxWH;
+             targetH = targetW / ratio;
+         }
+     } else {
+         /**  宽或高 > maxWH 宽图 图片尺寸大小保持不变 */
+         if (ratio > 2) {
+             targetW = image.size.width;
+             targetH = image.size.height;
+         } else if (ratio < 0.5) {
+             /**   长图 图片尺寸大小保持不变 */
+             targetW = image.size.width;
+             targetH = image.size.height;
+         } else if (ratio > 1) {
+             /**  宽大于高 取较大值(宽)等于maxWH，较小值等比例压缩 */
+             targetW = maxWH;
+             targetH = targetW / ratio;
+         } else {
+             /**  高大于宽 取较大值(高)等于maxWH，较小值等比例压缩 */
+             targetH = maxWH;
+             targetW = targetH * ratio;
+         }
+     }
+    return [image wc_scaleToSize:CGSizeMake(targetW, targetH)];
 }
 
 @end

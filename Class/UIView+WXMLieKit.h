@@ -18,6 +18,8 @@
 
 /** 截图 */
 - (UIImage *)wc_makeImage;
+
+/** view截图存在本地 */
 - (void)wc_saveImageInlocation:(NSString *)imageName;
 
 /** 手势 */
@@ -39,4 +41,5 @@
 /// @param rectCorner 圆角边
 /// @param cornerRadius 圆角大小
 - (void)wc_drawSemicircle:(UIRectCorner)rectCorner cornerRadius:(CGFloat)cornerRadius;
+
 @end

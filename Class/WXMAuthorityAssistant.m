@@ -61,6 +61,7 @@
             if (index) [[UIApplication sharedApplication] openURL:settingUrl];
         }];
     } else {
+        
         [AVCaptureDevice requestAccessForMediaType:media completionHandler:callback];
     }
 }
