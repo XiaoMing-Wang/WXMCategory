@@ -22,8 +22,11 @@
 
 /** 手势 */
 - (void)wc_addTapped:(id)target action:(SEL)action;
-- (UITapGestureRecognizer *)wc_addOnceTappedWithBlock:(void (^)(void))block;
-- (UITapGestureRecognizer *)wc_addDoubleTappedWithBlock:(void (^)(void))block;
+- (UITapGestureRecognizer *)wc_addOnceTappedWithCallback:(void (^)(void))callback;
+- (UITapGestureRecognizer *)wc_addDoubleTappedWithCallback:(void (^)(void))callback;
+
+/** 渐现动画 */
+- (void)wc_fadeAnimation;
 
 /** 居中设置 */
 - (void)wc_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval;
@@ -32,12 +35,8 @@
 /** 获取xib */
 + (instancetype)xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex;
 
-/**
- UIView任意边角画圆角
- 
- @param rectCorner 圆角边
- @param cornerRadius 圆角大小
- */
-- (void)wc_drawSemicircleWithRectCorner:(UIRectCorner)rectCorner
-                           cornerRadius:(CGFloat)cornerRadius;
+/// 任意边角画圆角
+/// @param rectCorner 圆角边
+/// @param cornerRadius 圆角大小
+- (void)wc_drawSemicircle:(UIRectCorner)rectCorner cornerRadius:(CGFloat)cornerRadius;
 @end

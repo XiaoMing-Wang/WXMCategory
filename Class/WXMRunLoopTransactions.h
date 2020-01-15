@@ -12,7 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface WXMRunLoopTransactions : NSObject
 
-/** runloop */
+/// 监听runloop调用
+/// @param sel 行数
+/// @param object object
 + (void)delayRunSEL:(SEL)sel object:(id)object;
 
 @end

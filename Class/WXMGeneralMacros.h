@@ -125,10 +125,7 @@ alpha:1.0];
 #define kCopyContent(aString) [[UIPasteboard generalPasteboard] setString:aString]
 
 /** 图片 */
-#define kImageWithName(aString) [UIImage imageNamed:[NSString stringWithFormat:@"%@",aString]]
-
-/** indexPath */
-#define kIndexPath(row) [NSIndexPath indexPathForRow:row inSection:0]
+#define kImageString(aString) [UIImage imageNamed:[NSString stringWithFormat:@"%@",aString]]
 
 /** 空对象 */
 #define kEmptyObject(object) (object == nil \
@@ -219,6 +216,9 @@ typedef id   (^kIdCallback_Id)  (id obj);
 /**  判断string */
 #define kEqualString(aString, bString)  [aString isEqualToString:bString]
 
+/** 区间 */
+#define kMin_Max(Mix, Pa, Max) MAX(Mix, MIN(Pa, Max))
+
 /** 将括号内的类型转化成id类型 */
 static inline id aMASBoxValue(const char *type, ...) {
     va_list v;
@@ -278,7 +278,7 @@ static inline id aMASBoxValue(const char *type, ...) {
 }
 
 /** 归档解归档 */
-#define KSERIALIZE_CODER_DECODER()     \
+#define kSERIALIZE_CODER_DECODER()     \
 \
 - (id)initWithCoder:(NSCoder *)coder    \
 {   \

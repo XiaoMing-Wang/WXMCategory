@@ -34,15 +34,15 @@ static char doubleTap;
     [self addGestureRecognizer:tapGes];
 }
 
-- (UITapGestureRecognizer *)wc_addOnceTappedWithBlock:(void (^)(void))block {
+- (UITapGestureRecognizer *)wc_addOnceTappedWithCallback:(void (^)(void))callback {
     UITapGestureRecognizer *tap = [self addTapGesture:1 touches:1 selector:@selector(viewTapped:)];
-    objc_setAssociatedObject(self, &onceTap, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &onceTap, callback, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return tap;
 }
 
-- (UITapGestureRecognizer *)wc_addDoubleTappedWithBlock:(void (^)(void))block {
+- (UITapGestureRecognizer *)wc_addDoubleTappedWithCallback:(void (^)(void))callback {
     UITapGestureRecognizer *tap = [self addTapGesture:2 touches:1 selector:@selector(viewTapped:)];
-    objc_setAssociatedObject(self, &doubleTap, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &doubleTap, callback, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     return tap;
 }
 
@@ -66,7 +66,7 @@ static char doubleTap;
     return tapGes;
 }
 
-/** 在window中 */
+/** 在window位置 */
 - (CGRect)wc_locationWithWindow {
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     return [self convertRect:self.bounds toView:window];
@@ -128,12 +128,9 @@ static char doubleTap;
 
 /**
  UIView任意边角画圆角
- 
  @param rectCorner 圆角边
- @param cornerRadius 圆角大小
- */
-- (void)wc_drawSemicircleWithRectCorner:(UIRectCorner)rectCorner
-                           cornerRadius:(CGFloat)cornerRadius {
+ @param cornerRadius 圆角大小 */
+- (void)wc_drawSemicircle:(UIRectCorner)rectCorner cornerRadius:(CGFloat)cornerRadius {
     CGSize size = CGSizeMake(cornerRadius,cornerRadius);
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
                                                    byRoundingCorners:(rectCorner)
@@ -144,4 +141,12 @@ static char doubleTap;
     self.layer.mask = maskLayer;
 }
 
+/** 渐现动画 */
+- (void)wc_fadeAnimation {
+    CATransition *transition = [CATransition animation];
+    transition.duration = 0.5;
+    transition.type = kCATransitionFade;
+    transition.subtype = kCATransitionFromRight;
+    [self.layer addAnimation:transition forKey:@"animation"];
+}
 @end

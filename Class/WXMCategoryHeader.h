@@ -16,6 +16,7 @@
 #import "UIColor+WXMCategory.h"
 #import "NSString+WXMCategory.h"
 #import "NSObject+WXMCategory.h"
+#import "NSObject+WXMModel.h"
 #import "NSDictionary+WXMCategory.h"
 #import "NSNotificationCenter+WXMCategory.h"
 #import "NSMutableAttributedString+WXMCategory.h"

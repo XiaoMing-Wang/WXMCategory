@@ -167,12 +167,30 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 /** 删除NavigationController子控制器*/
 - (void)wc_removeViewControllerWithControllerName:(NSString *)vcName {
     NSMutableArray *arrayM = @[].mutableCopy;
-    NSArray *viewControllers = self.viewControllers;
-    if (viewControllers.count <= 1) return;
-    [viewControllers enumerateObjectsUsingBlock:^(UIViewController *obj, NSUInteger idx, BOOL *stop) {
-        if (![obj isKindOfClass:NSClassFromString(vcName)]) [arrayM addObject:obj];
+    NSArray *vcs = self.viewControllers;
+    if (vcs.count <= 1) return;
+    [vcs enumerateObjectsUsingBlock:^(UIViewController *obj, NSUInteger idx, BOOL *stop) {
+        if (![obj isKindOfClass:NSClassFromString(vcName)] || obj == self.visibleViewController) {
+            [arrayM addObject:obj];
+        }
     }];
     [self setViewControllers:arrayM];
+}
+
+/** 删除NavigationController子控制器*/
+- (void)wc_removeViewControllerWithControllers:(NSArray *)controllers {
+    @synchronized (self.navigationController) {
+        NSMutableArray *arrayM = @[].mutableCopy;
+        NSArray *vcs = self.viewControllers;
+        if (vcs.count <= 1) return;
+        [vcs enumerateObjectsUsingBlock:^(UIViewController *obj, NSUInteger idx, BOOL *stop) {
+            NSString *vcString = NSStringFromClass(obj.class);
+            if (![controllers containsObject:vcString] || obj == self.visibleViewController) {
+                [arrayM addObject:obj];
+            }
+        }];
+        [self setViewControllers:arrayM];
+    }
 }
 
 /** 回退到第几个界面 */
