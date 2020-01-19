@@ -5,6 +5,7 @@
 //  Created by wq on 2019/12/23.
 //  Copyright © 2019 wxm. All rights reserved.
 //
+#define WXMCellIdentifier @"WXMCellIdentifier"
 #define WXMPreventCrashBegin  @try {
 #define WXMPreventCrashEnd     } @catch (NSException *exception) {} @finally {}
 #import "UITableView+WXMKit.h"

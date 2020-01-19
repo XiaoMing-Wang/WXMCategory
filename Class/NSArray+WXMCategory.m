@@ -90,16 +90,14 @@
 
 /** 加载plist文件 */
 + (NSArray *)wc_arrayWithPlist:(NSString *)plistName {
-    return [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle]
-                                             pathForResource:plistName
-                                             ofType:@"plist"]];
+    return [NSArray arrayWithContentsOfFile:[[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"]];
 }
 
 /** 重复的object只添加一次 */
 - (void)wc_addRepeatObject:(NSString *)object {
     if (!object) return;
     if (![self containsObject:object] && [self isKindOfClass:[NSMutableArray class]]) {
-        NSMutableArray *arrays = (NSMutableArray *)self;
+        NSMutableArray *arrays = (NSMutableArray *) self;
         [arrays addObject:object];
     }
 }
