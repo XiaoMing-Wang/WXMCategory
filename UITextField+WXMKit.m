@@ -8,7 +8,6 @@
 #import <objc/runtime.h>
 #import "UITextField+WXMKit.h"
 
-static char callbackKey;
 @implementation UITextField (WXMKit)
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
@@ -71,6 +70,8 @@ static char callbackKey;
 }
 
 - (void)setMaxCharacter:(NSInteger)maxCharacter {
+    self.delegate = self;
+    [self addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventAllEditingEvents];
     objc_setAssociatedObject(self, @selector(maxCharacter), @(maxCharacter), OBJC_ASSOCIATION_COPY);
 }
 

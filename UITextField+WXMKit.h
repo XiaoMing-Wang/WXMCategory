@@ -16,10 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)wc_textFieldShouldClear:(UITextField *)textField;
 - (BOOL)wc_textFieldShouldReturn:(UITextField *)textField;
 - (void)wc_textFieldValueChanged:(UITextField *)textField;
-
-- (void)wc_textViewDidBeginEditing:(UITextView *)textView;
-- (BOOL)wc_textViewShouldReturn:(UITextView *)textView;
-- (void)wc_textViewValueChanged:(UITextView *)textView;
 @end
 
 /** UITextField输入不会走kvo */
@@ -28,14 +24,14 @@ NS_ASSUME_NONNULL_BEGIN
 /** 当前显示 kvo */
 @property (nonatomic, copy) NSString *currentText;
 
-/** 限制最大个数 */
+/** 限制最大个数 会把delegate设置成自己 */
 @property (nonatomic, assign) NSInteger maxCharacter;
 
 /** 代理 */
 @property (nonatomic, weak) id<WXMKitTextFieldDelegate> delegateKit;
 
 /** block */
-- (void)setTextFieldValueChangedCallback:(void (^)(NSString *_Nullable text))callback;
+- (void)setTextFieldValueChangedCallback:(void (^)(NSString * _Nullable text))callback;
 
 @end
 
