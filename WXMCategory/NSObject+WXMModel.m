@@ -1675,6 +1675,10 @@ WXMEncodingType WXMEncodingGetType(const char *typeEncoding) {
     return nil;
 }
 
++ (NSArray *)modelArrayWithKeyValuesArray:(NSArray<NSDictionary *> *)keyValuesArray {
+    return [NSArray modelArrayWithClass:[self class] json:keyValuesArray];
+}
+
 - (BOOL)modelSetWithJSON:(id)json {
     NSDictionary *dic = [NSObject _WXM_dictionaryWithJSON:json];
     return [self modelSetWithDictionary:dic];

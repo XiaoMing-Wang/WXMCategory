@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 字典转模型 */
 + (nullable instancetype)modelWithDictionary:(NSDictionary *)dictionary;
 
+/** json转模型数组 */
++ (NSArray *)modelArrayWithKeyValuesArray:(NSArray<NSDictionary *> *)keyValuesArray;
+
 /** model转字典 */
 - (nullable id)modelToJSONObject;
 
@@ -56,13 +59,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** model属性 */
 - (NSString *)modelDescription;
+
 @end
 
 @interface NSArray (WXMModel)
-
-/** 字典数组转模型数组 */
 + (nullable NSArray *)modelArrayWithClass:(Class)cls json:(id)json;
-
 @end
 
 @protocol WXMModel <NSObject>

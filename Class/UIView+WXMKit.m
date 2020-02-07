@@ -9,10 +9,8 @@
 #import "UIView+WXMKit.h"
 
 @implementation UIView (WXMKit)
-
 @dynamic layoutRight;
 @dynamic layoutBottom;
-@dynamic layoutCenterSupView;
 @dynamic layCornerRadius;
 
 - (void)setX:(CGFloat)x {
@@ -66,15 +64,15 @@
 - (void)setTop:(CGFloat)top { [self setY:top]; }
 - (void)setBottom:(CGFloat)bottom { [self setY:bottom - self.height]; }
 
-- (CGFloat)x {return self.frame.origin.x;}
-- (CGFloat)y {return self.frame.origin.y;}
-- (CGFloat)width {return self.frame.size.width;}
-- (CGFloat)height {return self.frame.size.height;}
-- (CGFloat)centerX {return self.center.x;}
-- (CGFloat)centerY {return self.center.y;}
-- (CGFloat)left {return self.frame.origin.x; }
-- (CGFloat)right {return self.left + self.width; }
-- (CGFloat)top {return self.frame.origin.y;}
+- (CGFloat)x { return self.frame.origin.x; }
+- (CGFloat)y { return self.frame.origin.y; }
+- (CGFloat)width { return self.frame.size.width; }
+- (CGFloat)height { return self.frame.size.height; }
+- (CGFloat)centerX { return self.center.x; }
+- (CGFloat)centerY { return self.center.y; }
+- (CGFloat)left { return self.frame.origin.x; }
+- (CGFloat)right { return self.left + self.width; }
+- (CGFloat)top { return self.frame.origin.y;}
 - (CGFloat)bottom {  return self.top + self.height; }
 - (CGSize)size { return self.frame.size; }
 - (CGPoint)origin { return self.frame.origin; }
@@ -84,34 +82,39 @@
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     if (self.superview) width = self.superview.width;
     if (self.width == 0) self.width = width - self.left - layoutRight;
-    else self.left = width - self.width - layoutRight;
+    else self.right = width - layoutRight;
 }
 
 - (void)setLayoutBottom:(CGFloat)layoutBottom {
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
     if (self.superview) height = self.superview.height;
     if (self.height == 0) self.height = height - self.top - layoutBottom;
-    else self.top = height - self.height - layoutBottom;
+    else self.bottom = height  - layoutBottom;
+}
+
+- (void)layoutCenterXToSupView:(UIView *)supview {
+    self.centerX = supview.frame.size.width / 2.0;
+}
+
+- (void)layoutCenterYToSupView:(UIView *)supview {
+    self.centerY = supview.frame.size.height / 2.0;
+}
+
+- (void)layoutCenterXYToSupView:(UIView *)supview {
+    self.centerX = supview.frame.size.width / 2.0;
+    self.centerY = supview.frame.size.height / 2.0;
 }
 
 - (void)layoutRight:(UIView *)refer offset:(CGFloat)offset {
     CGFloat width = refer.left - self.left;
     if (self.width == 0) self.width = width - self.left - offset;
-    else self.left = width - self.width - offset;
+    else self.right = width  - offset;
 }
 
 - (void)layoutBottom:(UIView *)refer offset:(CGFloat)offset {
     CGFloat height = refer.top - self.top;
     if (self.height == 0) self.height = height - self.top - offset;
-    else self.top = height - self.height - offset;
-}
-
-- (void)setLayoutCenterSupView:(BOOL)layoutCenterSupView {
-    if (!self.superview) return;
-    if (layoutCenterSupView) {
-        self.centerX = self.superview.width / 2;
-        self.centerY = self.superview.height / 2;
-    } else self.centerY = self.superview.height / 2;
+    else self.bottom = height - offset;
 }
 
 - (void)setLayCornerRadius:(CGFloat)layCornerRadius {

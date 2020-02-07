@@ -28,11 +28,13 @@
 @property (nonatomic, assign) CGFloat bottom;
 
 /** 相对定位 */
-@property (nonatomic, assign) BOOL layoutCenterSupView;
 @property (nonatomic, assign) CGFloat layoutRight;
 @property (nonatomic, assign) CGFloat layoutBottom;
 @property (nonatomic, assign) CGFloat layCornerRadius;
 
+- (void)layoutCenterXToSupView:(UIView *)supview;
+- (void)layoutCenterYToSupView:(UIView *)supview;
+- (void)layoutCenterXYToSupView:(UIView *)supview;
 - (void)layoutRight:(UIView *)refer offset:(CGFloat)offset;
 - (void)layoutBottom:(UIView *)refer offset:(CGFloat)offset;
 

@@ -12,7 +12,7 @@
 
 /** 响应链传递给父类 */
 - (void)routerEvent:(NSString *)event {
-    [self.nextResponder routerEvent:event];
+    [self.nextResponder routerEvent:event object:nil];
 }
 
 - (void)routerEvent:(NSString *)event object:(nullable id)object {

@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 响应链传递给父类 */
 - (void)routerEvent:(NSString *)event;
 
+/** 响应链传递给父类 */
 - (void)routerEvent:(NSString *)event object:(nullable id)object;
 
 @end
