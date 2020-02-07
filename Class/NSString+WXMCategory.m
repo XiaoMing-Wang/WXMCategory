@@ -122,7 +122,7 @@
 /** 获取字符行数 */
 - (NSInteger)wc_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize {
     if (self.length == 0) return 0;
-    CGFloat allHeight = [self wc_getHeightWithFont:fontSize width:maxWidth];
+    CGFloat allHeight = [self wc_getHeightOtherWithFont:fontSize width:maxWidth];
     CGFloat lineHeight = [self wc_getHeightWithFont:fontSize];
     NSInteger totalRow = (allHeight / lineHeight);
     return totalRow;
