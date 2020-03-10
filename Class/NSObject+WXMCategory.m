@@ -74,7 +74,7 @@ static char holdTimerKey;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 #pragma clang diagnostic ignored "-Wundeclared-selector"
-        [weakTarget performSelector:action];
+        if ([weakTarget respondsToSelector:action]) [weakTarget performSelector:action];
 #pragma clang diagnostic pop
     });
     dispatch_resume(self.holdTimer);

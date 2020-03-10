@@ -16,8 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)wc_stopTiming;
 - (dispatch_source_t)wc_startTimingInterval:(float)interval countdown:(BOOL(^)(void))countdown;
 - (dispatch_source_t)wc_startTimingInterval:(float)interval
-                                   addTarget:(id)target
-                                      action:(SEL)action;
+                                  addTarget:(id)target
+                                     action:(SEL)action;
 
 /** runtime替换方法 */
 + (BOOL)wc_swizzleClassMethod:(SEL)originalSel with:(SEL)newSel;    /** 类方法 */
