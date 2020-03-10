@@ -20,7 +20,7 @@
     if ([self.delegateKit respondsToSelector:@selector(wc_textFieldShouldClear:)]) {
         return [self.delegateKit wc_textFieldShouldClear:textField];
     }
-    
+
     if ([self.delegateKit respondsToSelector:@selector(wc_textFieldValueChanged:)]) {
         [self.delegateKit wc_textFieldValueChanged:textField];
     }
@@ -42,6 +42,8 @@
 }
 
 - (void)textFieldValueChanged:(UITextField *)textField {
+    [self willChangeValueForKey:@"text"];
+    [self didChangeValueForKey:@"text"];
     self.currentText = textField.text;
     if (self.callback) self.callback(textField.text);
     if ([self.delegateKit respondsToSelector:@selector(wc_textFieldValueChanged:)]) {
@@ -56,12 +58,12 @@
 }
 
 /** block */
-- (void)setTextFieldValueChangedCallback:(void (^) (NSString *text))callback {
+- (void)setTextFieldValueChangedCallback:(void (^)(NSString *text))callback {
     [self addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventAllEditingEvents];
     objc_setAssociatedObject(self, @selector(callback), callback, OBJC_ASSOCIATION_COPY);
 }
 
-- (void (^) (NSString *text))callback {
+- (void (^)(NSString *text))callback {
     return objc_getAssociatedObject(self, _cmd);
 }
 

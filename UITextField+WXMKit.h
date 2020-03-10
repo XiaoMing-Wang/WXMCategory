@@ -31,7 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<WXMKitTextFieldDelegate> delegateKit;
 
 /** block */
-- (void)setTextFieldValueChangedCallback:(void (^)(NSString * _Nullable text))callback;
+- (void)setTextFieldValueChangedCallback:(void (^)(NSString *_Nullable text))callback;
 
 @end
 

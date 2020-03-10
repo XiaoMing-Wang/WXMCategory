@@ -25,4 +25,8 @@
 /** 尾部 */
 - (void)wc_crollsToBottomWithAnimation:(BOOL)animation;
 
+/** 滚动优先级低于返回 */
+- (void)wc_rollingPriorityLow:(UIViewController *)controller;
+- (void)wc_rollingPriorityHight:(UIViewController *)controller;
+
 @end

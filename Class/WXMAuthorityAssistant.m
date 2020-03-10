@@ -29,10 +29,9 @@
                                         cancel:@"取消"
                                    otherAction:@[@"去开启"]
                                  completeBlock:^(NSInteger index) {
-            if (index)[[UIApplication sharedApplication] openURL:settingUrl];
+            if (index) [[UIApplication sharedApplication] openURL:settingUrl options:@{} completionHandler:nil];
         }];
     } else {
-        
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
             callback(status == PHAuthorizationStatusAuthorized);
         }];
@@ -58,7 +57,7 @@
                                         cancel:@"取消"
                                    otherAction:@[@"去开启"]
                                  completeBlock:^(NSInteger index) {
-            if (index) [[UIApplication sharedApplication] openURL:settingUrl];
+            if (index) [[UIApplication sharedApplication] openURL:settingUrl options:@{} completionHandler:nil];
         }];
     } else {
         
@@ -85,7 +84,7 @@
                                         cancel:@"取消"
                                    otherAction:@[@"去开启"]
                                  completeBlock:^(NSInteger index) {
-            if (index)[[UIApplication sharedApplication] openURL:settingUrl];
+            if (index) [[UIApplication sharedApplication] openURL:settingUrl options:@{} completionHandler:nil];
         }];
     } else {
         [AVCaptureDevice requestAccessForMediaType:media completionHandler:callback];
@@ -109,7 +108,7 @@
                                     cancel:@"取消"
                                otherAction:@[@"去开启"]
                              completeBlock:^(NSInteger index) {
-        if (index)[[UIApplication sharedApplication] openURL:settingUrl];
+        if (index) [[UIApplication sharedApplication] openURL:settingUrl options:@{} completionHandler:nil];
     }];
     
     return NO;

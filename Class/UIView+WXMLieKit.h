@@ -30,8 +30,10 @@
 /** 渐现动画 */
 - (void)wc_fadeAnimation;
 
-/** 居中设置 */
+/** 左右居中对齐 */
 - (void)wc_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval;
+
+/** 上下居中对齐 */
 - (void)wc_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
 
 /** 获取xib */

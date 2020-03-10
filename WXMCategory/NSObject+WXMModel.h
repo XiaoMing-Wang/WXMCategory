@@ -28,6 +28,10 @@ NS_ASSUME_NONNULL_BEGIN
 /** json转模型 */
 + (nullable instancetype)modelWithJSON:(id)json;
 
+#pragma mark 常用
+#pragma mark 常用
+#pragma mark 常用
+
 /** 字典转模型 */
 + (nullable instancetype)modelWithDictionary:(NSDictionary *)dictionary;
 

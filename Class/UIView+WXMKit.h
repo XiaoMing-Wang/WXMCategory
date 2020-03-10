@@ -32,6 +32,7 @@
 @property (nonatomic, assign) CGFloat layoutBottom;
 @property (nonatomic, assign) CGFloat layCornerRadius;
 
+/** 居中 */
 - (void)layoutCenterXToSupView:(UIView *)supview;
 - (void)layoutCenterYToSupView:(UIView *)supview;
 - (void)layoutCenterXYToSupView:(UIView *)supview;

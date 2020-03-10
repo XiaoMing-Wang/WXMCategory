@@ -51,12 +51,12 @@ static char touchKey;
 - (void)wc_sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
     if ([self isKindOfClass:[UIButton class]]) {
         BOOL interruptResponse = [objc_getAssociatedObject(self, &responseKey) boolValue];
-        if (interruptResponse && self.respondInterval > 0) {
+        if (interruptResponse && self.respondInterval > 0.0) {
             NSLog(@"button暂时不能响应...");
             return;
         }
         
-        if (self.respondInterval > 0 && self.respondInterval) {
+        if (self.respondInterval > 0.0 && self.respondInterval) {
             objc_setAssociatedObject(self, &responseKey, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
             CGFloat delay = self.respondInterval * 1.0f;
             dispatch_queue_t queue = dispatch_get_main_queue();
