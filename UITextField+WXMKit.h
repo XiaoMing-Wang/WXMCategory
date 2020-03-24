@@ -2,8 +2,8 @@
 //  UITextField+WXMKit.h
 //  WXMComponentization
 //
-//  Created by sdjim on 2020/1/19.
-//  Copyright © 2020 sdjim. All rights reserved.
+//  Created by wxm on 2020/1/19.
+//  Copyright © 2020 wxm. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
