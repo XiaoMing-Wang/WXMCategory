@@ -60,7 +60,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString *)base64EncodedString;
 
 /** Base64解码 */
-- (NSString *)base64DecodedString ;
+- (NSString *)base64DecodedString;
+
 @end
 
 NS_ASSUME_NONNULL_END

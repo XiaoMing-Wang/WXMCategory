@@ -51,17 +51,23 @@
 
 - (void)setDelegateKit:(id<WXMKitTextFieldDelegate>)delegateKit {
     self.delegate = self;
-    [self addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventAllEditingEvents];
+    [self addTarget:self
+             action:@selector(textFieldValueChanged:)
+   forControlEvents:UIControlEventAllEditingEvents];
+    
     objc_setAssociatedObject(self, @selector(delegateKit), delegateKit, OBJC_ASSOCIATION_ASSIGN);
 }
 
 /** block */
 - (void)setTextFieldValueChangedCallback:(void (^) (NSString *text))callback {
-    [self addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventAllEditingEvents];
+    [self addTarget:self
+             action:@selector(textFieldValueChanged:)
+   forControlEvents:UIControlEventAllEditingEvents];
+    
     objc_setAssociatedObject(self, @selector(callback), callback, OBJC_ASSOCIATION_COPY);
 }
 
-- (void (^) (NSString *text))callback {
+- (void (^)(NSString *text))callback {
     return objc_getAssociatedObject(self, _cmd);
 }
 
@@ -71,7 +77,9 @@
 
 - (void)setMaxCharacter:(NSInteger)maxCharacter {
     self.delegate = self;
-    [self addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventAllEditingEvents];
+    [self addTarget:self
+             action:@selector(textFieldValueChanged:)
+   forControlEvents:UIControlEventAllEditingEvents];
     objc_setAssociatedObject(self, @selector(maxCharacter), @(maxCharacter), OBJC_ASSOCIATION_COPY);
 }
 

@@ -142,8 +142,8 @@ static char kimage_title;
     UIImage *iconImage = [UIImage imageNamed:imageName];
     UIButton *wrapButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:wrapButton];
-    CGFloat leftImage = (title.length > 0) ? 0 : -7;
-    CGRect rect = CGRectMake(leftImage, 0, iconImage.size.width, iconImage.size.height);
+    CGFloat leftImage = (title.length > 0) ? 0 : -3.5;
+    CGRect rect = CGRectMake(leftImage, 0, 17.5, 17.5);
     
     UIImageView *icon = [[UIImageView alloc] initWithFrame:rect];
     icon.image = iconImage;
