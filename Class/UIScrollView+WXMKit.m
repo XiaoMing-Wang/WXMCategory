@@ -97,4 +97,35 @@
         [self setContentOffset:offset animated:animation];
     }
 }
+
+/** 滚动优先级低于返回 */
+- (void)wc_rollingPriorityLow:(UIViewController *)controller {
+    @try {
+        
+        if (!self.panGestureRecognizer || !self.scrollEnabled) return;
+        UIGestureRecognizer *gesturecognizer = controller.navigationController.interactivePopGestureRecognizer;
+        UIPanGestureRecognizer *panGestureRecognizer = self.panGestureRecognizer;
+        if (!gesturecognizer || !panGestureRecognizer) return;
+        if ([panGestureRecognizer respondsToSelector:@selector(requireGestureRecognizerToFail:)]) {
+            [panGestureRecognizer requireGestureRecognizerToFail:gesturecognizer];
+        }
+        
+    } @catch (NSException *exception) {} @finally {}
+}
+
+/** 滚动优先级低于返回 */
+- (void)wc_rollingPriorityHight:(UIViewController *)controller {
+    @try {
+        
+        if (!self.panGestureRecognizer || !self.scrollEnabled) return;
+        UIGestureRecognizer *gesturecognizer = controller.navigationController.interactivePopGestureRecognizer;
+        UIPanGestureRecognizer *panGestureRecognizer = self.panGestureRecognizer;
+        if (!gesturecognizer || !panGestureRecognizer) return;
+        if ([gesturecognizer respondsToSelector:@selector(requireGestureRecognizerToFail:)]) {
+            [gesturecognizer requireGestureRecognizerToFail:panGestureRecognizer];
+        }
+        
+    } @catch (NSException *exception) {} @finally {}
+}
+
 @end

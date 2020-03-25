@@ -12,6 +12,8 @@
 
 /** title 有键盘出现系统的会失去响应  */
 + (UIBarButtonItem *)wc_titleItem:(NSString *)title tintColor:(UIColor *)tintColor action:(void (^)(void))action;
+
+/** title自定义文字(右边)  */
 + (UIBarButtonItem *)wc_titleCustomItem:(NSString *)title tintColor:(UIColor *)tintColor action:(void (^)(void))action;
 
 /** 自定义单图 */

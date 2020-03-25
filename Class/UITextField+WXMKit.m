@@ -2,8 +2,8 @@
 //  UITextField+WXMKit.m
 //  WXMComponentization
 //
-//  Created by sdjim on 2020/1/19.
-//  Copyright © 2020 sdjim. All rights reserved.
+//  Created by wxm on 2020/1/19.
+//  Copyright © 2020 wxm. All rights reserved.
 //
 #import <objc/runtime.h>
 #import "UITextField+WXMKit.h"
@@ -20,7 +20,7 @@
     if ([self.delegateKit respondsToSelector:@selector(wc_textFieldShouldClear:)]) {
         return [self.delegateKit wc_textFieldShouldClear:textField];
     }
-    
+
     if ([self.delegateKit respondsToSelector:@selector(wc_textFieldValueChanged:)]) {
         [self.delegateKit wc_textFieldValueChanged:textField];
     }
@@ -42,6 +42,8 @@
 }
 
 - (void)textFieldValueChanged:(UITextField *)textField {
+    [self willChangeValueForKey:@"text"];
+    [self didChangeValueForKey:@"text"];
     self.currentText = textField.text;
     if (self.callback) self.callback(textField.text);
     if ([self.delegateKit respondsToSelector:@selector(wc_textFieldValueChanged:)]) {
@@ -51,19 +53,13 @@
 
 - (void)setDelegateKit:(id<WXMKitTextFieldDelegate>)delegateKit {
     self.delegate = self;
-    [self addTarget:self
-             action:@selector(textFieldValueChanged:)
-   forControlEvents:UIControlEventAllEditingEvents];
-    
+    [self addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventAllEditingEvents];
     objc_setAssociatedObject(self, @selector(delegateKit), delegateKit, OBJC_ASSOCIATION_ASSIGN);
 }
 
 /** block */
-- (void)setTextFieldValueChangedCallback:(void (^) (NSString *text))callback {
-    [self addTarget:self
-             action:@selector(textFieldValueChanged:)
-   forControlEvents:UIControlEventAllEditingEvents];
-    
+- (void)setTextFieldValueChangedCallback:(void (^)(NSString *text))callback {
+    [self addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventAllEditingEvents];
     objc_setAssociatedObject(self, @selector(callback), callback, OBJC_ASSOCIATION_COPY);
 }
 
@@ -77,9 +73,7 @@
 
 - (void)setMaxCharacter:(NSInteger)maxCharacter {
     self.delegate = self;
-    [self addTarget:self
-             action:@selector(textFieldValueChanged:)
-   forControlEvents:UIControlEventAllEditingEvents];
+    [self addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventAllEditingEvents];
     objc_setAssociatedObject(self, @selector(maxCharacter), @(maxCharacter), OBJC_ASSOCIATION_COPY);
 }
 

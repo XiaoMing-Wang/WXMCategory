@@ -115,7 +115,7 @@ static char doubleTap;
     CGRect rectAbove = left.frame;
     rectAbove.origin.x = topAbove;
     left.frame = rectAbove;
-    
+
     CGRect rectNether = right.frame;
     rectNether.origin.x = totalWidth - topAbove - right.frame.size.width;
     right.frame = rectNether;

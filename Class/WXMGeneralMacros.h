@@ -12,6 +12,7 @@
 /** 屏幕frame */
 #define kSRect ([UIScreen mainScreen].bounds)
 #define kEdgeRect CGRectMake(0, kNBarHeight, kSWidth, kSHeight - kNBarHeight)
+#define kEdgeSafeRect CGRectMake(0, kNBarHeight, kSWidth, kSHeight - kNBarHeight - kSafeHeight)
 
 /** 导航栏高度 安全高度 */
 #define kNBarHeight ((kIPhoneX) ? 88.0f : 64.0f)

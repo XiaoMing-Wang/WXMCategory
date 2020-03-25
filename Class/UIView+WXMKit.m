@@ -93,28 +93,28 @@
 }
 
 - (void)layoutCenterXToSupView:(UIView *)supview {
-    self.centerX = supview.frame.size.width / 2.0;
+    self.centerX = supview.width / 2.0;
 }
 
 - (void)layoutCenterYToSupView:(UIView *)supview {
-    self.centerY = supview.frame.size.height / 2.0;
+    self.centerY = supview.height / 2.0;
 }
 
 - (void)layoutCenterXYToSupView:(UIView *)supview {
-    self.centerX = supview.frame.size.width / 2.0;
-    self.centerY = supview.frame.size.height / 2.0;
+    self.centerX = supview.width / 2.0;
+    self.centerY = supview.height / 2.0;
 }
 
 - (void)layoutRight:(UIView *)refer offset:(CGFloat)offset {
     CGFloat width = refer.left - self.left;
-    if (self.width == 0) self.width = width - self.left - offset;
-    else self.right = width  - offset;
+    if (self.width == 0) self.width = width - offset;
+    else self.right = refer.left - offset;
 }
 
 - (void)layoutBottom:(UIView *)refer offset:(CGFloat)offset {
     CGFloat height = refer.top - self.top;
-    if (self.height == 0) self.height = height - self.top - offset;
-    else self.bottom = height - offset;
+    if (self.height == 0) self.height = height - offset;
+    else self.bottom = refer.top - offset;
 }
 
 - (void)setLayCornerRadius:(CGFloat)layCornerRadius {

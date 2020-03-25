@@ -10,7 +10,6 @@
 
 @implementation NSDate (WXMCategory)
 
-
 - (NSUInteger)day {
     return [NSDate day:self];
 }
