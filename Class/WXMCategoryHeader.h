@@ -29,7 +29,7 @@
 #import "UIControl+WXMKit.h"
 #import "UIView+WXMLieKit.h"
 #import "UITableView+WXMKit.h"
-//#import "UITextField+WXMKit.h"
+#import "UITextField+WXMKit.h"
 #import "UIScrollView+WXMKit.h"
 #import "UITableViewCell+WXMKit.h"
 #import "UIBarButtonItem+WXMKit.h"
