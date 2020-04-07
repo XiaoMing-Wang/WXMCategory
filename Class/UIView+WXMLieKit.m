@@ -25,7 +25,7 @@ static char doubleTap;
 }
 
 /** 手势 */
-- (void)wc_addTapped:(id)target action:(SEL)action {
+- (void)wc_tappedWithTarget:(id)target action:(SEL)action {
     UITapGestureRecognizer *tapGes = nil;
     tapGes = [[UITapGestureRecognizer alloc] initWithTarget:target action:action];
     tapGes.numberOfTapsRequired = 1;
@@ -54,9 +54,7 @@ static char doubleTap;
 }
 
 /** 实例化手势 */
-- (UITapGestureRecognizer *)addTapGesture:(NSUInteger)taps
-                                  touches:(NSUInteger)touches
-                                 selector:(SEL)selector {
+- (UITapGestureRecognizer *)addTapGesture:(NSUInteger)taps touches:(NSUInteger)touches selector:(SEL)selector {
     self.userInteractionEnabled = YES;
     UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self  action:selector];
     tapGes.delegate = self;
@@ -122,7 +120,7 @@ static char doubleTap;
 }
 
 /** 获取nib文件 */
-+ (instancetype)xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex {
++ (instancetype)wc_xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex {
     return [[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil][currentIdex];
 }
 
@@ -149,4 +147,5 @@ static char doubleTap;
     transition.subtype = kCATransitionFromRight;
     [self.layer addAnimation:transition forKey:@"animation"];
 }
+
 @end

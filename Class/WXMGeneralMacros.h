@@ -9,23 +9,21 @@
 #ifndef WXMGeneralMacros_h
 #define WXMGeneralMacros_h
 
+/** iphoneX */
+#define kIPhoneX ({  \
+BOOL isPhoneX = NO;  \
+if (@available(iOS 11.0, *)) {  \
+    isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom > 0.0; \
+} (isPhoneX); })
+
 /** 屏幕frame */
-#define kSRect ([UIScreen mainScreen].bounds)
+#define kScreenRect ([UIScreen mainScreen].bounds)
 #define kEdgeRect CGRectMake(0, kNBarHeight, kSWidth, kSHeight - kNBarHeight)
 #define kEdgeSafeRect CGRectMake(0, kNBarHeight, kSWidth, kSHeight - kNBarHeight - kSafeHeight)
 
 /** 导航栏高度 安全高度 */
 #define kNBarHeight ((kIPhoneX) ? 88.0f : 64.0f)
 #define kSafeHeight ((kIPhoneX) ? 35.0f : 0.0f)
-
-/** iphoneX */
-#define kIPhoneX \
-({BOOL isPhoneX = NO;\
-if (@available(iOS 11.0, *)) {\
-isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bottom > 0.0;\
-}\
-(isPhoneX);\
-})
 
 /** 屏幕宽高 */
 #define kSWidth [UIScreen mainScreen].bounds.size.width
@@ -40,8 +38,7 @@ isPhoneX = [[UIApplication sharedApplication] delegate].window.safeAreaInsets.bo
 #define kCurrentLanguage ([[NSLocale preferredLanguages] objectAtIndex:0])
 
 /** Library 路径 */
-#define kLibraryboxPath \
-NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject
+#define kLibraryboxPath NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).firstObject
 
 /** 强弱引用 */
 #ifndef weakify
@@ -83,9 +80,9 @@ NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).f
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 
 /** 颜色(RGB) */
-#define kRGBColor(r, g, b) kRGBAColor(r, g, b, 1)
-#define kRGBAColor(r, g, b, a) \
-[UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:a]
+#define kRGBCOLOR(r, g, b) kRGBAColor(r, g, b, 1)
+#define kRGBCOLORSINGULAR(s) kRGBAColor(s, s, s, 1)
+#define kRGBACOLOR(r, g, b, a) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:a]
 
 /**  16进制颜色(0xFFFFFF) 不用带 0x 和 @"" */
 #define kCOLOR_WITH_HEX(hexValue) \
@@ -119,14 +116,13 @@ alpha:1.0];
 #define GrayColor        [UIColor grayColor]
 
 /** 获取当前系统时间戳 */
-#define kGetCurentTime \
-[NSString stringWithFormat:@"%zd", (long)[[NSDate date] timeIntervalSince1970]]
+#define kGetCurentTime [NSString stringWithFormat:@"%zd", (long)[[NSDate date] timeIntervalSince1970]]
 
 /*! 复制文字内容 */
 #define kCopyContent(aString) [[UIPasteboard generalPasteboard] setString:aString]
 
 /** 图片 */
-#define kImageString(aString) [UIImage imageNamed:[NSString stringWithFormat:@"%@",aString]]
+#define kImageWithString(aString) [UIImage imageNamed:[NSString stringWithFormat:@"%@",aString]]
 
 /** 空对象 */
 #define kEmptyObject(object) (object == nil \
@@ -137,8 +133,7 @@ alpha:1.0];
 [[(NSDictionary *)object allKeys] count] == 0))
 
 /** 用safari打开URL */
-#define kOpenUrl(aString) \
-[[UIApplication sharedApplication] openURL:[NSURL URLWithString:aString]]
+#define kOpenUrl(aString) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:aString]]
 
 /** 角度转弧度 */
 #define kDegreesToRadian(x) (M_PI * (x) / 180.0)
@@ -158,9 +153,7 @@ alpha:1.0];
 #define kFormatLog(FORMAT, ...)           \
 fprintf(stderr, "%s  %d行 ------>:\t%s\n", \
 [[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], \
-__LINE__, \
-[[NSString stringWithFormat:FORMAT,\
-##__VA_ARGS__] UTF8String]);
+__LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 #define kNSLog(...) kFormatLog(@"%@", kMASBoxValue(__VA_ARGS__));
 #else
@@ -191,25 +184,25 @@ static inline void wk_dispatch_after_main_queue(CGFloat delay, void (^block)(voi
 }
 
 /** block */
-typedef void (^kVoidCallback)(void);
-typedef BOOL (^kBoolCallback)(void);
-typedef int  (^kIntCallback) (void);
-typedef id   (^kIdCallback)  (void);
+typedef void (^kVoidBlockDefine)(void);
+typedef BOOL (^kBoolBlockDefine)(void);
+typedef int  (^kIntBlockDefine) (void);
+typedef id   (^kIdBlockDefine)  (void);
 
-typedef void (^kVoidCallback_Int)(int index);
-typedef BOOL (^kBoolCallback_Int)(int index);
-typedef int  (^kIntCallback_Int) (int index);
-typedef id   (^kIdCallback_Int)  (int index);
+typedef void (^kVoidBlockDefineInt)(int index);
+typedef BOOL (^kBoolBlockDefineInt)(int index);
+typedef int  (^kIntBlockDefineInt) (int index);
+typedef id   (^kIdBlockDefineInt)  (int index);
 
-typedef void (^kVoidCallback_Str)(NSString *aString);
-typedef BOOL (^kBoolCallback_Str)(NSString *aString);
-typedef int  (^kIntCallback_Str) (NSString *aString);
-typedef id   (^kIdCallback_Str)  (NSString *aString);
+typedef void (^kVoidBlockDefineString)(NSString *aString);
+typedef BOOL (^kBoolBlockDefineString)(NSString *aString);
+typedef int  (^kIntBlockDefineString) (NSString *aString);
+typedef id   (^kIdBlockDefineString)  (NSString *aString);
 
-typedef void (^kVoidCallback_Id)(id obj);
-typedef BOOL (^kBoolCallback_Id)(id obj);
-typedef int  (^kIntCallback_Id) (id obj);
-typedef id   (^kIdCallback_Id)  (id obj);
+typedef void (^kVoidBlockDefineId)(id obj);
+typedef BOOL (^kBoolBlockDefineId)(id obj);
+typedef int  (^kIntBlockDefineId) (id obj);
+typedef id   (^kIdBlockDefineId)  (id obj);
 
 /**  执行回调 */
 #define kBlock_exec(block, ...) if (block) { block(__VA_ARGS__); }
@@ -217,7 +210,7 @@ typedef id   (^kIdCallback_Id)  (id obj);
 /**  判断string */
 #define kEqualString(aString, bString)  [aString isEqualToString:bString]
 
-/** 区间 */
+/** 获取区间 kMin_Max(3, 4, 5) */
 #define kMin_Max(Mix, Pa, Max) MAX(Mix, MIN(Pa, Max))
 
 /** 将括号内的类型转化成id类型 */

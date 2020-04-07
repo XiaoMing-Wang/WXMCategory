@@ -14,10 +14,10 @@
 /** 相册权限 */
 + (void)wp_photoAuthorityWithCallback:(void (^)(BOOL authorized))callback {
     if (!callback) return;
-    
     if (PHPhotoLibrary.authorizationStatus == AVAuthorizationStatusAuthorized) {
         
         callback(YES);
+        
     } else if (PHPhotoLibrary.authorizationStatus == AVAuthorizationStatusRestricted ||
                PHPhotoLibrary.authorizationStatus == AVAuthorizationStatusDenied) {
         
@@ -31,22 +31,25 @@
                                  completeBlock:^(NSInteger index) {
             if (index) [[UIApplication sharedApplication] openURL:settingUrl options:@{} completionHandler:nil];
         }];
+        
     } else {
+        
         [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            callback(status == PHAuthorizationStatusAuthorized);
+            dispatch_async(dispatch_get_main_queue(), ^{ callback(status == PHAuthorizationStatusAuthorized); });
         }];
+        
     }
 }
 
 /** 相机权限 */
 + (void)wp_cameraAuthorityWithCallback:(void (^)(BOOL authorized))callback {
     if (!callback) return;
-    
     AVMediaType media = AVMediaTypeVideo;
     AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:media];
     if (status == AVAuthorizationStatusAuthorized) {
         
         callback(YES);
+        
     } else if (status == AVAuthorizationStatusRestricted || status == AVAuthorizationStatusDenied) {
         
         callback(NO);
@@ -59,9 +62,12 @@
                                  completeBlock:^(NSInteger index) {
             if (index) [[UIApplication sharedApplication] openURL:settingUrl options:@{} completionHandler:nil];
         }];
+        
     } else {
         
-        [AVCaptureDevice requestAccessForMediaType:media completionHandler:callback];
+        [AVCaptureDevice requestAccessForMediaType:media completionHandler:^(BOOL granted) {
+            dispatch_async(dispatch_get_main_queue(), ^{ callback(granted); });
+        }];
     }
 }
 
@@ -74,6 +80,7 @@
     if (status == AVAuthorizationStatusAuthorized) {
         
         callback(YES);
+        
     } else if (status == AVAuthorizationStatusRestricted || status == AVAuthorizationStatusDenied) {
         
         callback(NO);
@@ -86,8 +93,12 @@
                                  completeBlock:^(NSInteger index) {
             if (index) [[UIApplication sharedApplication] openURL:settingUrl options:@{} completionHandler:nil];
         }];
+        
     } else {
-        [AVCaptureDevice requestAccessForMediaType:media completionHandler:callback];
+        
+        [AVCaptureDevice requestAccessForMediaType:media completionHandler:^(BOOL granted) {
+            dispatch_async(dispatch_get_main_queue(), ^{ callback(granted); });
+        }];
     }
 }
 

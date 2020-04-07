@@ -174,6 +174,19 @@
     return allCharacter;
 }
 
+/** 是否是正确的密码 */
+- (BOOL)wc_correctPassword {
+    BOOL allCharacter = YES;
+    for (int i = 0; i < self.length; i++) {
+        NSString *subStr = [self substringWithRange:NSMakeRange(i, 1)];
+        if (!subStr.wc_number && !subStr.wc_english && ![self isEqualToString:@"_"]) {
+            allCharacter = NO;
+            break;
+        }
+    }
+    return allCharacter;
+}
+
 /** 拼音 */
 - (NSString *)wc_changePinyin {
     NSMutableString *string = [NSMutableString stringWithString:self];

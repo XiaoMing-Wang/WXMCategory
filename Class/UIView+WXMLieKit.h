@@ -23,7 +23,7 @@
 - (void)wc_saveImageInlocation:(NSString *)imageName;
 
 /** 手势 */
-- (void)wc_addTapped:(id)target action:(SEL)action;
+- (void)wc_tappedWithTarget:(id)target action:(SEL)action;
 - (UITapGestureRecognizer *)wc_addOnceTappedWithCallback:(void (^)(void))callback;
 - (UITapGestureRecognizer *)wc_addDoubleTappedWithCallback:(void (^)(void))callback;
 
@@ -37,7 +37,7 @@
 - (void)wc_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
 
 /** 获取xib */
-+ (instancetype)xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex;
++ (instancetype)wc_xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex;
 
 /// 任意边角画圆角
 /// @param rectCorner 圆角边
