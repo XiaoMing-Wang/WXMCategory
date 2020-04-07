@@ -93,14 +93,17 @@
 }
 
 - (void)layoutCenterXToSupView:(UIView *)supview {
+    if (!supview) supview = self.superview;
     self.centerX = supview.width / 2.0;
 }
 
 - (void)layoutCenterYToSupView:(UIView *)supview {
+    if (!supview) supview = self.superview;
     self.centerY = supview.height / 2.0;
 }
 
 - (void)layoutCenterXYToSupView:(UIView *)supview {
+    if (!supview) supview = self.superview;
     self.centerX = supview.width / 2.0;
     self.centerY = supview.height / 2.0;
 }

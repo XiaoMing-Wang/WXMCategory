@@ -19,11 +19,14 @@
 
 @end
 
-static inline void wc_addNotificationSEL(id obser, SEL selector, NSString *name, id object) {
+static inline void wc_addNotificationWithSEL(id obser, SEL selector, NSString *name, id object) {
     [[NSNotificationCenter defaultCenter] addObserver:obser selector:selector name:name object:object];
 }
 
-static inline void wc_addNotification(UIViewController *obser, NSString *name, id object, void (^usingBlock)(NSNotification *note)) {
+static inline void wc_addNotificationWithBlock(UIViewController *obser,
+                                               NSString *name,
+                                               id object,
+                                               void (^usingBlock)(NSNotification *note)) {
     [[NSNotificationCenter defaultCenter] wc_addObserver:obser name:name object:object usingBlock:usingBlock];
 }
 

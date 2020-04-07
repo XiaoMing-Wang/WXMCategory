@@ -107,14 +107,17 @@
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.lineBreakMode = NSLineBreakByCharWrapping;
     style.alignment = NSTextAlignmentLeft;
+    style.lineSpacing = -2.5f;
+    style.paragraphSpacing = 0;
     NSDictionary *dict = @{
         NSFontAttributeName: [UIFont systemFontOfSize:fontSize],
         NSParagraphStyleAttributeName: style
     };
     
+    NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading;
+
     NSAttributedString *string = [[NSAttributedString alloc]initWithString:self attributes:dict];
-    CGSize size =  [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
-                                        options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading context:nil].size;
+    CGSize size = [string boundingRectWithSize:CGSizeMake(width, MAXFLOAT) options:options context:nil].size;
     CGFloat height = ceil(size.height) + 1;
     return height;
 }
@@ -122,7 +125,7 @@
 /** 获取字符行数 */
 - (NSInteger)wc_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize {
     if (self.length == 0) return 0;
-    CGFloat allHeight = [self wc_getHeightOtherWithFont:fontSize width:maxWidth];
+    CGFloat allHeight = [self wc_getHeightWithFont:fontSize width:maxWidth];
     CGFloat lineHeight = [self wc_getHeightWithFont:fontSize];
     NSInteger totalRow = (allHeight / lineHeight);
     return totalRow;
@@ -189,10 +192,19 @@
 
 /** 拼音 */
 - (NSString *)wc_changePinyin {
-    NSMutableString *string = [NSMutableString stringWithString:self];
-    CFStringTransform((__bridge CFMutableStringRef) string, NULL, kCFStringTransformMandarinLatin, NO);
-    CFStringTransform((__bridge CFMutableStringRef) string, NULL, kCFStringTransformStripDiacritics, NO);
-    return [string stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+//    NSMutableString *string = [NSMutableString stringWithString:self];
+//    CFStringTransform((__bridge CFMutableStringRef) string, NULL, kCFStringTransformMandarinLatin, NO);
+//    CFStringTransform((__bridge CFMutableStringRef) string, NULL, kCFStringTransformStripDiacritics, NO);
+//    return [string stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    /** 这个效率比较高 */
+    NSMutableString *mutableString = [NSMutableString stringWithString:self];
+    CFStringTransform((CFMutableStringRef)mutableString, NULL, kCFStringTransformToLatin, false);
+    mutableString = (NSMutableString *) [mutableString stringByFoldingWithOptions:NSDiacriticInsensitiveSearch
+                                                                           locale:[NSLocale currentLocale]];
+    return mutableString;
+    
 }
 #pragma mark _____________________________________________ 时间转化
 
@@ -239,6 +251,38 @@
 - (NSString *)base64DecodedString {
     NSData *data = [[NSData alloc] initWithBase64EncodedString:self options:0];
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
+/** 判断是否允许输入 */
++ (BOOL)allowedEnter:(NSString *)original enterString:(NSString *)enterString {
+    if ([enterString isEqualToString:@""]) return YES;
+    if (original.length >= 9) return NO;
+    if (original.length == 8 && [enterString isEqualToString:@"."]) return NO;
+    if (!enterString.wc_number && ![enterString isEqualToString:@"."]) return NO;
+    if (original.length == 0 && [enterString isEqualToString:@"."]) return NO;
+    
+    if ([original rangeOfString:@"."].location != NSNotFound &&
+        [enterString isEqualToString:@"."]) {
+        return NO;
+    }
+    
+    if ([original isEqualToString:@"0"] &&
+        [enterString isEqualToString:@"0"]) {
+        return NO;
+    }
+    
+    NSRange rangePoint = [original rangeOfString:@"."];
+    if (rangePoint.location != NSNotFound) {
+        NSString *lastString = [original componentsSeparatedByString:@"."].lastObject;
+        if (lastString.length >= 2) return NO;
+    }
+    return YES;
+}
+
+/** 判断是否输入的是有效金额 */
++ (BOOL)availableEnter:(NSString *)enterString {
+    if ([enterString isEqualToString:@"0"] || [enterString isEqualToString:@"0."]) return NO;
+    return (enterString.length > 0);
 }
 @end
 
