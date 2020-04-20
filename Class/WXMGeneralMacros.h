@@ -22,13 +22,14 @@ if (@available(iOS 11.0, *)) {  \
 #define kEdgeSafeRect CGRectMake(0, kNBarHeight, kSWidth, kSHeight - kNBarHeight - kSafeHeight)
 
 /** 导航栏高度 安全高度 */
-#define kNBarHeight ((kIPhoneX) ? 88.0f : 64.0f)
+#define kBarHeight ((kIPhoneX) ? 88.0f : 64.0f)
+#define kTabbarHeight 49
 #define kSafeHeight ((kIPhoneX) ? 35.0f : 0.0f)
 
 /** 屏幕宽高 */
-#define kSWidth [UIScreen mainScreen].bounds.size.width
-#define kSHeight [UIScreen mainScreen].bounds.size.height
-#define kSScale  [UIScreen mainScreen].scale
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+#define kScreenScale  [UIScreen mainScreen].scale
 
 /** 获取系统版本 */
 #define kIOS_Version [[[UIDevice currentDevice] systemVersion] floatValue]
@@ -132,9 +133,6 @@ alpha:1.0];
 || ([object respondsToSelector:@selector(allKeys)] && \
 [[(NSDictionary *)object allKeys] count] == 0))
 
-/** 用safari打开URL */
-#define kOpenUrl(aString) [[UIApplication sharedApplication] openURL:[NSURL URLWithString:aString]]
-
 /** 角度转弧度 */
 #define kDegreesToRadian(x) (M_PI * (x) / 180.0)
 
@@ -142,10 +140,10 @@ alpha:1.0];
 #define kRadianToDegrees(radian) (radian * 180.0)/(M_PI)
 
 /** 通知 */
-#define kNotificationPost(name, object) \
+#define wk_postNotification(name, object) \
 [[NSNotificationCenter defaultCenter] postNotificationName:name object:object];
 
-#define kNotificationObserver(target, sel, name) \
+#define wk_addNotificationObserver(target, sel, name) \
 [[NSNotificationCenter defaultCenter] addObserver:target selector:sel name:name object:nil];
 
 /** 打印 */
@@ -163,7 +161,8 @@ __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 
 #define kMASBoxValue(value) aMASBoxValue(@encode(__typeof__(value)), (value))
 #define kiOS9 [[UIDevice currentDevice] systemVersion].floatValue >= 9.0
-#define kWidth320 (kSWidth == 320)
+#define kiOS10 [[UIDevice currentDevice] systemVersion].floatValue >= 10.0
+#define kiOS11 [[UIDevice currentDevice] systemVersion].floatValue >= 11.0
 #define kIphone5 (CGRectGetHeight([UIScreen mainScreen].bounds) == 568.0)
 #define kIPhone6 (CGRectGetHeight([UIScreen mainScreen].bounds) == 667.0)
 #define kIPhone6P ([UIScreen mainScreen].bounds.size.width > 400.0)
@@ -212,6 +211,16 @@ typedef id   (^kIdBlockDefineId)  (id obj);
 
 /** 获取区间 kMin_Max(3, 4, 5) */
 #define kMin_Max(Mix, Pa, Max) MAX(Mix, MIN(Pa, Max))
+
+/** 用safari打开URL */
+#define kSafariOpen(aString) NSURL *URL = [NSURL URLWithString:aString]; \
+if (@available(iOS 10.0, *)) { \
+    [[UIApplication sharedApplication] openURL:URL options:@{} completionHandler:nil]; \
+} else {  \
+[[UIApplication sharedApplication] openURL:URL];  \
+}
+/**  跳转到设置 */
+#define kOpenSetting() kSafariOpen(UIApplicationOpenSettingsURLString);
 
 /** 将括号内的类型转化成id类型 */
 static inline id aMASBoxValue(const char *type, ...) {
