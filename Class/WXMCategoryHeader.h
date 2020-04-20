@@ -35,6 +35,7 @@
 #import "UIBarButtonItem+WXMKit.h"
 #import "UIViewController+WXMKit.h"
 
+#import "WXMThreadAssistant.h"
 #import "WXMAuthorityAssistant.h"
 #import "WXMRunLoopTransactions.h"
 

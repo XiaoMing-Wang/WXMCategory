@@ -137,9 +137,8 @@ static char holdTimerKey;
     NSMutableArray *_arrayM = @[].mutableCopy;
     objc_property_t *propertys = class_copyPropertyList([self class], &count);
     for (int i = 0; i < count; i++) {
-        objc_property_t property = propertys[i]; /** 获得每一个属性 */
-        NSString *pro = [NSString stringWithCString:property_getName(property)
-                                           encoding:NSUTF8StringEncoding];
+        objc_property_t property = propertys[i];
+        NSString *pro = [NSString stringWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
         [_arrayM addObject:pro];
     }
     return _arrayM;
