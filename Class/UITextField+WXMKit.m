@@ -35,7 +35,12 @@
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
     if ([string isEqualToString:@""]) return YES;
+    if ([self.delegateKit respondsToSelector:@selector(wc_textFieldShouldEdit:replacementString:)]) {
+        return [self.delegateKit wc_textFieldShouldEdit:textField replacementString:string];
+    }
+    
     if (self.maxCharacter == 0) return YES;
     if (textField.text.length >= self.maxCharacter) return NO;
     return YES;
@@ -44,10 +49,14 @@
 - (void)textFieldValueChanged:(UITextField *)textField {
     [self willChangeValueForKey:@"text"];
     [self didChangeValueForKey:@"text"];
-    self.currentText = textField.text;
     if (self.callback) self.callback(textField.text);
     if ([self.delegateKit respondsToSelector:@selector(wc_textFieldValueChanged:)]) {
         [self.delegateKit wc_textFieldValueChanged:textField];
+    }
+    
+    /** textField设置不会触发kvo */
+    if (self.maxCharacter > 0 && textField.text.length > self.maxCharacter) {
+        textField.text = [textField.text substringToIndex:self.maxCharacter];
     }
 }
 
@@ -72,21 +81,12 @@
 }
 
 - (void)setMaxCharacter:(NSInteger)maxCharacter {
-    self.delegate = self;
     [self addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventAllEditingEvents];
     objc_setAssociatedObject(self, @selector(maxCharacter), @(maxCharacter), OBJC_ASSOCIATION_COPY);
 }
 
 - (NSInteger)maxCharacter {
     return [objc_getAssociatedObject(self, _cmd) integerValue];
-}
-
-- (void)setCurrentText:(NSString *)currentText {
-    objc_setAssociatedObject(self, @selector(currentText), currentText, OBJC_ASSOCIATION_COPY);
-}
-
-- (NSString *)currentText {
-    return objc_getAssociatedObject(self, _cmd);
 }
 
 @end
