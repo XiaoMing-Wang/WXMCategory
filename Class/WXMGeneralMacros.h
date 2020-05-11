@@ -18,7 +18,7 @@ if (@available(iOS 11.0, *)) {  \
 
 /** 屏幕frame */
 #define kScreenRect ([UIScreen mainScreen].bounds)
-#define kEdgeRect CGRectMake(0, kNBarHeight, kSWidth, kSHeight - kNBarHeight)
+#define kEdgeRect CGRectMake(0, kBarHeight, kScreenWidth, kScreenHeight - kBarHeight)
 #define kEdgeSafeRect CGRectMake(0, kNBarHeight, kSWidth, kSHeight - kNBarHeight - kSafeHeight)
 
 /** 导航栏高度 安全高度 */
