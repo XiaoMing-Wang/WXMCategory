@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (WXMKit)
 
+@property (nonatomic, assign) BOOL presentationStyleFull;
+
 /** UIAlertController */
 - (UIAlertController *)wc_showAlertViewControllerWithTitle:(NSString *)title
                                                    message:(NSString *)message

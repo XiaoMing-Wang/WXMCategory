@@ -10,6 +10,7 @@
 #import "UIViewController+WXMKit.h"
 
 @implementation UIViewController (WXMKit)
+@dynamic presentationStyleFull;
 
 + (void)load {
     Method method1 = class_getInstanceMethod(self, NSSelectorFromString(@"dealloc"));
@@ -103,6 +104,11 @@
     
     [(self.navigationController ?: self) presentViewController:alert animated:YES completion:nil];
     return alert;
+}
+
+- (void)setPresentationStyleFull:(BOOL)presentationStyleFull {
+    if (presentationStyleFull) self.modalPresentationStyle = UIModalPresentationFullScreen;
+    if (!presentationStyleFull) self.modalPresentationStyle = UIModalPresentationFormSheet;
 }
 
 @end
