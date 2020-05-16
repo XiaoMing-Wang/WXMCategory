@@ -27,13 +27,10 @@
     /** 不带参数的 */
     if ([self.nextResponder respondsToSelector:nextSEL]) {
         [self.nextResponder performSelector:nextSEL];
-        return;
-    }
-    
+       
     /** 带参数的  */
-    if ([self.nextResponder respondsToSelector:nextSELParameter]) {
+    } else if ([self.nextResponder respondsToSelector:nextSELParameter]) {
         [self.nextResponder performSelector:nextSELParameter withObject:object];
-        return;
     }
     
     /** 没有实现 继续向下传递 */

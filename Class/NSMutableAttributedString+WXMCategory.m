@@ -5,13 +5,12 @@
 //  Created by edz on 2019/9/12.
 //  Copyright © 2019 wq. All rights reserved.
 //
-#define WXMCreatAttributedString(aString) \
-[[NSMutableAttributedString alloc] initWithSafeString:aString]
+#define WXMCreatAttributedString(aString) [[NSMutableAttributedString alloc] initWithSafeString:aString]
 
-#include <CommonCrypto/CommonCrypto.h>
-#import <CoreText/CoreText.h>
 #include <zlib.h>
 #import <objc/runtime.h>
+#import <CoreText/CoreText.h>
+#include <CommonCrypto/CommonCrypto.h>
 #import "NSMutableAttributedString+WXMCategory.h"
 
 @implementation NSMutableAttributedString (WXMCategory)

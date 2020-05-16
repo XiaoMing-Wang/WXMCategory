@@ -23,6 +23,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /** 此类为YYModel 做了一点修改 */
+/** 此类为YYModel 做了一点修改 */
+/** 此类为YYModel 做了一点修改 */
 @interface NSObject (WXMModel)
 
 /** json转模型 */
