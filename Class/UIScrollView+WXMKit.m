@@ -93,7 +93,9 @@
 /** 尾部 */
 - (void)wc_crollsToBottomWithAnimation:(BOOL)animation {
     if (self.contentSize.height > self.frame.size.height) {
-        CGPoint offset = CGPointMake(0, self.contentSize.height - self.frame.size.height);
+        CGPoint offset = CGPointMake(0, self.contentSize.height -
+                                     self.frame.size.height +
+                                     self.contentInset.bottom);
         [self setContentOffset:offset animated:animation];
     }
 }

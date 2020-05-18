@@ -81,8 +81,8 @@ if (@available(iOS 11.0, *)) {  \
 #define kUserDefaults [NSUserDefaults standardUserDefaults]
 
 /** 颜色(RGB) */
-#define kRGBCOLOR(r, g, b) kRGBAColor(r, g, b, 1)
-#define kRGBCOLORSINGULAR(s) kRGBAColor(s, s, s, 1)
+#define kRGBCOLOR(r, g, b) kRGBACOLOR(r, g, b, 1)
+#define kRGBCOLORSINGULAR(s) kRGBACOLOR(s, s, s, 1)
 #define kRGBACOLOR(r, g, b, a) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:a]
 
 /**  16进制颜色(0xFFFFFF) 不用带 0x 和 @"" */
