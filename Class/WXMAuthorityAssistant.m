@@ -132,19 +132,15 @@
                              otherAction:(NSArray *)otherAction
                            completeBlock:(void (^)(NSInteger index))block {
     
-    UIAlertController *alert = nil;
-    alert = [UIAlertController alertControllerWithTitle:title message:mes preferredStyle:1];
-    
-    UIAlertAction *cancle = nil;
-    cancle = [UIAlertAction actionWithTitle:canStr style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:title message:mes preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancle  = [UIAlertAction actionWithTitle:canStr style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         if (block) block(0);
     }];
     [alert addAction:cancle];
     
     for (int i = 0; i < otherAction.count; i++) {
         NSString *title = otherAction[i];
-        UIAlertAction *action = nil;
-        action = [UIAlertAction actionWithTitle:title style:0 handler:^(UIAlertAction *act) {
+        UIAlertAction *action = action = [UIAlertAction actionWithTitle:title style:0 handler:^(UIAlertAction *act) {
             if (block) block(i + 1);
         }];
         [alert addAction:action];
@@ -155,4 +151,5 @@
     if (rootVC.presentedViewController) rootVC = rootVC.presentedViewController;
     [rootVC presentViewController:alert animated:YES completion:nil];
 }
+
 @end
