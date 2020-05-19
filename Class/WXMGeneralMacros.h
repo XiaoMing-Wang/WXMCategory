@@ -23,11 +23,11 @@ if (@available(iOS 11.0, *)) {  \
 
 /** 导航栏高度 安全高度 */
 #define kBarHeight ((kIPhoneX) ? 88.0f : 64.0f)
-#define kTabbarHeight 49
 #define kSafeHeight ((kIPhoneX) ? 35.0f : 0.0f)
+#define kTabbarHeight 49
 
 /** 屏幕宽高 */
-#define kSWidth [UIScreen mainScreen].bounds.size.width
+#define kSWidth  [UIScreen mainScreen].bounds.size.width
 #define kSHeight [UIScreen mainScreen].bounds.size.height
 #define kSScale  [UIScreen mainScreen].scale
 
@@ -82,7 +82,6 @@ if (@available(iOS 11.0, *)) {  \
 
 /** 颜色(RGB) */
 #define kRGBCOLOR(r, g, b) kRGBACOLOR(r, g, b, 1)
-#define kRGBCOLORSINGULAR(s) kRGBACOLOR(s, s, s, 1)
 #define kRGBACOLOR(r, g, b, a) [UIColor colorWithRed:(r) / 255.0f green:(g) / 255.0f blue:(b) / 255.0f alpha:a]
 
 /**  16进制颜色(0xFFFFFF) 不用带 0x 和 @"" */
@@ -99,31 +98,11 @@ green:((CGFloat) random() / (CGFloat) RAND_MAX) \
 blue:((CGFloat) random() / (CGFloat) RAND_MAX) \
 alpha:1.0];
 
-/** 颜色 */
-#define BlackColor       [UIColor blackColor]
-#define DarkGrayColor    [UIColor darkGrayColor]
-#define LightGrayColor   [UIColor lightGrayColor]
-#define WhiteColor       [UIColor whiteColor]
-#define RedColor         [UIColor redColor]
-#define BlueColor        [UIColor blueColor]
-#define GreenColor       [UIColor greenColor]
-#define CyanColor        [UIColor cyanColor]
-#define YellowColor      [UIColor yellowColor]
-#define MagentaColor     [UIColor magentaColor]
-#define OrangeColor      [UIColor orangeColor]
-#define PurpleColor      [UIColor purpleColor]
-#define BrownColor       [UIColor brownColor]
-#define ClearColor       [UIColor clearColor]
-#define GrayColor        [UIColor grayColor]
-
 /** 获取当前系统时间戳 */
 #define kGetCurentTime [NSString stringWithFormat:@"%zd", (long)[[NSDate date] timeIntervalSince1970]]
 
 /*! 复制文字内容 */
 #define kCopyContent(aString) [[UIPasteboard generalPasteboard] setString:aString]
-
-/** 图片 */
-#define kImageWithString(aString) [UIImage imageNamed:[NSString stringWithFormat:@"%@",aString]]
 
 /** 空对象 */
 #define kEmptyObject(object) (object == nil \
