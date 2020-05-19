@@ -17,9 +17,9 @@ if (@available(iOS 11.0, *)) {  \
 } (isPhoneX); })
 
 /** 屏幕frame */
-#define kScreenRect ([UIScreen mainScreen].bounds)
-#define kEdgeRect CGRectMake(0, kBarHeight, kScreenWidth, kScreenHeight - kBarHeight)
-#define kEdgeSafeRect CGRectMake(0, kNBarHeight, kSWidth, kSHeight - kNBarHeight - kSafeHeight)
+#define kSRect ([UIScreen mainScreen].bounds)
+#define kEdgeRect CGRectMake(0, kBarHeight, kSWidth, kSHeight - kBarHeight)
+#define kEdgeSafeRect CGRectMake(0, kBarHeight, kSWidth, kSHeight - kNBarHeight - kSafeHeight)
 
 /** 导航栏高度 安全高度 */
 #define kBarHeight ((kIPhoneX) ? 88.0f : 64.0f)
@@ -27,9 +27,9 @@ if (@available(iOS 11.0, *)) {  \
 #define kSafeHeight ((kIPhoneX) ? 35.0f : 0.0f)
 
 /** 屏幕宽高 */
-#define kScreenWidth [UIScreen mainScreen].bounds.size.width
-#define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kScreenScale  [UIScreen mainScreen].scale
+#define kSWidth [UIScreen mainScreen].bounds.size.width
+#define kSHeight [UIScreen mainScreen].bounds.size.height
+#define kSScale  [UIScreen mainScreen].scale
 
 /** 获取系统版本 */
 #define kIOS_Version [[[UIDevice currentDevice] systemVersion] floatValue]
