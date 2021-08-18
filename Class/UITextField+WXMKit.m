@@ -11,25 +11,25 @@
 @implementation UITextField (WXMKit)
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([self.delegateKit respondsToSelector:@selector(wc_textFieldDidBeginEditing:)]) {
-        [self.delegateKit wc_textFieldDidBeginEditing:textField];
+    if ([self.delegateKit respondsToSelector:@selector(wd_textFieldDidBeginEditing:)]) {
+        [self.delegateKit wd_textFieldDidBeginEditing:textField];
     }
 }
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField {
-    if ([self.delegateKit respondsToSelector:@selector(wc_textFieldShouldClear:)]) {
-        return [self.delegateKit wc_textFieldShouldClear:textField];
+    if ([self.delegateKit respondsToSelector:@selector(wd_textFieldShouldClear:)]) {
+        return [self.delegateKit wd_textFieldShouldClear:textField];
     }
 
-    if ([self.delegateKit respondsToSelector:@selector(wc_textFieldValueChanged:)]) {
-        [self.delegateKit wc_textFieldValueChanged:textField];
+    if ([self.delegateKit respondsToSelector:@selector(wd_textFieldValueChanged:)]) {
+        [self.delegateKit wd_textFieldValueChanged:textField];
     }
     return YES;
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if ([self.delegateKit respondsToSelector:@selector(wc_textFieldShouldReturn:)]) {
-        return [self.delegateKit wc_textFieldShouldReturn:textField];
+    if ([self.delegateKit respondsToSelector:@selector(wd_textFieldShouldReturn:)]) {
+        return [self.delegateKit wd_textFieldShouldReturn:textField];
     }
     return YES;
 }
@@ -37,8 +37,8 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     
     if ([string isEqualToString:@""]) return YES;
-    if ([self.delegateKit respondsToSelector:@selector(wc_textFieldShouldEdit:replacementString:)]) {
-        return [self.delegateKit wc_textFieldShouldEdit:textField replacementString:string];
+    if ([self.delegateKit respondsToSelector:@selector(wd_textFieldShouldEdit:replacementString:)]) {
+        return [self.delegateKit wd_textFieldShouldEdit:textField replacementString:string];
     }
     
     if (self.maxCharacter == 0) return YES;
@@ -50,8 +50,8 @@
     [self willChangeValueForKey:@"text"];
     [self didChangeValueForKey:@"text"];
     if (self.callback) self.callback(textField.text);
-    if ([self.delegateKit respondsToSelector:@selector(wc_textFieldValueChanged:)]) {
-        [self.delegateKit wc_textFieldValueChanged:textField];
+    if ([self.delegateKit respondsToSelector:@selector(wd_textFieldValueChanged:)]) {
+        [self.delegateKit wd_textFieldValueChanged:textField];
     }
     
     /** textField设置不会触发kvo */

@@ -12,7 +12,7 @@
 /** 在viewcontroller+dxpclass类别里面做了自动释放 */
 @implementation NSNotificationCenter (WXMCategory)
 
-- (void)wc_addObserver:(UIViewController *)observer
+- (void)wd_addObserver:(UIViewController *)observer
                   name:(NSString *)name
                 object:(id)obj
             usingBlock:(void (^)(NSNotification *note))block {

@@ -16,12 +16,12 @@ static char touchKey;
 
 + (void)load {
     SEL method1 = @selector(sendAction:to:forEvent:);
-    SEL method2 = @selector(wc_sendAction:to:forEvent:);
+    SEL method2 = @selector(wd_sendAction:to:forEvent:);
     [self swizzleInstanceMethod:method1 with:method2];
 }
 
 /** 点击 block */
-- (void)wc_blockWithControlEventTouchUpInsideSup:(void (^)(void))block {
+- (void)wd_blockWithControlEventTouchUpInsideSup:(void (^)(void))block {
     objc_setAssociatedObject(self, &touchKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     UIControlEvents event = UIControlEventTouchUpInside;
     [self addTarget:self action:@selector(callActionBlock:) forControlEvents:event];
@@ -48,7 +48,7 @@ static char touchKey;
 }
 
 /** 拦截系统 */
-- (void)wc_sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
+- (void)wd_sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event {
     if ([self isKindOfClass:[UIButton class]]) {
         BOOL interruptResponse = [objc_getAssociatedObject(self, &responseKey) boolValue];
         if (interruptResponse && self.respondInterval > 0.0) {
@@ -66,7 +66,7 @@ static char touchKey;
         }
     }
     
-    [self wc_sendAction:action to:target forEvent:event];
+    [self wd_sendAction:action to:target forEvent:event];
 }
 
 - (void)setRespondInterval:(CGFloat)respondInterval {

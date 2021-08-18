@@ -20,48 +20,48 @@ static char buttonTextObjectKey;
 
 @implementation UIButton (WXMKit)
 
-- (void)wc_setFontOfSize:(CGFloat)size {
+- (void)wd_setFontOfSize:(CGFloat)size {
     self.titleLabel.font = [UIFont systemFontOfSize:size];
 }
 
-- (void)wc_setTitle:(NSString *)title {
+- (void)wd_setTitle:(NSString *)title {
     [self setTitle:title forState:UIControlStateNormal];
 }
 
-- (void)wc_setTitleColor:(UIColor *)color {
+- (void)wd_setTitleColor:(UIColor *)color {
     [self setTitleColor:color forState:UIControlStateNormal];
 }
 
-- (void)wc_setImage:(NSString *)imageName {
+- (void)wd_setImage:(NSString *)imageName {
     [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 }
 
-- (void)wc_setImageOfSelected:(NSString *)imageName {
+- (void)wd_setImageOfSelected:(NSString *)imageName {
     [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateSelected];
 }
 
-- (void)wc_setImageOfDisable:(NSString *)imageName {
+- (void)wd_setImageOfDisable:(NSString *)imageName {
     [self setImage:[UIImage imageNamed:imageName] forState:UIControlStateDisabled];
 }
 
-- (void)wc_setBackgroundImage:(NSString *)imageName {
+- (void)wd_setBackgroundImage:(NSString *)imageName {
     [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
 }
 
-- (void)wc_setBackgroundImageOfSelected:(NSString *)imageName {
+- (void)wd_setBackgroundImageOfSelected:(NSString *)imageName {
     [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateSelected];
 }
 
-- (void)wc_setBackgroundImageOfDisabled:(NSString *)imageName {
+- (void)wd_setBackgroundImageOfDisabled:(NSString *)imageName {
     [self setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateDisabled];
 }
 
-- (void)wc_addTarget:(nullable id)target action:(SEL)action {
+- (void)wd_addTarget:(nullable id)target action:(SEL)action {
     [self addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
 }
 
 /** 点击 block */
-- (void)wc_blockWithControlEventTouchUpInside:(void (^)(void))block {
+- (void)wd_blockWithControlEventTouchUpInside:(void (^)(void))block {
     objc_setAssociatedObject(self, &touchKeyS, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     UIControlEvents event = UIControlEventTouchUpInside;
     [self addTarget:self action:@selector(callActionBlockButton:) forControlEvents:event];
@@ -73,7 +73,7 @@ static char buttonTextObjectKey;
 }
 
 /**  设置图片字体上下对齐 */
-- (void)wc_alineTextAlignment:(CGFloat)space {
+- (void)wd_alineTextAlignment:(CGFloat)space {
     CGSize imageSize = self.imageView.frame.size;
     CGSize titleSize = self.titleLabel.frame.size;
     CGSize textSize = [self.titleLabel.text sizeWithAttributes:@{NSFontAttributeName : self.titleLabel.font}];
@@ -86,7 +86,7 @@ static char buttonTextObjectKey;
 }
 
 /** 左图右字 */
-- (void)wc_horizontalCenterTitleimage:(CGFloat)space {
+- (void)wd_horizontalCenterTitleimage:(CGFloat)space {
     CGSize imageSize = self.imageView.frame.size;
     CGSize titleSize = self.titleLabel.frame.size;
     self.titleEdgeInsets = UIEdgeInsetsMake(0.0, -imageSize.width, 0.0, imageSize.width + space / 2);
@@ -95,7 +95,7 @@ static char buttonTextObjectKey;
 }
 
 /** 扩大点击 */
-- (void)wc_setEnlargeEdgeWithTop:(CGFloat)top left:(CGFloat)left right:(CGFloat)right bottom:(CGFloat)bottom {
+- (void)wd_setEnlargeEdgeWithTop:(CGFloat)top left:(CGFloat)left right:(CGFloat)right bottom:(CGFloat)bottom {
     objc_setAssociatedObject(self, &topNameKey, @(top), OBJC_ASSOCIATION_COPY_NONATOMIC);
     objc_setAssociatedObject(self, &rightNameKey, @(right), OBJC_ASSOCIATION_COPY_NONATOMIC);
     objc_setAssociatedObject(self, &bottomNameKey, @(bottom), OBJC_ASSOCIATION_COPY_NONATOMIC);
@@ -123,10 +123,10 @@ static char buttonTextObjectKey;
 }
 
 /** 带动画的enabled */
-- (void)wc_enabledAnimation:(BOOL)enabled {
+- (void)wd_enabledAnimation:(BOOL)enabled {
     if (enabled == self.enabled) return;
     @synchronized (self) {
-        UIImageView *contentView = self.wc_imageView;
+        UIImageView *contentView = self.wd_imageView;
         if (!contentView) return;
         UIImage *imageNormal= [self backgroundImageForState:UIControlStateNormal];
         UIImage *imageDisabled = [self backgroundImageForState:UIControlStateDisabled];
@@ -151,7 +151,7 @@ static char buttonTextObjectKey;
 }
 
 /** 获取背景ImageView */
-- (UIImageView *)wc_imageView {
+- (UIImageView *)wd_imageView {
     __block UIImageView *imageView = nil;
     [self.subviews enumerateObjectsUsingBlock:^(UIView *obj, NSUInteger idx, BOOL * stop) {
         if ([obj isKindOfClass:[UIImageView class]]) imageView = (UIImageView *)obj;
@@ -160,7 +160,7 @@ static char buttonTextObjectKey;
 }
 
 /** 显示菊花 */
-- (void)wc_showIndicator {
+- (void)wd_showIndicator {
     UIActivityIndicatorViewStyle style = UIActivityIndicatorViewStyleWhite;
     UIActivityIndicatorView *indicator = nil;
     indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:style];
@@ -178,7 +178,7 @@ static char buttonTextObjectKey;
 }
 
 /** 隐藏菊花 */
-- (void)wc_hideIndicator {
+- (void)wd_hideIndicator {
     self.userInteractionEnabled = YES;
     UIActivityIndicatorView *indicator = nil;
     NSString *currentText = objc_getAssociatedObject(self, &buttonTextObjectKey);

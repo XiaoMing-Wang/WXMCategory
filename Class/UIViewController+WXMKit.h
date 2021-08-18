@@ -15,17 +15,17 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL presentationStyleFull;
 
 /** UIAlertController */
-- (UIAlertController *)wc_showAlertViewControllerWithTitle:(NSString *)title
+- (UIAlertController *)wd_showAlertViewControllerWithTitle:(NSString *)title
                                                    message:(NSString *)message
                                                     cancel:(NSString *)cancleString;
 /** UIAlertController alert */
-- (UIAlertController *)wc_showAlertViewControllerWithTitle:(NSString *)title
+- (UIAlertController *)wd_showAlertViewControllerWithTitle:(NSString *)title
                                                    message:(NSString *)message
                                                     cancel:(NSString *)cancle
                                                otherAction:(NSArray *_Nullable)otherAction
                                              completeBlock:(void (^_Nullable)(NSInteger idx))block;
 /** UIAlertController sheet */
-- (UIAlertController *)wc_showSheetViewControllerWithTitle:(NSString *)title
+- (UIAlertController *)wd_showSheetViewControllerWithTitle:(NSString *)title
                                                    message:(NSString *)message
                                                     cancel:(NSString *)cancle
                                                otherAction:(NSArray *_Nullable)otherAction
@@ -38,30 +38,30 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UINavigationController (WXMKit)
 
 /** 设置导航栏透明 */
-- (void)wc_setNavigationBarColor:(UIColor *)color alpha:(CGFloat)alpha;
+- (void)wd_setNavigationBarColor:(UIColor *)color alpha:(CGFloat)alpha;
 
 /** 删除NavigationController子控制器 */
-- (void)wc_removeViewControllerWithControllerName:(NSString *)vcName;
-- (void)wc_removeViewControllerWithControllers:(NSArray *)controllers;
+- (void)wd_removeViewControllerWithControllerName:(NSString *)vcName;
+- (void)wd_removeViewControllerWithControllers:(NSArray *)controllers;
 
 /** 跳到某个界面 */
-- (void)wc_popToViewControllerWithControllerName:(NSString *)vcName animated:(BOOL)animated;
+- (void)wd_popToViewControllerWithControllerName:(NSString *)vcName animated:(BOOL)animated;
 
 /** 回退到第几个界面 */
-- (void)wc_popViewControllerIndex:(NSString *)index;
+- (void)wd_popViewControllerIndex:(NSString *)index;
 
 /** 子控制器里是否包含这个控制器 */
-- (BOOL)wc_haveChildViewControllers:(NSString *)vcName;
+- (BOOL)wd_haveChildViewControllers:(NSString *)vcName;
 
 /** 添加子控制器到NavigationController*/
-- (void)wc_insertViewControlle:(NSString *)vcName index:(NSInteger)index;
+- (void)wd_insertViewControlle:(NSString *)vcName index:(NSInteger)index;
 
 @end
 
 /** TabBar控制器  */
 @interface UITabBarController (WXMKit)
 
-- (void)wc_addChildViewController:(NSString *)viewController
+- (void)wd_addChildViewController:(NSString *)viewController
                               nav:(NSString *)nav
                             title:(NSString *)title
                             image:(NSString *)image
@@ -72,8 +72,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Alert控制器  */
 @interface UIAlertController (WXMKit)
-@property (nonatomic, assign) NSTextAlignment wc_titleTextAlignment;
-@property (nonatomic, assign) NSTextAlignment wc_messageTextAlignment;
-@property (nonatomic, assign) UIFont *wc_messageFont;
+@property (nonatomic, assign) NSTextAlignment wd_titleTextAlignment;
+@property (nonatomic, assign) NSTextAlignment wd_messageTextAlignment;
+@property (nonatomic, assign) UIFont *wd_messageFont;
 @end
 NS_ASSUME_NONNULL_END

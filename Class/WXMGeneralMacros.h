@@ -119,10 +119,10 @@ alpha:1.0];
 #define kRadianToDegrees(radian) (radian * 180.0)/(M_PI)
 
 /** 通知 */
-#define wk_postNotification(name, object) \
+#define wd_postNotification(name, object) \
 [[NSNotificationCenter defaultCenter] postNotificationName:name object:object];
 
-#define wk_addNotificationObserver(target, sel, name) \
+#define wd_addNotificationObserver(target, sel, name) \
 [[NSNotificationCenter defaultCenter] addObserver:target selector:sel name:name object:nil];
 
 /** 打印 */
@@ -147,15 +147,15 @@ __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 #define kIPhone6P ([UIScreen mainScreen].bounds.size.width > 400.0)
 
 /** 线程 */
-static inline void wk_dispatch_async_on_main_queue(void (^block)(void)) {
+static inline void wd_dispatch_async_on_main_queue(void (^block)(void)) {
     dispatch_async(dispatch_get_main_queue(), block);
 }
 
-static inline void wk_dispatch_async_on_global_queue(void (^block)(void)) {
+static inline void wd_dispatch_async_on_global_queue(void (^block)(void)) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block);
 }
 
-static inline void wk_dispatch_after_main_queue(CGFloat delay, void (^block)(void)) {
+static inline void wd_dispatch_after_main_queue(CGFloat delay, void (^block)(void)) {
     dispatch_queue_t queue = dispatch_get_main_queue();
     int64_t delay64 = (int64_t)(delay * NSEC_PER_SEC);
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay64), queue, block);

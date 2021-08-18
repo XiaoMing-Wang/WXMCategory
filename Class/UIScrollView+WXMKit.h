@@ -20,13 +20,13 @@
 @property (nonatomic, assign) CGFloat contentInsetRight;
 
 /** 滚到到顶部 */
-- (void)wc_crollsToTopWithAnimation:(BOOL)animation;
+- (void)wd_crollsToTopWithAnimation:(BOOL)animation;
 
 /** 尾部 */
-- (void)wc_crollsToBottomWithAnimation:(BOOL)animation;
+- (void)wd_crollsToBottomWithAnimation:(BOOL)animation;
 
 /** 滚动优先级低于返回 */
-- (void)wc_rollingPriorityLow:(UIViewController *)controller;
-- (void)wc_rollingPriorityHight:(UIViewController *)controller;
+- (void)wd_rollingPriorityLow:(UIViewController *)controller;
+- (void)wd_rollingPriorityHight:(UIViewController *)controller;
 
 @end

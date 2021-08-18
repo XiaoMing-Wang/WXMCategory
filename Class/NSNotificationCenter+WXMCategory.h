@@ -12,24 +12,24 @@
 @interface NSNotificationCenter (WXMCategory)
 
 /** 自动释放 在view和控制器的dealloc里面 */
-- (void)wc_addObserver:(UIViewController *)observer
+- (void)wd_addObserver:(UIViewController *)observer
                   name:(NSString *)name
                 object:(id)obj
             usingBlock:(void (^)(NSNotification *note))block;
 
 @end
 
-static inline void wc_addNotificationWithSEL(id obser, SEL selector, NSString *name, id object) {
+static inline void wd_addNotificationWithSEL(id obser, SEL selector, NSString *name, id object) {
     [[NSNotificationCenter defaultCenter] addObserver:obser selector:selector name:name object:object];
 }
 
-static inline void wc_addNotificationWithBlock(UIViewController *obser,
+static inline void wd_addNotificationWithBlock(UIViewController *obser,
                                                NSString *name,
                                                id object,
                                                void (^usingBlock)(NSNotification *note)) {
-    [[NSNotificationCenter defaultCenter] wc_addObserver:obser name:name object:object usingBlock:usingBlock];
+    [[NSNotificationCenter defaultCenter] wd_addObserver:obser name:name object:object usingBlock:usingBlock];
 }
 
-static inline void wc_postNotification(NSString *name, id object) {
+static inline void wd_postNotification(NSString *name, id object) {
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:object userInfo:nil];
 }

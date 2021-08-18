@@ -14,9 +14,9 @@
 - (BOOL)available;
 
 /** 转字符串 */
-- (NSString *)wc_jsonRepresentation;
+- (NSString *)wd_jsonRepresentation;
 
 /** 加载plist文件 */
-+ (NSDictionary *)wc_dictionaryWithPlist:(NSString *)plistName;
++ (NSDictionary *)wd_dictionaryWithPlist:(NSString *)plistName;
 
 @end

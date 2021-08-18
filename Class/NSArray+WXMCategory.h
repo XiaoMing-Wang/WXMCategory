@@ -14,12 +14,12 @@
 - (BOOL)available;
 
 /** 加载plist文件 */
-+ (NSArray *)wc_arrayWithPlist:(NSString *)plistName;
++ (NSArray *)wd_arrayWithPlist:(NSString *)plistName;
 
 /** 重复的object只添加一次 */
-- (void)wc_addRepeatObject:(NSString *)object;
+- (void)wd_addRepeatObject:(NSString *)object;
 
 /** 反转数组 */
-- (NSArray *)wc_reverseArray;
+- (NSArray *)wd_reverseArray;
 @end
 

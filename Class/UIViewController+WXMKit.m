@@ -36,11 +36,11 @@
 }
 
 /* AlertController */
-- (UIAlertController *)wc_showAlertViewControllerWithTitle:(NSString *)title
+- (UIAlertController *)wd_showAlertViewControllerWithTitle:(NSString *)title
                                                    message:(NSString *)message
                                                     cancel:(NSString *)cancleString {
     
-    return [self wc_showAlertViewControllerWithTitle:title
+    return [self wd_showAlertViewControllerWithTitle:title
                                              message:message
                                               cancel:cancleString
                                          otherAction:nil
@@ -48,7 +48,7 @@
 }
 
 /* AlertController */
-- (UIAlertController *)wc_showAlertViewControllerWithTitle:(NSString *)title
+- (UIAlertController *)wd_showAlertViewControllerWithTitle:(NSString *)title
                                                    message:(NSString *)message
                                                     cancel:(NSString *)cancle
                                                otherAction:(NSArray *)otherAction
@@ -78,7 +78,7 @@
 }
 
 /** 警告框  Sheet*/
-- (UIAlertController *)wc_showSheetViewControllerWithTitle:(NSString *)title
+- (UIAlertController *)wd_showSheetViewControllerWithTitle:(NSString *)title
                                                    message:(NSString *)message
                                                     cancel:(NSString *)cancle
                                                otherAction:(NSArray *)otherAction
@@ -129,7 +129,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 }
 
 /** 设置导航栏透明 */
-- (void)wc_setNavigationBarColor:(UIColor *)color alpha:(CGFloat)alpha {
+- (void)wd_setNavigationBarColor:(UIColor *)color alpha:(CGFloat)alpha {
     self.navigationBar.shadowImage = [[UIImage alloc] init];
     self.navigationBar.backgroundColor = [UIColor clearColor];
     color = [color colorWithAlphaComponent:alpha];
@@ -137,7 +137,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 }
 
 /** 跳到某个页面 */
-- (void)wc_popToViewControllerWithControllerName:(NSString *)vcName animated:(BOOL)animated {
+- (void)wd_popToViewControllerWithControllerName:(NSString *)vcName animated:(BOOL)animated {
     NSArray *arrayVC = self.viewControllers;
     if (arrayVC.count <= 1) return;
     [arrayVC enumerateObjectsUsingBlock:^(UIViewController *obj, NSUInteger idx, BOOL *stop) {
@@ -149,7 +149,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 }
 
 /** 判断是否包含某个页面 */
-- (BOOL)wc_haveChildViewControllers:(NSString *)vcName {
+- (BOOL)wd_haveChildViewControllers:(NSString *)vcName {
     NSArray *arrayVC = self.viewControllers;
     BOOL haveChild = NO;
     for (UIViewController *obj in arrayVC) {
@@ -162,7 +162,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 }
 
 /** 插入某个页面 */
-- (void)wc_insertViewControlle:(NSString *)vcName index:(NSInteger)index {
+- (void)wd_insertViewControlle:(NSString *)vcName index:(NSInteger)index {
     NSMutableArray *arrayVC = self.viewControllers.mutableCopy;
     if (index >= arrayVC.count) return;
     UIViewController *vc = [NSClassFromString(vcName) new];
@@ -173,7 +173,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 }
 
 /** 删除NavigationController子控制器 */
-- (void)wc_removeViewControllerWithControllerName:(NSString *)vcName {
+- (void)wd_removeViewControllerWithControllerName:(NSString *)vcName {
     NSMutableArray *arrayM = @[].mutableCopy;
     NSArray *vcs = self.viewControllers;
     if (vcs.count <= 1) return;
@@ -186,7 +186,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 }
 
 /** 删除NavigationController子控制器 */
-- (void)wc_removeViewControllerWithControllers:(NSArray *)controllers {
+- (void)wd_removeViewControllerWithControllers:(NSArray *)controllers {
     @synchronized (self.navigationController) {
         NSMutableArray *arrayM = @[].mutableCopy;
         NSArray *vcs = self.viewControllers;
@@ -202,7 +202,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 }
 
 /** 回退到第几个界面 */
-- (void)wc_popViewControllerIndex:(NSString *)index {
+- (void)wd_popViewControllerIndex:(NSString *)index {
     NSArray *arrayVC = self.viewControllers;
     NSInteger indexInt = index.integerValue;
     if (indexInt < 0 || indexInt >= 7 || indexInt >= arrayVC.count) return;
@@ -220,7 +220,7 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 @implementation UITabBarController (WXMKit)
 
 //UIOffset titlePosition = UIOffsetMake(0, -2); 字体的位置
-- (void)wc_addChildViewController:(NSString *)viewController
+- (void)wd_addChildViewController:(NSString *)viewController
                               nav:(NSString *)nav
                             title:(NSString *)title
                             image:(NSString *)image
@@ -242,31 +242,31 @@ static inline UIImage *WXM_colorConversionImage(UIColor *color) {
 
 /** Alert控制器  */
 @implementation UIAlertController (WXMKit)
-@dynamic wc_messageFont;
-@dynamic wc_messageTextAlignment;
-@dynamic wc_titleTextAlignment;
+@dynamic wd_messageFont;
+@dynamic wd_messageTextAlignment;
+@dynamic wd_titleTextAlignment;
 
-- (void)setWc_messageFont:(UIFont *)wc_messageFont {
+- (void)setwd_messageFont:(UIFont *)wd_messageFont {
     if (self.message == nil) return;
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:self.message];
     NSRange range = NSMakeRange(0, self.message.length);
-    [att addAttribute:NSFontAttributeName value:wc_messageFont range:range];
+    [att addAttribute:NSFontAttributeName value:wd_messageFont range:range];
     self.message = @"";
     [self setValue:att forKey:@"attributedMessage"];
 }
 
-- (void)setWc_titleTextAlignment:(NSTextAlignment)wc_titleTextAlignment {
+- (void)setwd_titleTextAlignment:(NSTextAlignment)wd_titleTextAlignment {
     UIView *messageParentView = [self getParentViewOfTitleAndMessageFromView:self.view];
     if (messageParentView && messageParentView.subviews.count > 1) {
         UILabel *messageLb = messageParentView.subviews[0];
-        messageLb.textAlignment = wc_titleTextAlignment;
+        messageLb.textAlignment = wd_titleTextAlignment;
     }
 }
-- (void)setWc_messageTextAlignment:(NSTextAlignment)wc_messageTextAlignment {
+- (void)setwd_messageTextAlignment:(NSTextAlignment)wd_messageTextAlignment {
     UIView *messageParentView = [self getParentViewOfTitleAndMessageFromView:self.view];
     if (messageParentView && messageParentView.subviews.count > 1) {
         UILabel *messageLb = messageParentView.subviews[1];
-        messageLb.textAlignment = wc_messageTextAlignment;
+        messageLb.textAlignment = wd_messageTextAlignment;
     }
 }
 - (UIView *)getParentViewOfTitleAndMessageFromView:(UIView *)view {

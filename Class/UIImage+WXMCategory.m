@@ -12,7 +12,7 @@
 @implementation UIImage (WXMCategory)
 
 /** 根据颜色绘制图片 */
-+ (UIImage *)wc_imageFromColor:(UIColor *)color {
++ (UIImage *)wd_imageFromColor:(UIColor *)color {
     CGRect rect = CGRectMake(0, 0, 1, 1);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -24,15 +24,15 @@
 }
 
 /** 模糊效果 */
-- (UIImage *)wc_imageWithBlurNumber:(CGFloat)blur {
-    return [self wc_applyBlurWithRadius:blur
+- (UIImage *)wd_imageWithBlurNumber:(CGFloat)blur {
+    return [self wd_applyBlurWithRadius:blur
                               tintColor:[UIColor colorWithWhite:0 alpha:0.0]
                   saturationDeltaFactor:1.4
                               maskImage:nil];
 }
 
 /** 修改image的大小 */
-- (UIImage *)wc_imageToSize:(CGSize)targetSize {
+- (UIImage *)wd_imageToSize:(CGSize)targetSize {
     UIImage *sourceImage = self;
     UIImage *newImage = nil;
     CGSize imageSize = sourceImage.size;
@@ -73,7 +73,7 @@
     return newImage;
 }
 
-- (UIImage *)wc_scaleToSize:(CGSize)size {
+- (UIImage *)wd_scaleToSize:(CGSize)size {
     if ([[UIScreen mainScreen] scale] == 0.0) {
         UIGraphicsBeginImageContext(size);
     } else {
@@ -86,7 +86,7 @@
 }
 
 /** 裁剪图片的一部分 */
-- (UIImage *)wc_tailorImageWithRect:(CGRect)rect {
+- (UIImage *)wd_tailorImageWithRect:(CGRect)rect {
     CGImageRef sourceImageRef = [self CGImage];
     CGImageRef newImageRef = CGImageCreateWithImageInRect(sourceImageRef, rect);
     UIImage *newImage = [UIImage imageWithCGImage:newImageRef];
@@ -94,12 +94,12 @@
 }
 
 /** 拉伸 */
-- (UIImage *)wc_imageWithStretching {
+- (UIImage *)wd_imageWithStretching {
     return [self resizableImageWithCapInsets:UIEdgeInsetsZero resizingMode:UIImageResizingModeStretch];
 }
 
 /** 获取启动图 */
-+ (UIImage *)wc_getLaunchImage {
++ (UIImage *)wd_getLaunchImage {
     NSString *viewOrientation = @"Portrait";
     NSString *launchImageName = nil;
     NSArray *imagesDict = [[[NSBundle mainBundle] infoDictionary] valueForKey:@"UILaunchImages"];
@@ -114,7 +114,7 @@
 }
 
 /** 模糊图片 */
-- (UIImage *)wc_applyBlurWithRadius:(CGFloat)blurRadius
+- (UIImage *)wd_applyBlurWithRadius:(CGFloat)blurRadius
                           tintColor:(UIColor *)tintColor
               saturationDeltaFactor:(CGFloat)saturationDeltaFactor
                           maskImage:(UIImage *)maskImage {
@@ -252,7 +252,7 @@
 /// @param radius 半径
 /// @param rectSize 大小
 /// @param fillColor 圆角被切掉的颜色
-+ (UIImage *)wc_drawRoundedCornerImageWithRadius:(CGFloat)radius
++ (UIImage *)wd_drawRoundedCornerImageWithRadius:(CGFloat)radius
                                         rectSize:(CGSize)rectSize
                                        fillColor:(UIColor *)fillColor {
     
@@ -326,12 +326,12 @@
 
 /** 按比例重绘图片 最大宽度maxWH */
 #define WCCOMPRESS_MAXWIDTH 1280
-+ (UIImage *)wc_compressionImage1280:(UIImage *)image {
-    return [self wc_compressionImage:image maxWH:WCCOMPRESS_MAXWIDTH];
++ (UIImage *)wd_compressionImage1280:(UIImage *)image {
+    return [self wd_compressionImage:image maxWH:WCCOMPRESS_MAXWIDTH];
 }
 
 /** 按比例重绘图片 最大宽度maxWH */
-+ (UIImage *)wc_compressionImage:(UIImage *)image maxWH:(CGFloat)maxWH {
++ (UIImage *)wd_compressionImage:(UIImage *)image maxWH:(CGFloat)maxWH {
     
     /**  宽高比 */
      CGFloat ratio = image.size.width / image.size.height;
@@ -372,7 +372,7 @@
              targetW = targetH * ratio;
          }
      }
-    return [image wc_scaleToSize:CGSizeMake(targetW, targetH)];
+    return [image wd_scaleToSize:CGSizeMake(targetW, targetH)];
 }
 
 @end

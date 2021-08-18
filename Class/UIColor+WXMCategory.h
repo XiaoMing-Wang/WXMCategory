@@ -16,10 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param c1 开始颜色
 /// @param c2 结束颜色
 /// @param height 渐变高度
-+ (UIColor *)wc_gradientFromColor:(UIColor *)c1 toColor:(UIColor *)c2 withHeight:(int)height;
++ (UIColor *)wd_gradientFromColor:(UIColor *)c1 toColor:(UIColor *)c2 withHeight:(int)height;
 
 /** 随机色 */
-+ (UIColor *)wc_randomColor;
++ (UIColor *)wd_randomColor;
 
 @end
 

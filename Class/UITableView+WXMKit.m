@@ -12,16 +12,16 @@
 
 @implementation UITableView (WXMKit)
 
-- (void)wc_updateWithBlock:(void (^)(UITableView *tableView))block {
+- (void)wd_updateWithBlock:(void (^)(UITableView *tableView))block {
     [self beginUpdates];
     block(self);
     [self endUpdates];
 }
 
 /** 滚动到第一个cell */
-- (void)wc_scrollToFirstCellWithAnimated:(BOOL)animated {
+- (void)wd_scrollToFirstCellWithAnimated:(BOOL)animated {
     if (self.sectionCount > 1 && [self rowCountOfSetion:0] > 1) {
-        [self wc_scrollToRow:0
+        [self wd_scrollToRow:0
                    inSection:0
             atScrollPosition:UITableViewScrollPositionTop
                     animated:animated];
@@ -29,17 +29,17 @@
 }
 
 /** 滚动到最后一个cell */
-- (void)wc_scrollToLastCellWithAnimated:(BOOL)animated {
+- (void)wd_scrollToLastCellWithAnimated:(BOOL)animated {
     NSInteger section = MAX(self.sectionCount - 1, 0);
     NSInteger row = MAX([self rowCountOfSetion:section] - 1, 0);
-    [self wc_scrollToRow:row
+    [self wd_scrollToRow:row
                inSection:section
         atScrollPosition:UITableViewScrollPositionBottom
                 animated:animated];
 }
 
 /** 滚动到某个cell */
-- (void)wc_scrollToRow:(NSUInteger)row
+- (void)wd_scrollToRow:(NSUInteger)row
              inSection:(NSUInteger)section
       atScrollPosition:(UITableViewScrollPosition)scrollPosition
               animated:(BOOL)animated {
@@ -51,7 +51,7 @@
 }
 
 /** 刷新cell */
-- (void)wc_reloadRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)wd_reloadRowAtIndexPath:(NSIndexPath *)indexPath
                withRowAnimation:(UITableViewRowAnimation)animation {
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
@@ -60,7 +60,7 @@
     }
 }
 
-- (void)wc_reloadSection:(NSUInteger)section
+- (void)wd_reloadSection:(NSUInteger)section
         withRowAnimation:(UITableViewRowAnimation)animation {
     if (self.sectionCount > section) {
         NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:section];
@@ -68,29 +68,29 @@
     }
 }
 
-- (void)wc_reloadRow:(NSUInteger)row
+- (void)wd_reloadRow:(NSUInteger)row
            inSection:(NSUInteger)section
     withRowAnimation:(UITableViewRowAnimation)animation {
     NSIndexPath *toReload = [NSIndexPath indexPathForRow:row inSection:section];
-    [self wc_reloadRowAtIndexPath:toReload withRowAnimation:animation];
+    [self wd_reloadRowAtIndexPath:toReload withRowAnimation:animation];
 }
 
 /** 插入cell */
-- (void)wc_insertRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)wd_insertRowAtIndexPath:(NSIndexPath *)indexPath
                withRowAnimation:(UITableViewRowAnimation)animation {
     [self insertRowsAtIndexPaths:@[indexPath] withRowAnimation:animation];
 }
 
-- (void)wc_insertRow:(NSUInteger)row
+- (void)wd_insertRow:(NSUInteger)row
            inSection:(NSUInteger)section
     withRowAnimation:(UITableViewRowAnimation)animation {
     WXMPreventCrashBegin
     NSIndexPath *toInsert = [NSIndexPath indexPathForRow:row inSection:section];
-    [self wc_insertRowAtIndexPath:toInsert withRowAnimation:animation];
+    [self wd_insertRowAtIndexPath:toInsert withRowAnimation:animation];
     WXMPreventCrashEnd
 }
 
-- (void)wc_insertSection:(NSUInteger)section withRowAnimation:(UITableViewRowAnimation)animation {
+- (void)wd_insertSection:(NSUInteger)section withRowAnimation:(UITableViewRowAnimation)animation {
     WXMPreventCrashBegin
     NSIndexSet *sections = [NSIndexSet indexSetWithIndex:section];
     [self insertSections:sections withRowAnimation:animation];
@@ -98,7 +98,7 @@
 }
 
 /** 删除 */
-- (void)wc_deleteRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)wd_deleteRowAtIndexPath:(NSIndexPath *)indexPath
                withRowAnimation:(UITableViewRowAnimation)animation {
     NSInteger section = indexPath.section;
     NSInteger row = indexPath.row;
@@ -107,14 +107,14 @@
     }
 }
 
-- (void)wc_deleteRow:(NSUInteger)row
+- (void)wd_deleteRow:(NSUInteger)row
            inSection:(NSUInteger)section
     withRowAnimation:(UITableViewRowAnimation)animation {
     NSIndexPath *toDelete = [NSIndexPath indexPathForRow:row inSection:section];
-    [self wc_deleteRowAtIndexPath:toDelete withRowAnimation:animation];
+    [self wd_deleteRowAtIndexPath:toDelete withRowAnimation:animation];
 }
 
-- (void)wc_deleteSection:(NSUInteger)section
+- (void)wd_deleteSection:(NSUInteger)section
         withRowAnimation:(UITableViewRowAnimation)animation {
     if (self.sectionCount > section) {
         NSIndexSet *sections = [NSIndexSet indexSetWithIndex:section];
@@ -122,7 +122,7 @@
     }
 }
 
-- (void)wc_clearSelectedRowsAnimated:(BOOL)animated {
+- (void)wd_clearSelectedRowsAnimated:(BOOL)animated {
     NSArray *indexs = [self indexPathsForSelectedRows];
     [indexs enumerateObjectsUsingBlock:^(NSIndexPath *path, NSUInteger idx, BOOL *stop) {
         [self deselectRowAtIndexPath:path animated:animated];

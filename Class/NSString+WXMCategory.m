@@ -48,7 +48,7 @@
 }
 
 /** json字符串转字典*/
-- (NSDictionary *)wc_jsonToDictionary {
+- (NSDictionary *)wd_jsonToDictionary {
     NSData *jsonData = [self dataUsingEncoding:NSUTF8StringEncoding];
     if (!jsonData) return nil;
     return [NSJSONSerialization JSONObjectWithData:jsonData
@@ -57,7 +57,7 @@
 }
 
 /* 保留小数 */
-- (NSString *)wc_preciseTdigits:(NSInteger)digits {
+- (NSString *)wd_preciseTdigits:(NSInteger)digits {
     NSInteger currentDigits = [self componentsSeparatedByString:@"."].lastObject.length;
     if ([self containsString:@"."] && (digits == currentDigits)) return self;
     NSString *format = [NSString stringWithFormat:@"%%.%ldf",(long)digits];
@@ -79,7 +79,7 @@
 }
 
 /** 求width */
-- (CGFloat)wc_getWidthWithFont:(CGFloat)fontSize {
+- (CGFloat)wd_getWidthWithFont:(CGFloat)fontSize {
     if (!fontSize) fontSize = [UIFont systemFontSize];
     UIFont *font = [UIFont systemFontOfSize:fontSize];
     CGRect rect = [self boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
@@ -89,11 +89,11 @@
 }
 
 /** 求 height */
-- (CGFloat)wc_getHeightWithFont:(CGFloat)fontSize {
-    return [self wc_getHeightWithFont:fontSize width:MAXFLOAT];
+- (CGFloat)wd_getHeightWithFont:(CGFloat)fontSize {
+    return [self wd_getHeightWithFont:fontSize width:MAXFLOAT];
 }
 
-- (CGFloat)wc_getHeightWithFont:(CGFloat)fontSize width:(CGFloat)width {
+- (CGFloat)wd_getHeightWithFont:(CGFloat)fontSize width:(CGFloat)width {
     if (!fontSize) fontSize = [UIFont systemFontSize];
     UIFont *font = [UIFont systemFontOfSize:fontSize];
     CGRect rect = [self boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
@@ -102,7 +102,7 @@
     return rect.size.height;
 }
 
-- (CGFloat)wc_getHeightOtherWithFont:(CGFloat)fontSize width:(CGFloat)width {
+- (CGFloat)wd_getHeightOtherWithFont:(CGFloat)fontSize width:(CGFloat)width {
     if (fontSize == 0) fontSize = [UIFont systemFontSize];
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     style.lineBreakMode = NSLineBreakByCharWrapping;
@@ -123,10 +123,10 @@
 }
 
 /** 获取字符行数 */
-- (NSInteger)wc_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize {
+- (NSInteger)wd_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize {
     if (self.length == 0) return 0;
-    CGFloat allHeight = [self wc_getHeightWithFont:fontSize width:maxWidth];
-    CGFloat lineHeight = [self wc_getHeightWithFont:fontSize];
+    CGFloat allHeight = [self wd_getHeightWithFont:fontSize width:maxWidth];
+    CGFloat lineHeight = [self wd_getHeightWithFont:fontSize];
     NSInteger totalRow = (allHeight / lineHeight);
     return totalRow;
 }
@@ -141,7 +141,7 @@
 }
 
 /** 验证是否是数字*/
-- (BOOL)wc_number {
+- (BOOL)wd_number {
     if (self.length == 0) return NO;
     NSString *isNumber = @"^[0-9]*$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", isNumber];
@@ -149,7 +149,7 @@
 }
 
 /** 中文 */
-- (BOOL)wc_chinese {
+- (BOOL)wd_chinese {
     if (self.length == 0) return NO;
     NSString *phoneRegex = @"[\u4e00-\u9fa5]";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
@@ -157,7 +157,7 @@
 }
 
 /** 英文字母 */
-- (BOOL)wc_english {
+- (BOOL)wd_english {
     if (self.length == 0) return NO;
     NSString *phoneRegex = @"^[A-Za-z]+$";
     NSPredicate *phoneTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", phoneRegex];
@@ -165,11 +165,11 @@
 }
 
 /** 判断包含数字字母中文纯符号 */
-- (BOOL)wc_allCharacterString {
+- (BOOL)wd_allCharacterString {
     BOOL allCharacter = YES;
     for (int i = 0; i < self.length; i++) {
         NSString *subStr = [self substringWithRange:NSMakeRange(i, 1)];
-        if (subStr.wc_number || subStr.wc_chinese || self.wc_english) {
+        if (subStr.wd_number || subStr.wd_chinese || self.wd_english) {
             allCharacter = NO;
             break;
         }
@@ -178,11 +178,11 @@
 }
 
 /** 是否是正确的密码 */
-- (BOOL)wc_correctPassword {
+- (BOOL)wd_correctPassword {
     BOOL allCharacter = YES;
     for (int i = 0; i < self.length; i++) {
         NSString *subStr = [self substringWithRange:NSMakeRange(i, 1)];
-        if (!subStr.wc_number && !subStr.wc_english && ![self isEqualToString:@"_"]) {
+        if (!subStr.wd_number && !subStr.wd_english && ![self isEqualToString:@"_"]) {
             allCharacter = NO;
             break;
         }
@@ -191,7 +191,7 @@
 }
 
 /** 拼音 */
-- (NSString *)wc_changePinyin {
+- (NSString *)wd_changePinyin {
     
 //    NSMutableString *string = [NSMutableString stringWithString:self];
 //    CFStringTransform((__bridge CFMutableStringRef) string, NULL, kCFStringTransformMandarinLatin, NO);
@@ -209,17 +209,17 @@
 #pragma mark _____________________________________________ 时间转化
 
 /* 时间戳转化String */
-- (NSString *)wc_timeForYYYY_MM_DD {
-    return [self wc_timeWithFormatter:@"yyyy-MM-dd"];
+- (NSString *)wd_timeForYYYY_MM_DD {
+    return [self wd_timeWithFormatter:@"yyyy-MM-dd"];
 }
 
 /* 时间戳转化String */
-- (NSString *)wc_timeForYYYY_MM_DD_HH_MM; {
-    return [self wc_timeWithFormatter:@"yyyy-MM-dd HH:mm"];
+- (NSString *)wd_timeForYYYY_MM_DD_HH_MM; {
+    return [self wd_timeWithFormatter:@"yyyy-MM-dd HH:mm"];
 }
 
 /* 时间戳转化String */
-- (NSString *)wc_timeWithFormatter:(NSString *)formatter {
+- (NSString *)wd_timeWithFormatter:(NSString *)formatter {
     NSString * timeFormatter = self;
     if (timeFormatter.length >= 10) timeFormatter = [timeFormatter substringToIndex:10];
     NSDate *detaildate = [NSDate dateWithTimeIntervalSince1970:[timeFormatter doubleValue]];
@@ -229,7 +229,7 @@
 }
 
 /** String转换成时间戳 */
-- (NSInteger)wc_timestampWithFormatter:(NSString *)formatter {
+- (NSInteger)wd_timestampWithFormatter:(NSString *)formatter {
     NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
     [dateformatter setDateFormat:formatter];
     NSDate *fromDate = [dateformatter dateFromString:self];
@@ -237,8 +237,8 @@
 }
 
 /** String转换成时间戳 */
-- (NSInteger)wc_timestampForYYYY_MM_DD {
-    return [self wc_timestampWithFormatter:@"yyyy-MM-dd"];
+- (NSInteger)wd_timestampForYYYY_MM_DD {
+    return [self wd_timestampWithFormatter:@"yyyy-MM-dd"];
 }
 
 /**  转换为Base64编码 */
@@ -258,7 +258,7 @@
     if ([enterString isEqualToString:@""]) return YES;
     if (original.length >= 9) return NO;
     if (original.length == 8 && [enterString isEqualToString:@"."]) return NO;
-    if (!enterString.wc_number && ![enterString isEqualToString:@"."]) return NO;
+    if (!enterString.wd_number && ![enterString isEqualToString:@"."]) return NO;
     if (original.length == 0 && [enterString isEqualToString:@"."]) return NO;
     
     if ([original rangeOfString:@"."].location != NSNotFound &&

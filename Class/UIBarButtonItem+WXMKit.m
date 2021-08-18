@@ -14,7 +14,7 @@
 @implementation UIBarButtonItem (WXMKit)
 
 /** title 有键盘出现系统的会失去响应  */
-+ (UIBarButtonItem *)wc_titleItem:(NSString *)title tintColor:(UIColor *)tintColor action:(void (^)(void))action {
++ (UIBarButtonItem *)wd_titleItem:(NSString *)title tintColor:(UIColor *)tintColor action:(void (^)(void))action {
     UIFont *font = [UIFont systemFontOfSize:WXM_FontSize];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithTitle:title style:UIBarButtonItemStylePlain target:nil action:nil];
     NSDictionary *attributes = @{NSFontAttributeName : font};
@@ -31,7 +31,7 @@
 }
 
 /** title自定义文字(右边)  */
-+ (UIBarButtonItem *)wc_titleCustomItem:(NSString *)title tintColor:(UIColor *)tintColor action:(void (^)(void))action {
++ (UIBarButtonItem *)wd_titleCustomItem:(NSString *)title tintColor:(UIColor *)tintColor action:(void (^)(void))action {
     UIFont *font = [UIFont systemFontOfSize:WXM_FontSize];
     CGRect rect = [title boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT)
                                       options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
@@ -56,7 +56,7 @@
 }
 
 /** title自定义图片(左右)  */
-+ (UIBarButtonItem *)wc_imageItem:(NSString *)imageName action:(void (^)(void))action {
++ (UIBarButtonItem *)wd_imageItem:(NSString *)imageName action:(void (^)(void))action {
     UIButton *wrapButton = [[UIButton alloc] init];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:wrapButton];
     [wrapButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
@@ -69,7 +69,7 @@
 }
 
 /** title自定义图片(左右)  */
-+ (UIBarButtonItem *)wc_imageItem:(NSString *)imageName target:(id)target action:(SEL)action {
++ (UIBarButtonItem *)wd_imageItem:(NSString *)imageName target:(id)target action:(SEL)action {
     UIButton *wrapButton = [[UIButton alloc] init];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:wrapButton];
     [wrapButton setBackgroundImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
@@ -86,7 +86,7 @@
 }
 
 /** 自定义带图片带文字(左)  */
-+ (UIBarButtonItem *)wc_imageWithTitleItem:(NSString *)imageName title:(NSString *)title action:(void (^)(void))action {
++ (UIBarButtonItem *)wd_imageWithTitleItem:(NSString *)imageName title:(NSString *)title action:(void (^)(void))action {
     SEL sel = @selector(image_titleEvent:);
     UIImage *iconImage = [UIImage imageNamed:imageName];
     UIButton *wrapButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
@@ -114,7 +114,7 @@
 }
 
 /** 自定义带图片带文字(左)  */
-+ (UIBarButtonItem *)wc_imageWithTitleItem:(NSString *)imageName title:(NSString *)title target:(id)target action:(SEL)action {
++ (UIBarButtonItem *)wd_imageWithTitleItem:(NSString *)imageName title:(NSString *)title target:(id)target action:(SEL)action {
     UIImage *iconImage = [UIImage imageNamed:imageName];
     UIButton *wrapButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
     UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:wrapButton];

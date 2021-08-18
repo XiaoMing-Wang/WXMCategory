@@ -11,37 +11,37 @@
 @interface UIView (WXMLieKit) <UIGestureRecognizerDelegate>
 
 /** 当前控制器 */
-- (UIViewController *)wc_responderViewController;
+- (UIViewController *)wd_responderViewController;
 
 /** 在window中 */
-- (CGRect)wc_locationWithWindow;
+- (CGRect)wd_locationWithWindow;
 
 /** 截图 */
-- (UIImage *)wc_makeImage;
+- (UIImage *)wd_makeImage;
 
 /** view截图存在本地 */
-- (void)wc_saveImageInlocation:(NSString *)imageName;
+- (void)wd_saveImageInlocation:(NSString *)imageName;
 
 /** 手势 */
-- (void)wc_tappedWithTarget:(id)target action:(SEL)action;
-- (UITapGestureRecognizer *)wc_addOnceTappedWithCallback:(void (^)(void))callback;
-- (UITapGestureRecognizer *)wc_addDoubleTappedWithCallback:(void (^)(void))callback;
+- (void)wd_tappedWithTarget:(id)target action:(SEL)action;
+- (UITapGestureRecognizer *)wd_addOnceTappedWithCallback:(void (^)(void))callback;
+- (UITapGestureRecognizer *)wd_addDoubleTappedWithCallback:(void (^)(void))callback;
 
 /** 渐现动画 */
-- (void)wc_fadeAnimation;
+- (void)wd_fadeAnimation;
 
 /** 左右居中对齐 */
-- (void)wc_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval;
+- (void)wd_horizontalSet:(UIView *)left nether:(UIView *)right interval:(CGFloat)interval;
 
 /** 上下居中对齐 */
-- (void)wc_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
+- (void)wd_venicalSet:(UIView *)above nether:(UIView *)nether interval:(CGFloat)interval;
 
 /** 获取xib */
-+ (instancetype)wc_xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex;
++ (instancetype)wd_xibFileWithName:(NSString *)nibName currentIdex:(NSInteger)currentIdex;
 
 /// 任意边角画圆角
 /// @param rectCorner 圆角边
 /// @param cornerRadius 圆角大小
-- (void)wc_drawSemicircle:(UIRectCorner)rectCorner cornerRadius:(CGFloat)cornerRadius;
+- (void)wd_drawSemicircle:(UIRectCorner)rectCorner cornerRadius:(CGFloat)cornerRadius;
 
 @end

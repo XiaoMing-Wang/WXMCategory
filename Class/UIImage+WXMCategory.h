@@ -11,32 +11,32 @@
 @interface UIImage (WXMCategory)
 
 /** 根据颜色绘制图片 */
-+ (UIImage *)wc_imageFromColor:(UIColor *)color;
++ (UIImage *)wd_imageFromColor:(UIColor *)color;
 
 /** 模糊效果 */
-- (UIImage *)wc_imageWithBlurNumber:(CGFloat)blur;
+- (UIImage *)wd_imageWithBlurNumber:(CGFloat)blur;
 
 /** 修改image的大小 */
-- (UIImage *)wc_imageToSize:(CGSize)targetSize;
+- (UIImage *)wd_imageToSize:(CGSize)targetSize;
 
 /** 裁剪图片的一部分 */
-- (UIImage *)wc_tailorImageWithRect:(CGRect)rect;
+- (UIImage *)wd_tailorImageWithRect:(CGRect)rect;
 
 /** 拉伸 */
-- (UIImage *)wc_imageWithStretching;
+- (UIImage *)wd_imageWithStretching;
 
 /** 获取启动图 */
-+ (UIImage *)wc_getLaunchImage;
++ (UIImage *)wd_getLaunchImage;
 
 /** 按比例重绘图片 最大宽度1280 (1280大约等于iphoneX三倍像素) */
-+ (UIImage *)wc_compressionImage1280:(UIImage *)image;
-+ (UIImage *)wc_compressionImage:(UIImage *)image maxWH:(CGFloat)maxWH;
++ (UIImage *)wd_compressionImage1280:(UIImage *)image;
++ (UIImage *)wd_compressionImage:(UIImage *)image maxWH:(CGFloat)maxWH;
 
 /// 画圆角遮罩图片
 /// @param radius 半径
 /// @param rectSize 大小
 /// @param fillColor 圆角被切掉的颜色
-+ (UIImage *)wc_drawRoundedCornerImageWithRadius:(CGFloat)radius
++ (UIImage *)wd_drawRoundedCornerImageWithRadius:(CGFloat)radius
                                         rectSize:(CGSize)rectSize
                                        fillColor:(UIColor *)fillColor;
 @end

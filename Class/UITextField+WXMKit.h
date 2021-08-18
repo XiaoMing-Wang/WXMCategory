@@ -12,11 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol WXMKitTextFieldDelegate <NSObject>
 @optional
-- (void)wc_textFieldDidBeginEditing:(UITextField *)textField;
-- (BOOL)wc_textFieldShouldClear:(UITextField *)textField;
-- (BOOL)wc_textFieldShouldReturn:(UITextField *)textField;
-- (BOOL)wc_textFieldShouldEdit:(UITextField *)textField replacementString:(NSString *)string;
-- (void)wc_textFieldValueChanged:(UITextField *)textField;
+- (void)wd_textFieldDidBeginEditing:(UITextField *)textField;
+- (BOOL)wd_textFieldShouldClear:(UITextField *)textField;
+- (BOOL)wd_textFieldShouldReturn:(UITextField *)textField;
+- (BOOL)wd_textFieldShouldEdit:(UITextField *)textField replacementString:(NSString *)string;
+- (void)wd_textFieldValueChanged:(UITextField *)textField;
 @end
 
 /** UITextField输入不会走kvo */

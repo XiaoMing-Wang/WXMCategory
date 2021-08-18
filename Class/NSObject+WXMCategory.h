@@ -13,37 +13,37 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSObject (WXMCategory)
 
 /** GCD定时器 */
-- (void)wc_stopTiming;
-- (dispatch_source_t)wc_startTimingInterval:(float)interval countdown:(BOOL(^)(void))countdown;
-- (dispatch_source_t)wc_startTimingInterval:(float)interval
+- (void)wd_stopTiming;
+- (dispatch_source_t)wd_startTimingInterval:(float)interval countdown:(BOOL(^)(void))countdown;
+- (dispatch_source_t)wd_startTimingInterval:(float)interval
                                   addTarget:(id)target
                                      action:(SEL)action;
 
 /** runtime替换方法 */
-+ (BOOL)wc_swizzleClassMethod:(SEL)originalSel with:(SEL)newSel;    /** 类方法 */
-+ (BOOL)wc_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel; /** 对象方法 */
++ (BOOL)wd_swizzleClassMethod:(SEL)originalSel with:(SEL)newSel;    /** 类方法 */
++ (BOOL)wd_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel; /** 对象方法 */
 
 /** runtime获取所有属性 */
-+ (NSArray *)wc_getFropertys;
++ (NSArray *)wd_getFropertys;
 
 /** 绑定 */
-- (void)wc_setAssociateValue:(nullable id)value withKey:(void *)key;
-- (void)wc_setAssociateWeakValue:(nullable id)value withKey:(void *)key;
+- (void)wd_setAssociateValue:(nullable id)value withKey:(void *)key;
+- (void)wd_setAssociateWeakValue:(nullable id)value withKey:(void *)key;
 
 /** 获取 */
-- (nullable id)wc_getAssociatedValueForKey:(void *)key;
+- (nullable id)wd_getAssociatedValueForKey:(void *)key;
 
 /** kvo block*/
-- (void)wc_addObserverBlockForKeyPath:(NSString *)keyPath block:(void (^)(id obj, id oldVal, id newVal))block;
-- (void)wc_removeObserverBlocksForKeyPath:(NSString *)keyPath;
-- (void)wc_removeObserverBlocks;
+- (void)wd_addObserverBlockForKeyPath:(NSString *)keyPath block:(void (^)(id obj, id oldVal, id newVal))block;
+- (void)wd_removeObserverBlocksForKeyPath:(NSString *)keyPath;
+- (void)wd_removeObserverBlocks;
 
 /** 解归档 需实现归档协议 */
-- (BOOL)wc_archiverWithPath:(NSString *)path;
-+ (instancetype)wc_unArchiverWithPath:(NSString *)path;
+- (BOOL)wd_archiverWithPath:(NSString *)path;
++ (instancetype)wd_unArchiverWithPath:(NSString *)path;
 
 /** nib文件 */
-+ (UINib *)wc_nib;
++ (UINib *)wd_nib;
 
 /** 深拷贝 */
 - (instancetype)deepsCopy;

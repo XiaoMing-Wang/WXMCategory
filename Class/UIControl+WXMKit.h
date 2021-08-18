@@ -14,6 +14,6 @@
 @property (nonatomic, assign) CGFloat respondInterval;
 
 /** 点击 block */
-- (void)wc_blockWithControlEventTouchUpInsideSup:(void (^)(void))block;
+- (void)wd_blockWithControlEventTouchUpInsideSup:(void (^)(void))block;
 
 @end

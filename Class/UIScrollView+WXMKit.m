@@ -86,12 +86,12 @@
 }
 
 /** 滚到到顶部 */
-- (void)wc_crollsToTopWithAnimation:(BOOL)animation {
+- (void)wd_crollsToTopWithAnimation:(BOOL)animation {
     [self setContentOffset:CGPointZero animated:animation];
 }
 
 /** 尾部 */
-- (void)wc_crollsToBottomWithAnimation:(BOOL)animation {
+- (void)wd_crollsToBottomWithAnimation:(BOOL)animation {
     if (self.contentSize.height > self.frame.size.height) {
         CGPoint offset = CGPointMake(0, self.contentSize.height -
                                      self.frame.size.height +
@@ -101,7 +101,7 @@
 }
 
 /** 滚动优先级低于返回 */
-- (void)wc_rollingPriorityLow:(UIViewController *)controller {
+- (void)wd_rollingPriorityLow:(UIViewController *)controller {
     @try {
         
         if (!self.panGestureRecognizer || !self.scrollEnabled) return;
@@ -116,7 +116,7 @@
 }
 
 /** 滚动优先级低于返回 */
-- (void)wc_rollingPriorityHight:(UIViewController *)controller {
+- (void)wd_rollingPriorityHight:(UIViewController *)controller {
     @try {
         
         if (!self.panGestureRecognizer || !self.scrollEnabled) return;

@@ -10,36 +10,36 @@
 
 @interface UIButton (WXMKit)
 
-- (void)wc_addTarget:(id)target action:(SEL)action;
-- (void)wc_blockWithControlEventTouchUpInside:(void (^)(void))block;
+- (void)wd_addTarget:(id)target action:(SEL)action;
+- (void)wd_blockWithControlEventTouchUpInside:(void (^)(void))block;
 
 /** 带动画的enabled */
-- (void)wc_enabledAnimation:(BOOL)enabled;
+- (void)wd_enabledAnimation:(BOOL)enabled;
 
 /** 显示菊花 */
-- (void)wc_showIndicator;
+- (void)wd_showIndicator;
 
 /** 隐藏菊花 */
-- (void)wc_hideIndicator;
+- (void)wd_hideIndicator;
 
-- (void)wc_setFontOfSize:(CGFloat)size;
-- (void)wc_setTitle:(NSString *)title;
-- (void)wc_setTitleColor:(UIColor *)color;
-- (void)wc_setImage:(NSString *)imageName;
-- (void)wc_setImageOfSelected:(NSString *)imageName;
-- (void)wc_setImageOfDisable:(NSString *)imageName;
-- (void)wc_setBackgroundImage:(NSString *)imageName;
-- (void)wc_setBackgroundImageOfSelected:(NSString *)imageName;
-- (void)wc_setBackgroundImageOfDisabled:(NSString *)imageName;
+- (void)wd_setFontOfSize:(CGFloat)size;
+- (void)wd_setTitle:(NSString *)title;
+- (void)wd_setTitleColor:(UIColor *)color;
+- (void)wd_setImage:(NSString *)imageName;
+- (void)wd_setImageOfSelected:(NSString *)imageName;
+- (void)wd_setImageOfDisable:(NSString *)imageName;
+- (void)wd_setBackgroundImage:(NSString *)imageName;
+- (void)wd_setBackgroundImageOfSelected:(NSString *)imageName;
+- (void)wd_setBackgroundImageOfDisabled:(NSString *)imageName;
 
 /** 图片字体上下对齐 先设置frame且图片大小 < button 否则会盖住 */
-- (void)wc_alineTextAlignment:(CGFloat)space;
+- (void)wd_alineTextAlignment:(CGFloat)space;
 
 /** 左字右图 */
-- (void)wc_horizontalCenterTitleimage:(CGFloat)space;
+- (void)wd_horizontalCenterTitleimage:(CGFloat)space;
 
 /** 扩大Button的点击范围 */
-- (void)wc_setEnlargeEdgeWithTop:(CGFloat)top
+- (void)wd_setEnlargeEdgeWithTop:(CGFloat)top
                             left:(CGFloat)left
                            right:(CGFloat)right
                           bottom:(CGFloat)bottom;

@@ -21,15 +21,15 @@
     SEL objectForKey = @selector(objectForKey:);
     SEL safeObjectForKey = @selector(safeObjectForKey:);
     
-    [self wc_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryI];
-    [self wc_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryM];
+    [self wd_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryI];
+    [self wd_swizzleInstanceMethod:setObject with:safeSetObject class:NSDictionaryM];
     
-    [self wc_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryI];
-    [self wc_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryM];
+    [self wd_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryI];
+    [self wd_swizzleInstanceMethod:objectForKey with:safeObjectForKey class:NSDictionaryM];
 }
 
 /** -方法 */
-+ (BOOL)wc_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel class:(Class)aclass {
++ (BOOL)wd_swizzleInstanceMethod:(SEL)originalSel with:(SEL)newSel class:(Class)aclass {
     Method original = class_getInstanceMethod(aclass, originalSel);
     Method newMethod = class_getInstanceMethod(aclass, newSel);
     if (!original || !newMethod) return NO;
@@ -44,13 +44,13 @@
 }
 
 /** 转字符串 */
-- (NSString *)wc_jsonRepresentation {
+- (NSString *)wd_jsonRepresentation {
     NSData *data = [NSJSONSerialization dataWithJSONObject:self options:0 error:nil];
     return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 /** 加载plist文件 */
-+ (NSDictionary *)wc_dictionaryWithPlist:(NSString *)plistName {
++ (NSDictionary *)wd_dictionaryWithPlist:(NSString *)plistName {
     return [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle]
                                                        pathForResource:plistName
                                                        ofType:@"plist"]];

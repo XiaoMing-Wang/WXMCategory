@@ -10,28 +10,28 @@
 #import <objc/runtime.h>
 
 @implementation UILabel (WXMKit)
-@dynamic wc_space;
-@dynamic wc_wordSpace;
+@dynamic wd_space;
+@dynamic wd_wordSpace;
 
 /** 设置最大宽度  */
-- (void)setWc_maxShowWidth:(CGFloat)wc_maxShowWidth {
-    if (self.frame.size.width <= wc_maxShowWidth) return;
+- (void)setwd_maxShowWidth:(CGFloat)wd_maxShowWidth {
+    if (self.frame.size.width <= wd_maxShowWidth) return;
     CGPoint origin = self.frame.origin;
     CGRect frame = self.frame;
-    frame.size.width = wc_maxShowWidth;
+    frame.size.width = wd_maxShowWidth;
     frame.origin = origin;
     self.frame = frame;
     self.lineBreakMode = NSLineBreakByTruncatingTail;
-    SEL sel = @selector(wc_maxShowWidth);
-    objc_setAssociatedObject(self, sel, @(wc_maxShowWidth), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    SEL sel = @selector(wd_maxShowWidth);
+    objc_setAssociatedObject(self, sel, @(wd_maxShowWidth), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (CGFloat)wc_maxShowWidth {
+- (CGFloat)wd_maxShowWidth {
     return [objc_getAssociatedObject(self, _cmd) floatValue];
 }
 
 /** 行与行间隔 */
-- (void)setWc_space:(CGFloat)wc_space {
+- (void)setwd_space:(CGFloat)wd_space {
     CGPoint origin = self.frame.origin;
     NSString *text = self.text;
     
@@ -39,7 +39,7 @@
     atts = [[NSMutableAttributedString alloc] initWithString:text ?: @""];
     
     NSMutableParagraphStyle *parag = [[NSMutableParagraphStyle alloc] init];
-    [parag setLineSpacing:wc_space];
+    [parag setLineSpacing:wd_space];
     
     NSRange range = NSMakeRange(0, text.length);
     [atts addAttribute:NSParagraphStyleAttributeName value:parag range:range];
@@ -52,11 +52,11 @@
 }
 
 /** 字间距 */
-- (void)setWc_wordSpace:(CGFloat)wc_wordSpace {
+- (void)setwd_wordSpace:(CGFloat)wd_wordSpace {
     CGPoint origin = self.frame.origin;
     NSString *text = self.text;
     
-    NSDictionary * pa = @{NSKernAttributeName:@(wc_wordSpace)};
+    NSDictionary * pa = @{NSKernAttributeName:@(wd_wordSpace)};
     NSMutableAttributedString *att = nil;
     att = [[NSMutableAttributedString alloc] initWithString:text attributes:pa];
 

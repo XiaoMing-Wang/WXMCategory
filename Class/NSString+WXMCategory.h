@@ -24,40 +24,40 @@
  - (NSURL *)urlConvert;
 
  /* 保留小数 */
- - (NSString *)wc_preciseTdigits:(NSInteger)digits;
+ - (NSString *)wd_preciseTdigits:(NSInteger)digits;
 
  /** json字符串转字典 */
- - (NSDictionary *)wc_jsonToDictionary;
+ - (NSDictionary *)wd_jsonToDictionary;
 
  /** 正则 */
- - (BOOL)wc_number;
- - (BOOL)wc_chinese;
- - (BOOL)wc_english;
- - (BOOL)wc_allCharacterString;
+ - (BOOL)wd_number;
+ - (BOOL)wd_chinese;
+ - (BOOL)wd_english;
+ - (BOOL)wd_allCharacterString;
 
  /** 是否是正确的密码 */
- - (BOOL)wc_correctPassword;
+ - (BOOL)wd_correctPassword;
 
  /** 求宽高 */
- - (CGFloat)wc_getHeightWithFont:(CGFloat)fontSize;
- - (CGFloat)wc_getWidthWithFont:(CGFloat)fontSize;
- - (CGFloat)wc_getHeightWithFont:(CGFloat)fontSize width:(CGFloat)width;
- - (CGFloat)wc_getHeightOtherWithFont:(CGFloat)fontSize width:(CGFloat)width;
+ - (CGFloat)wd_getHeightWithFont:(CGFloat)fontSize;
+ - (CGFloat)wd_getWidthWithFont:(CGFloat)fontSize;
+ - (CGFloat)wd_getHeightWithFont:(CGFloat)fontSize width:(CGFloat)width;
+ - (CGFloat)wd_getHeightOtherWithFont:(CGFloat)fontSize width:(CGFloat)width;
 
  /* 时间戳转化String */
- - (NSString *)wc_timeForYYYY_MM_DD;
- - (NSString *)wc_timeForYYYY_MM_DD_HH_MM;
- - (NSString *)wc_timeWithFormatter:(NSString *)formatter;
+ - (NSString *)wd_timeForYYYY_MM_DD;
+ - (NSString *)wd_timeForYYYY_MM_DD_HH_MM;
+ - (NSString *)wd_timeWithFormatter:(NSString *)formatter;
 
  /** String转换成时间戳 */
- - (NSInteger)wc_timestampForYYYY_MM_DD;
- - (NSInteger)wc_timestampWithFormatter:(NSString *)formatter;
+ - (NSInteger)wd_timestampForYYYY_MM_DD;
+ - (NSInteger)wd_timestampWithFormatter:(NSString *)formatter;
 
  /** 拼音 */
- - (NSString *)wc_changePinyin;
+ - (NSString *)wd_changePinyin;
 
  /** 获取字符行数 */
- - (NSInteger)wc_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize;
+ - (NSInteger)wd_numberRowWithMaxWidth:(CGFloat)maxWidth fontSize:(NSInteger)fontSize;
 
  /** 转换为Base64编码 */
  - (NSString *)base64EncodedString;
